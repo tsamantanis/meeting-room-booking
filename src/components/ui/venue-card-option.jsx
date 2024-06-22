@@ -15,7 +15,7 @@ export function VenueCardOption({
 
   return (
     <Card className={
-      cn("relative bg-accent border-2 shadow-md border-transparent hover:border-primary hover:cursor-pointer", isSelected && "border-primary")
+      cn("relative bg-gray-50 border-2 shadow-md border-transparent hover:border-primary hover:cursor-pointer", isSelected && "border-primary")
     }
       onClick={onClick}
     >
