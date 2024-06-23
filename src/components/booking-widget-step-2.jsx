@@ -2,21 +2,8 @@ import React, { useState } from 'react';
 import FacilityCard from '@/components/ui/facility-card';
 import CateringCard from '@/components/ui/catering-card';
 
-const facilities = [
-  { id: 1, title: 'Presentation Screen', description: '60\' inch portable screen with wireless and HDMI connection.', image: '/placeholder.svg'},
-  { id: 2, title: 'Post-its & Markers', description: 'Various colours / sizes of markers and post-its.', image: '/placeholder.svg'},
-  { id: 3, title: 'Conference System', description: 'Wide angle camera with external microphones.', image: '/placeholder.svg'},
-  { id: 4, title: 'Flip Charts', description: 'Set of 2 flip-charts with paper.', image: '/placeholder.svg'}
-];
 
-const catering = [
-  { id: 1, title: 'Beverages', description: 'Unlimited Coffee, tea and soft drinks.', image: '/placeholder.svg'},
-  { id: 2, title: 'Snacks', description: 'Prepared during your check-in.', image: '/placeholder.svg'},
-  { id: 3, title: 'Breakfast', description: 'Via catering partners. Time of delivery is specified later.', image: '/placeholder.svg'},
-  { id: 4, title: 'Lunch', description: 'Via catering partners. Time of delivery is specified later.', image: '/placeholder.svg'}
-];
-
-const Step2 = ({ guests, facilitiesSelected, setFacilitiesSelected, cateringSelected, setCateringSelected, comments, setComments }) => {
+const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilitiesSelected, cateringSelected, setCateringSelected, comments, setComments }) => {
   const handleFacilityClick = (id) => {
     if (facilitiesSelected.includes(id)) {
       setFacilitiesSelected(facilitiesSelected.filter(facility => facility !== id));

@@ -35,9 +35,15 @@ export function VenueCardOption({
           <RulerIcon className="h-5 w-5 text-muted-foreground" />
           <p className="text-sm">{`${area} m^2`}</p>
         </div>
-        <Button className="mt-4" onClick={onClick}>{isSelected ? "Selected" : "Choose" }</Button>
-        {isSelected && (
-          <CheckIcon className="absolute top-2 right-2 h-6 w-6 text-primary" />
+        
+        {isSelected ? (
+          <div className="absolute bottom-2 left-2 flex items-center justify-center rounded bg-primary">
+            <div className="flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1">
+              <CheckIcon className="h-4 w-4 text-white" />
+            </div>
+          </div>
+        ) : (
+          <Button className="mt-4" onClick={onClick}>{isSelected ? "Selected" : "Choose" }</Button>
         )}
       </CardContent>
     </Card>
