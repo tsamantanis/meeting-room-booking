@@ -14,7 +14,7 @@ function App() {
         <DialogTrigger asChild>
           <Button onClick={() => setDialogOpen(true)}>Book Now</Button>
         </DialogTrigger>
-        <DialogContent className="h-[95vh] max-w-[95vw] p-0 overflow-scroll">
+        <DialogContent className="h-[95%] md:h-[95vh] max-w-[95vw] p-0 md:overflow-scroll">
           <BookingWidget />
         </DialogContent>
       </Dialog>

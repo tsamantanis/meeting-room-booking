@@ -15,11 +15,10 @@ import Step3 from '@/components/booking-widget-step-3';
 
 export function BookingWidget() {
   const [guests, setGuests] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date().setDate(new Date().getDate() + 1))
   const [endDate, setEndDate] = useState('');
   const [time, setTime] = useState('09:00');
   const [endTime, setEndTime] = useState('');
-  const [duration, setDuration] = useState('');
   const [isMultiDay, setMultiDay] = useState(false);
   const [tableSetup, setTableSetup] = useState('Boardroom');
   const [venue, setVenue] = useState('');
@@ -34,9 +33,11 @@ export function BookingWidget() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [venues, setVenues] = useState([]);
   const [eventPackages, setEventPackages] = useState([]);
-  const [event_package_price, setEventPackagePrice] = useState(0);
+  // const [event_package_price, setEventPackagePrice] = useState(0);
+  const [selectedEventPackages, setSelectedEventPackages] = useState([]);
   const [totalExclVat, setTotalExclVat] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
+  // const [multiDayPackages, setMultiDayPackages] = useState([{}]); // state for multiple days packages
 
   useEffect(() => {
     // fetchVenues();
@@ -44,27 +45,38 @@ export function BookingWidget() {
     setVenues(mockVenues);
     setEventPackages(mockEventPackages);
   }, []);
-
+  console.log(date)
   useEffect(() => {
 
-    // use venue, duration, isMultiDay, facilitiesSelected, cateringSelected to calculate totalExclVat
-    let total = 0;
-    if (venue && duration && (isMultiDay ? endDate : true)) {
+    let total = 0;    
+    if (venue && selectedEventPackages.length > 0) {
+      selectedEventPackages.forEach((packageId, index) => {
+        const venuePackage = mockVenuePackages.find(vp => vp.venue_id === venue && vp.package_id === packageId);
+        console.log(venuePackage)
+        if (venuePackage && venuePackage.price) {
+          console.log('adding ', venuePackage.price)
+          total += venuePackage.price;
+        }
 
-      const selectedEventPackage = mockEventPackages.find(ep => ep.duration_hours === duration);
-      console.log(selectedEventPackage);
-      const venuePackage = mockVenuePackages.find(vp => vp.venue_id === venue && vp.package_id === selectedEventPackage.id);
-      // const venuePackage = mockVenuePackages.find(vp => vp.venue_id === venue && vp.package_id === duration);
-      total += parseInt(venuePackage.price);
-      facilities.filter(facility => facilitiesSelected.includes(facility.id)).forEach(facility => total += facility.price);
-      catering.filter(cater => cateringSelected.map(item => item.id).includes(cater.id)).forEach(cater => total += cater.price);
-      console.log(venuePackage);
-      setEventPackagePrice(venuePackage.price.toFixed(2))
+        const selectedFacilities = facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId));
+        selectedFacilities.forEach(facility => {
+          console.log('adding ', facility.price)
+          total += facility.price;
+        });
+
+        cateringSelected.forEach(cateringItem => {
+          const c = catering.find(cater => cater.id === cateringItem.id);
+          console.log('adding ', c.price * cateringItem.quantity)
+          total += c.price * cateringItem.quantity;
+        });
+
+      });
     }
+    
     setTotalExclVat(total.toFixed(2));
 
     
-  }, [venue, duration, isMultiDay, endDate, facilitiesSelected, cateringSelected]);
+  }, [venue, isMultiDay, endDate, facilitiesSelected, cateringSelected]);
 
 
   // Mock Data
@@ -207,7 +219,7 @@ export function BookingWidget() {
       guests > 0 
       && date !== '' 
       && time !== '' 
-      && duration !== ''
+      && (selectedEventPackages.length > 0)
       && venue !== ''
       && (isMultiDay ? endDate !== '' : true)
     );
@@ -218,8 +230,8 @@ export function BookingWidget() {
   };
 
   return (
-    <div className="flex justify-center space-x-8 overflow-visible">
-      <div className="w-3/4 p-8 mt-8">
+    <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
+      <div className="min-w-[90vw] w-full lg:min-w-fit lg:w-3/4 p-2 md:p-8 mt-8 overflow-scroll">
         {currentStep === 1 && (
           <>
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>
@@ -235,8 +247,6 @@ export function BookingWidget() {
               setTime={setTime}
               endTime={endTime}
               setEndTime={setEndTime}
-              duration={duration}
-              setDuration={setDuration}
               isMultiDay={isMultiDay}
               setMultiDay={setMultiDay}
               tableSetup={tableSetup}
@@ -244,6 +254,8 @@ export function BookingWidget() {
               venue={venue}
               setVenue={setVenue}
               eventPackages={eventPackages}
+              selectedEventPackages={selectedEventPackages}
+              setSelectedEventPackages={setSelectedEventPackages}
               venues={venues}
             />
             <div className="mt-12 space-y-8 flex flex-col items-center">
@@ -308,21 +320,27 @@ export function BookingWidget() {
           </>
         )}
       </div>
-      <div className="w-1/4 p-8 bg-gray-50 overflow-visible mt-0 rounded-md">
-        <Overview
-          date={date}
-          guests={guests}
-          time={time}
-          venue={venues.find(v => v.id === venue)?.name}
-          tableSetup={tableSetup}
-          currentStep={currentStep}
-          duration={duration}
-          event_package_price={event_package_price}
-          facilitiesSelected={facilities.filter(facility => facilitiesSelected.includes(facility.id))}
-          cateringSelected={cateringSelected.map(item => ({ ...item, name: catering.find(cater => cater.id === item.id).title, price: catering.find(cater => cater.id === item.id).price}))}
-          totalExclVat={totalExclVat}
-        />
-      </div>
+      <Overview
+        date={date}
+        guests={guests}
+        time={time}
+        venue={venues.find(v => v.id === venue)?.name}
+        tableSetup={tableSetup}
+        isMultiDay={isMultiDay}
+        endDate={endDate}
+        currentStep={currentStep}
+        setCurrentStep={setCurrentStep}
+        isStep1Valid={isStep1Valid}
+        isStep3Valid={isStep3Valid}
+        selectedEventPackages={selectedEventPackages.map(item => ({ 
+          ...item, 
+          duration: eventPackages.find(pkg => pkg.id === item)?.duration_hours,
+          price: mockVenuePackages.find(vp => vp.venue_id === venue && vp.package_id === item)?.price 
+        }))}
+        facilitiesSelected={facilities.filter(facility => facilitiesSelected.includes(facility.id))}
+        cateringSelected={cateringSelected.map(item => ({ ...item, name: catering.find(cater => cater.id === item.id).title, price: catering.find(cater => cater.id === item.id).price}))}
+        totalExclVat={totalExclVat}
+      />
     </div>
   );
 }
