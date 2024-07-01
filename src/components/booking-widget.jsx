@@ -45,28 +45,24 @@ export function BookingWidget() {
     setVenues(mockVenues);
     setEventPackages(mockEventPackages);
   }, []);
-  console.log(date)
+
   useEffect(() => {
 
     let total = 0;    
     if (venue && selectedEventPackages.length > 0) {
       selectedEventPackages.forEach((packageId, index) => {
         const venuePackage = mockVenuePackages.find(vp => vp.venue_id === venue && vp.package_id === packageId);
-        console.log(venuePackage)
         if (venuePackage && venuePackage.price) {
-          console.log('adding ', venuePackage.price)
           total += venuePackage.price;
         }
 
         const selectedFacilities = facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId));
         selectedFacilities.forEach(facility => {
-          console.log('adding ', facility.price)
           total += facility.price;
         });
 
         cateringSelected.forEach(cateringItem => {
           const c = catering.find(cater => cater.id === cateringItem.id);
-          console.log('adding ', c.price * cateringItem.quantity)
           total += c.price * cateringItem.quantity;
         });
 

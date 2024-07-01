@@ -42,7 +42,7 @@ const Step1 = ({
     newPackages[index] = id;
     setSelectedEventPackages(newPackages);
   }
-  console.log(selectedEventPackages)
+
   return (
     <>
       <div className="space-y-4 mt-8 grid grid-rows-2 justify-center lg:max-w-[680px] mx-auto">
