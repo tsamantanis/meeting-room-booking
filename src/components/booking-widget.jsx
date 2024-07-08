@@ -274,7 +274,7 @@ export function BookingWidget() {
               catering={catering} 
               facilities={facilities}
             />
-            <div className="relative mt-12 space-x-8 flex justify-center items-center">
+            <div className="hidden md:visible relative mt-12 space-x-4 flex justify-end items-center">
               <span className="absolute top-1/2 left-0 text-muted-foreground">Step 2 of 3</span>
               <Button variant="outline" className="mt-8" onClick={() => setCurrentStep(1)}>
                 <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
@@ -302,10 +302,10 @@ export function BookingWidget() {
               setAgreeTerms={setAgreeTerms}
               isStep3Valid={isStep3Valid}
             />
-            <div className="mt-12 flex justify-between items-center">
+            <div className="hidden md:visible mt-12 flex justify-between items-center">
               <span className="text-muted-foreground">Step 3 of 3</span>
-              <div className='flex space-x-8 items-center'>
-                <Button variant="outline" onClick={() => setCurrentStep(1)}>
+              <div className='flex space-x-4 items-center'>
+                <Button variant="outline" onClick={() => setCurrentStep(2)}>
                   <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                 </Button>
                 <Button disabled={!isStep3Valid()}>

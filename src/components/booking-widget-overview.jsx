@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { UsersIcon, CheckIcon, CalendarDaysIcon, ClockIcon, ArrowUpCircleIcon } from "@/components/icons";
+import { UsersIcon, CheckIcon, CalendarDaysIcon, ClockIcon, ArrowUpCircleIcon, ArrowLeftIcon, ArrowRightIcon } from "@/components/icons";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -163,7 +163,24 @@ const Overview = ({
               </div>
               {/* button next step */}
               { currentStep === 1 && <Button className="ml-auto" disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)}>Add Event Options</Button>} 
-              { currentStep === 2 && <Button className="ml-auto" onClick={() => setCurrentStep(3)}>Next</Button> }
+              { currentStep === 2 && (
+                <div className="relative space-x-4 flex justify-center items-center">
+                  <Button variant="outline" onClick={() => setCurrentStep(1)}>
+                    <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+                  </Button> 
+                 <Button className="ml-auto" onClick={() => setCurrentStep(3)}>Next</Button>
+                </div>
+              )}
+              { currentStep === 3 && (
+                <div className='flex space-x-4 items-center'>
+                  <Button variant="outline" onClick={() => setCurrentStep(2)}>
+                    <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+                  </Button>
+                  <Button disabled={!isStep3Valid()}>
+                    Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         {/* </DrawerTrigger> */}
@@ -176,8 +193,37 @@ const Overview = ({
             <div className="flex flex-col items-between justify-start h-full overflow-y-auto">
               <OverviewData />
 
-              { currentStep === 1 &&  <Button className="w-full mt-auto" disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)}>Add Event Options</Button> }
-              { currentStep === 2 && <Button className="w-full mt-auto" onClick={() => setCurrentStep(3)}>Next</Button> }
+              { currentStep === 1 &&  <Button className="w-full mt-auto" disabled={!isStep1Valid()} onClick={() => {
+                setCurrentStep(2)
+                setIsDrawerOpen(false)
+              }}>Add Event Options</Button> }
+              { currentStep === 2 && (
+                <div className="relative mt-12 space-x-4 flex justify-center items-center">
+                  <Button variant="outline" onClick={() => {
+                    setCurrentStep(1)
+                    setIsDrawerOpen(false)
+                  }}>
+                    <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+                  </Button> 
+                 <Button className="ml-auto w-full" onClick={() => {
+                    setCurrentStep(3)
+                    setIsDrawerOpen(false)
+                  }}>Next</Button>
+                </div>
+              )}
+              { currentStep === 3 && (
+                <div className='relative mt-12 space-x-4 flex justify-center items-cente'>
+                  <Button variant="outline" onClick={() => {
+                    setCurrentStep(2)
+                    setIsDrawerOpen(false)
+                  }}>
+                    <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+                  </Button>
+                  <Button className="w-full" disabled={!isStep3Valid()}>
+                    Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </DrawerContent>

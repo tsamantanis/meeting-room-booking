@@ -40,7 +40,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
 
       <div>
         <h3 className="text-lg text-primary">Facilities</h3>
-        <div className="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-4 mt-4">
+        <div className="grid grid-cols-[repeat(auto-fill,_minmax(220px,_1fr))] gap-4 mt-4">
           {facilities.map(facility => (
             <FacilityCard
               key={facility.id}
@@ -57,7 +57,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
       <div>
         <h3 className="text-lg text-primary">Catering arrangements</h3>
         <p className="text-muted-foreground mt-2">Specific delivery times are be added later from your customer portal.</p>
-        <div className="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-4 mt-4">
+        <div className="grid grid-cols-[repeat(auto-fill,_minmax(220px,_1fr))] gap-4 mt-4">
           {catering.map(cater => {
             const selectedCater = cateringSelected.find(item => item.id === cater.id);
             return (

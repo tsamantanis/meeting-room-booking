@@ -20,7 +20,7 @@ const FacilityCard = ({ title, description, image_url, isSelected, onClick }) =>
         <h4 className="text-sm sm:text-mdfont-medium mt-4">{title}</h4>
         <p className="text-xs sm:text-sm mt-2">{description}</p>
         {isSelected ? (
-          <div className="md:absolute ml-6 mb-6 md:ml-0 md:mb-0 md:bottom-2 md:left-2 max-w-10 flex items-center justify-center rounded bg-primary">
+          <div className="md:absolute mt-2 md:ml-0 md:mb-0 md:bottom-2 md:left-2 max-w-10 flex items-center justify-center rounded bg-primary">
             <div className="flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1">
               <CheckIcon className="h-4 w-4 text-white" />
             </div>
