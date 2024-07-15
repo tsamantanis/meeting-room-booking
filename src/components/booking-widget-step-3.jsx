@@ -3,7 +3,27 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from '@/components/ui/checkbox';
 
-const Step3 = ({ company, setCompany, firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, agreeTerms, setAgreeTerms, isStep3Valid }) => {
+const Step3 = ({ 
+  company, 
+  setCompany, 
+  firstName, 
+  setFirstName, 
+  lastName, 
+  setLastName, 
+  email, 
+  setEmail, 
+  phone, 
+  setPhone, 
+  agreeTerms, 
+  setAgreeTerms, 
+  companyError,
+  firstNameError,
+  lastNameError,
+  emailError,
+  phoneError,
+  agreeTermsError,
+  isStep3Valid 
+}) => {
   return (
     <div className="flex flex-col space-y-8 mt-8 max-w-[480px] mx-auto">
       <h2 className="text-2xl font-bold text-center">Your contact details</h2>
@@ -17,24 +37,32 @@ const Step3 = ({ company, setCompany, firstName, setFirstName, lastName, setLast
       <div className="mt-4">
         <h3 className="text-lg">Contact Details <span className="text-sm text-red-400">(required)</span></h3>
         <div className="grid grid-cols-1 gap-4 mt-4">
-          <Input placeholder="Company name" value={company} onChange={(e) => setCompany(e.target.value)} />
+          <Input 
+            placeholder="Company name" 
+            className={companyError ? 'border-red-500' : ''}
+            value={company} 
+            onChange={(e) => setCompany(e.target.value)} 
+            />
+            {companyError && <p className="text-red-500 text-sm mt-1">{companyError}</p>}
           <div className="grid grid-cols-2 gap-4">
-            <Input placeholder="First name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-            <Input placeholder="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <Input placeholder="First name" className={firstNameError ? 'border-red-500' : ''} value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            <Input placeholder="Last name" className={lastNameError ? 'border-red-500' : ''} value={lastName} onChange={(e) => setLastName(e.target.value)} />
           </div>
-          <Input placeholder="Email (company email preferred)" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <Input placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+          <Input placeholder="Email (company email preferred)" className={emailError ? 'border-red-500' : ''} value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input placeholder="Phone" className={phoneError ? 'border-red-500' : ''} value={phone} onChange={(e) => setPhone(e.target.value)} />
         </div>
       </div>
 
       <div className="mt-4">
         <label className="inline-flex items-center">
           <Checkbox
+            className={agreeTermsError ? 'border-red-500' : ''}
             checked={agreeTerms}
             onChange={(e) => setAgreeTerms(e.target.checked)}
           />
           <span className="ml-2 text-muted-foreground text-sm">I agree to the terms & conditions and EU data processing</span>
         </label>
+        {agreeTermsError && <p className="text-red-500 text-sm mt-1">{agreeTermsError}</p>}
       </div>
       <p className='text-muted-foreground text-sm'>
         We will prepare a proposal for your event without any commitment. You will gain access to a personalised portal where you can manage your proposal online.

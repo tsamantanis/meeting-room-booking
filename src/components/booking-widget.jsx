@@ -42,6 +42,12 @@ export function BookingWidget() {
    const [dateError, setDateError] = useState(null);
    const [timeError, setTimeError] = useState(null)
    const [endDateError, setEndDateError] = useState(null)
+    const [companyError, setCompanyError] = useState(null);
+    const [firstNameError, setFirstNameError] = useState(null);
+    const [lastNameError, setLastNameError] = useState(null);
+    const [emailError, setEmailError] = useState(null);
+    const [phoneError, setPhoneError] = useState(null);
+    const [agreeTermsError, setAgreeTermsError] = useState(null);
  
   useEffect(() => {
     // fetchVenues();
@@ -257,6 +263,7 @@ export function BookingWidget() {
   // };
 
   const isStep1Valid = () => {
+    checkStep1Errors();
     return (
       guests > 0 
       && date !== '' 
@@ -268,7 +275,6 @@ export function BookingWidget() {
   };
 
   const checkStep1Errors = () => {
-    if (isStep1Valid()) return;
 
     if (!guests || guests <= 0) {
       setGuestsError("Please select the number of guests");
@@ -288,8 +294,36 @@ export function BookingWidget() {
   }
 
   const isStep3Valid = () => {
+    checkStep3Errors();
     return company !== '' && firstName !== '' && lastName !== '' && email !== '' && phone !== '' && agreeTerms;
   };
+
+  const checkStep3Errors = () => {
+
+    if (!company) {
+      setCompanyError("Please enter your company name");
+    }
+
+    if (!firstName) {
+      setFirstNameError("Please enter your first name");
+    }
+
+    if (!lastName) {
+      setLastNameError("Please enter your last name");
+    }
+
+    if (!email) {
+      setEmailError("Please enter your email");
+    }
+
+    if (!phone) {
+      setPhoneError("Please enter your phone number");
+    }
+
+    if (!agreeTerms) {
+      setAgreeTermsError("Please agree to the terms and conditions");
+    }
+  }
 
   const handleSubmit = () => {
     if (isStep1Valid() && isStep3Valid()) {
@@ -428,6 +462,12 @@ export function BookingWidget() {
               setPhone={setPhone}
               agreeTerms={agreeTerms}
               setAgreeTerms={setAgreeTerms}
+              companyError={companyError}
+              firstNameError={firstNameError}
+              lastNameError={lastNameError}
+              emailError={emailError}
+              phoneError={phoneError}
+              agreeTermsError={agreeTermsError}
               isStep3Valid={isStep3Valid}
             />
             <div className="hidden md:visible mt-12 flex justify-between items-center">
@@ -436,7 +476,7 @@ export function BookingWidget() {
                 <Button variant="outline" onClick={() => setCurrentStep(2)}>
                   <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                 </Button>
-                <Button disabled={!isStep3Valid()}>
+                <Button onClick={() => isStep3Valid() && handleSubmit()}>
                   Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                 </Button>
               </div>
