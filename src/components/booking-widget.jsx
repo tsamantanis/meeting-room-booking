@@ -81,7 +81,7 @@ export function BookingWidget() {
       id: '1',
       name: 'Blossom Private Space',
       description: 'With a spacious garden can host teams up to...',
-      images: ['/placeholder.svg'],
+      images: ['/Blossom_hero_widget.jpg'],
       capacity: 22,
       area: 70
     },
@@ -89,7 +89,7 @@ export function BookingWidget() {
       id: '2',
       name: 'Aurora Private Space',
       description: 'With a spacious garden can host teams up to...',
-      images: ['/placeholder.svg'],
+      images: ['/Aurora_hero_widget.jpg'],
       capacity: 22,
       area: 70
     }
@@ -164,33 +164,75 @@ export function BookingWidget() {
   const facilities = [
     { id: 1, title: 'Presentation Screen', price: 100, 
       description: '60" portable screen with wireless and HDMI connection.', 
-      image: '/placeholder.svg' },
+      image: '/tv_presentation_form_m.jpg' },
     { id: 2, title: 'Post-its & Markers', price: 20, 
       description: 'Various colours/sizes of markers and post-its.', 
-      image: '/placeholder.svg' },
+      image: '/postits_form_m.jpg' },
     { id: 3, title: 'Conference System', price: 150, 
       description: 'Wide angle camera with external microphones.', 
-      image: '/placeholder.svg' },
+      image: '/conference_form_m.jpg' },
     { id: 4, title: 'Flip Charts', price: 30, 
       description: 'Set of 2 flip-charts with paper.', 
-      image: '/placeholder.svg' }
+      image: '/flipcharts_form_m.jpg' }
   ];
   
   const catering = [
     { id: 1, title: 'Beverages', price: 10, 
       description: 'Unlimited Coffee, tea and soft drinks.', 
-      image: '/placeholder.svg' },
+      image: '/beverages_form_m.jpg' },
     { id: 2, title: 'Snacks', price: 15, 
       description: 'Prepared during your check-in.', 
-      image: '/placeholder.svg' },
+      image: '/snacks_form_m.jpg' },
     { id: 3, title: 'Breakfast', price: 25, 
       description: 'Via catering partners. Time of delivery specified later.', 
-      image: '/placeholder.svg' },
+      image: '/breakfast_form_m.jpg' },
     { id: 4, title: 'Lunch', price: 40, 
       description: 'Via catering partners. Time of delivery specified later.', 
-      image: '/placeholder.svg' }
+      image: '/lunch_form_m.jpg' }
   ];
-  
+
+  // comidor post request data structure
+  // data = {
+  //   "u_contactFirstName": string,
+  // "u_contactLastName": string,
+  // "u_email": string,
+  // "u_resStartDate": string (date format yyyymmdd),
+  // "u_resEndDate": string (date format yyyymmdd),
+  // "u_resStartTime":  string (time format hh:mm),
+  // "u_resEndTime": string (time format hh:mm),
+  // "u_duration": int (key value list: 1- Full day (8 hours), 2- Half day morning (8am to max 1pm), 3- Half day evening (after 1pm), 4- Multiple days, 5- Hourly rate (evening and weekends),
+  // "u_teamSize": int,
+  // "u_venueName": string (Blossom or Aurora),
+  // "u_tableLayout": int (key-value list: 1- Meeting, 2- U-shape, 3- Classroom),
+  // "u_hasHardware": int (checkbox values 0:unchecked, 1:checked),
+  // "u_hasFlipcharts": int (checkbox values 0:unchecked, 1:checked),
+  // "u_hasUnlimitedCoffee": int (checkbox values 0:unchecked, 1:checked),
+  // "u_hasBreakfast": int (checkbox values 0:unchecked, 1:checked),
+  // "u_hasLunch": int (checkbox values 0:unchecked, 1:checked),
+  // "u_hasSnacks": int (checkbox values 0:unchecked, 1:checked),
+  // "u_hasDinner": int (checkbox values 0:unchecked, 1:checked),
+  //   client: "creativepointdev",
+  //   unit: "APP_000134",
+  //   dataAction: "u_createReservation",
+  //   u_customQuote: 1,
+  //   u_preventEmailCommunications: 1,
+  //   responseFormat: "json",
+  // };
+  // const url = "https://betadev.comidor.com/Services";
+  // const params = new URLSearchParams(data);
+
+  // const full_url = url + "?" + params.toString();
+  // console.log("full_url: ", full_url);
+  // console.log("authToken: ", authToken);
+  // // handle response
+  // fetch(full_url, {
+  //   method: "POST",
+  //   headers: {
+  //     Authorization: `Bearer ${authToken}`,
+  //     Accept: "application/json",
+  //     "Content-Type": "application/xml",
+  //   },
+  // })
 
   // const fetchVenues = async () => {
   //   let { data: venues, error } = await supabase
@@ -225,6 +267,64 @@ export function BookingWidget() {
     return company !== '' && firstName !== '' && lastName !== '' && email !== '' && phone !== '' && agreeTerms;
   };
 
+  const handleSubmit = () => {
+    if (isStep1Valid() && isStep3Valid()) {
+      console.log('Submit data to Comidor');
+      
+      let event_end_date = new Date(date);
+      if (isMultiDay) {
+        event_end_date = new Date(endDate);
+      }
+
+      const data = {
+        u_contactFirstName: firstName,
+        u_contactLastName: lastName,
+        u_email: email,
+        u_resStartDate: date,
+        u_resEndDate: event_end_date,
+        u_resStartTime: time,
+        u_resEndTime: endTime,
+        u_duration: selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours),
+        u_teamSize: guests,
+        u_venueName: venue,
+        u_tableLayout: tableSetup,
+        u_hasHardware: facilitiesSelected.includes(1) ? 1 : 0,
+        u_hasFlipcharts: facilitiesSelected.includes(2) ? 1 : 0,
+        u_hasUnlimitedCoffee: cateringSelected.includes(1) ? 1 : 0,
+        u_hasBreakfast: cateringSelected.includes(3) ? 1 : 0,
+        u_hasLunch: cateringSelected.includes(4) ? 1 : 0,
+        u_hasSnacks: cateringSelected.includes(2) ? 1 : 0,
+        u_hasDinner: cateringSelected.includes(5) ? 1 : 0,
+        client: "creativepointdev",
+        unit: "APP_000134",
+        dataAction: "u_createReservation",
+        u_customQuote: 1,
+        u_preventEmailCommunications: 1,
+        responseFormat: "json",
+      };
+
+      const params = new URLSearchParams(data);
+      const full_url = url + "?" + params.toString();
+
+      fetch(full_url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/xml",
+        },
+      }).then(async (response) => {
+        const data = await response.json();
+        return data;
+      })
+      .then((data) => {
+        console.log("proposal created successfully");
+        console.log(data);
+      }).catch((error) => console.error("Error:", error)); // Handle any errors
+
+    }
+  }
+  
   return (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
       <div className="min-w-[90vw] w-full lg:min-w-fit lg:w-3/4 p-2 md:p-8 mt-8 overflow-scroll">
@@ -274,7 +374,7 @@ export function BookingWidget() {
               catering={catering} 
               facilities={facilities}
             />
-            <div className="hidden md:visible relative mt-12 space-x-4 flex justify-end items-center">
+            <div className="hidden md:flex relative mt-12 space-x-4 flex justify-end items-center">
               <span className="absolute top-1/2 left-0 text-muted-foreground">Step 2 of 3</span>
               <Button variant="outline" className="mt-8" onClick={() => setCurrentStep(1)}>
                 <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />

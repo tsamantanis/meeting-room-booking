@@ -22,7 +22,7 @@ export function VenueCardOption({
       <CardContent className="p-6">
         <img
           src={image_url}
-          alt="Blossom Private Space"
+          alt={venue_name}
           loading="lazy"
           className="w-full h-40 rounded-md object-cover" />
         <h4 className="text-lg font-bold mt-4">{venue_name}</h4>

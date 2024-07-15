@@ -14,7 +14,7 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
       <CardContent className="p-6 cursor-pointer">
         <img
           src={image_url}
-          alt="Blossom Private Space"
+          alt={title}
           loading="lazy"
           className="w-full h-40 rounded-md object-cover" />
         <h4 className="text-sm sm:text-mdfont-medium mt-4">{title}</h4>
