@@ -38,7 +38,11 @@ export function BookingWidget() {
   const [totalExclVat, setTotalExclVat] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   // const [multiDayPackages, setMultiDayPackages] = useState([{}]); // state for multiple days packages
-
+   const [guestsError, setGuestsError] = useState(null);
+   const [dateError, setDateError] = useState(null);
+   const [timeError, setTimeError] = useState(null)
+   const [endDateError, setEndDateError] = useState(null)
+ 
   useEffect(() => {
     // fetchVenues();
     // fetchEventPackages();
@@ -263,6 +267,26 @@ export function BookingWidget() {
     );
   };
 
+  const checkStep1Errors = () => {
+    if (isStep1Valid()) return;
+
+    if (!guests || guests <= 0) {
+      setGuestsError("Please select the number of guests");
+    }
+
+    if (!date) {
+      setDateError("Please select a date");
+    }
+
+    if (!time) {
+      setTimeError("Please select a time");
+    }
+
+    if (endDate && endDate < date) {
+      setEndDateError("End date must be after start date");
+    }
+  }
+
   const isStep3Valid = () => {
     return company !== '' && firstName !== '' && lastName !== '' && email !== '' && phone !== '' && agreeTerms;
   };
@@ -335,12 +359,16 @@ export function BookingWidget() {
             <Step1
               guests={guests}
               setGuests={setGuests}
+              guestsError={guestsError}
               date={date}
               setDate={setDate}
+              dateError={dateError}
               endDate={endDate}
               setEndDate={setEndDate}
+              endDateError={endDateError}
               time={time}
               setTime={setTime}
+              timeError={timeError}
               endTime={endTime}
               setEndTime={setEndTime}
               isMultiDay={isMultiDay}
@@ -355,7 +383,7 @@ export function BookingWidget() {
               venues={venues}
             />
             <div className="mt-12 space-y-8 flex flex-col items-center">
-              <Button className="mt-8" disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)}>
+              <Button className="mt-8" onClick={() => isStep1Valid() && setCurrentStep(2)}>
                 Add Event Options <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
               </Button>
             </div>

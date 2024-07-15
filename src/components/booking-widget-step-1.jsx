@@ -17,12 +17,16 @@ import { UserIcon, CalendarDaysIcon, ClockIcon } from "@/components/icons";
 const Step1 = ({ 
   guests, 
   setGuests, 
+  guestsError,
   date, 
   setDate, 
+  dateError,
   endDate, 
   setEndDate, 
+  endDateError,
   time, 
   setTime, 
+  timeError,
   endTime, 
   setEndTime, 
   isMultiDay, 
@@ -50,9 +54,18 @@ const Step1 = ({
           <div className="lg:max-w-[330px] w-full">
             <Label htmlFor="guests">Number of guests</Label>
             <div className="relative mt-2">
-              <Input className="pr-8" type="number" id="guests" placeholder="12" max="22" value={guests} onChange={(e) => setGuests(e.target.value)} />
+              <Input 
+                className={`pr-8 ${guestsError && "border-red-500"}`}
+                type="number" 
+                id="guests" 
+                placeholder="12" 
+                max="22" 
+                value={guests} 
+                onChange={(e) => {setGuests(e.target.value); setGuestsError(null)}}
+              />
               <UserIcon className="absolute right-2 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             </div>
+            { guestsError && <p className="text-red-500 text-sm mt-1">{guestsError}</p> }
           </div>
           <div className="lg:max-w-[330px] w-full">
             <Label htmlFor="date">When is it happening</Label>
@@ -66,6 +79,7 @@ const Step1 = ({
                   }
                 } />
             </div>
+            { dateError && <p className="text-red-500 text-sm mt-1">{dateError}</p>}
           </div>
         </div>
         <div className="grid md:grid-cols-2 space-y-4 md:space-y-0 md:space-x-4 items-end">
@@ -73,7 +87,7 @@ const Step1 = ({
             <Label htmlFor="time">Time of arrival</Label>
             <div className="relative mt-2">
               <Input type="time" id="time" placeholder="09:00 am" value={time} 
-                className="w-full"
+                className={`w-full ${timeError && "border-red-500"}`}
                 onChange={(e) => {
                   setTime(e.target.value);
                   let new_end_time = new Date().setHours(parseInt(e.target.value.split(":")[0]) + 8)
@@ -82,6 +96,7 @@ const Step1 = ({
                 }} />
               <ClockIcon className="absolute right-2 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             </div>
+            { timeError && <p className="text-red-500 text-sm mt-1">{timeError}</p> }
           </div>
           <div className="flex items-center space-x-2">
             <Switch id="multi-day" checked={isMultiDay} onClick={(e) => {
@@ -110,6 +125,7 @@ const Step1 = ({
                     setDate={setEndDate} 
                   />
                 </div>
+                { endDateError && <p className="text-red-500 text-sm mt-1">{endDateError}</p> }
               </div>
               <div className="lg:max-w-[330px] w-full">
                 <Label htmlFor="end-time">Time of Departure</Label>
