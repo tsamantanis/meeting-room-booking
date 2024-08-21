@@ -11,17 +11,18 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
     }
       onClick={() => { if (isSelected) {return} else onClick() }}
     >
-      <CardContent className="p-6 cursor-pointer">
-        <img
-          src={image_url}
-          alt={title}
-          loading="lazy"
-          className="w-full h-40 rounded-md object-cover" />
-        <h4 className="text-sm sm:text-mdfont-medium mt-4">{title}</h4>
-        <p className="text-xs sm:text-sm mt-2">{description}</p>
-        
+      <CardContent className="p-6 flex flex-col items-left justify-between cursor-pointer h-full">
+        <div className="flex flex-col items-left h-full">
+          <img
+            src={image_url}
+            alt={title}
+            loading="lazy"
+            className="w-full aspect-ratio-1 rounded-md object-cover" />
+          <h4 className="text-sm sm:text-md font-medium mt-4">{title}</h4>
+          <p className="text-xs sm:text-sm mt-2">{description}</p>
+        </div>
         {isSelected ? (
-          <div className="md:absolute mt-4 w-fit md:mt-0 md:ml-0 md:mb-0 md:bottom-2 md:left-2 md:absolute bottom-2 left-2 flex items-center justify-center rounded-full border-primary border-2 p-1 space-x-3">
+          <div className="mt-4 w-fit flex items-center justify-center rounded-full border-primary border-2 p-1 space-x-3">
             <div className="flex items-center justify-center bg-primary h-6 w-6 rounded-full m-1">
               <CheckIcon className="h-4 w-4 text-white" />
             </div>
@@ -47,7 +48,7 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
             </div>
           </div>
         ) : (
-          <Button variant="outline" className="mt-2">Add</Button>
+          <Button className="mt-2 w-fit">Add</Button>
         )}
       </CardContent>
     </Card>

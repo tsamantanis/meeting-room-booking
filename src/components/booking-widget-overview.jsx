@@ -6,6 +6,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { check } from 'prettier';
 
 const Overview = ({ 
   date, 
@@ -16,7 +17,9 @@ const Overview = ({
   currentStep, 
   setCurrentStep, 
   isStep1Valid,
+  checkStep1Errors,
   isStep3Valid,
+  checkStep3Errors,
   facilitiesSelected, 
   cateringSelected, 
   selectedEventPackages,
@@ -162,7 +165,7 @@ const Overview = ({
                 </div>
               </div>
               {/* button next step */}
-              { currentStep === 1 && <Button className="ml-auto" disabled={!isStep1Valid()} onClick={() => isStep1Valid() && setCurrentStep(2)}>Add Event Options</Button>} 
+              { currentStep === 1 && <Button className="ml-auto" disabled={!isStep1Valid()} onClick={() => checkStep1Errors() && isStep1Valid() && setCurrentStep(2)}>Add Event Options</Button>} 
               { currentStep === 2 && (
                 <div className="relative space-x-4 flex justify-center items-center">
                   <Button variant="outline" onClick={() => setCurrentStep(1)}>
@@ -176,7 +179,7 @@ const Overview = ({
                   <Button variant="outline" onClick={() => setCurrentStep(2)}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
-                  <Button onClick={() => isStep3Valid() && handleSubmit()}>
+                  <Button onClick={() => checkStep3Errors() && isStep3Valid() && handleSubmit()}>
                     Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                   </Button>
                 </div>

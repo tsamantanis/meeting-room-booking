@@ -39,7 +39,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
       <p className="text-center text-muted-foreground">Choose one of the default packages or create your custom event</p>
 
       <div>
-        <h3 className="text-lg text-primary">Facilities</h3>
+        <h3 className="text-lg text-primary font-medium">Facilities</h3>
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(220px,_1fr))] gap-4 mt-4">
           {facilities.map(facility => (
             <FacilityCard
@@ -55,7 +55,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
       </div>
 
       <div>
-        <h3 className="text-lg text-primary">Catering arrangements</h3>
+        <h3 className="text-lg text-primary font-medium">Catering arrangements</h3>
         <p className="text-muted-foreground mt-2">Specific delivery times are be added later from your customer portal.</p>
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(220px,_1fr))] gap-4 mt-4">
           {catering.map(cater => {

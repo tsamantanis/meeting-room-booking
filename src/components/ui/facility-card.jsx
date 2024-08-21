@@ -11,23 +11,25 @@ const FacilityCard = ({ title, description, image_url, isSelected, onClick }) =>
     }
       onClick={onClick}
     >
-      <CardContent className="p-6 cursor-pointer">
-        <img
-          src={image_url}
-          alt={title}
-          loading="lazy"
-          className="w-full h-40 rounded-md object-cover" />
-        <h4 className="text-sm sm:text-mdfont-medium mt-4">{title}</h4>
-        <p className="text-xs sm:text-sm mt-2">{description}</p>
-        {isSelected ? (
-          <div className="md:absolute mt-2 md:ml-0 md:mb-0 md:bottom-2 md:left-2 max-w-10 flex items-center justify-center rounded bg-primary">
-            <div className="flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1">
-              <CheckIcon className="h-4 w-4 text-white" />
-            </div>
+      <CardContent className="p-6 flex flex-col items-left justify-between cursor-pointer h-full">
+        <div className="flex flex-col items-left h-full">
+          <img
+            src={image_url}
+            alt={title}
+            loading="lazy"
+            className="w-full aspect-ratio-1 rounded-md object-cover" />
+          <h4 className="text-sm sm:text-md font-medium mt-4">{title}</h4>
+          <p className="text-xs sm:text-sm mt-2">{description}</p>
+        </div>
+        <Button className="mt-4 w-fit outline-none" onClick={onClick}>
+          <span className={isSelected && 'hidden'}>Choose</span>            
+          <div className={
+            `${!isSelected && 'hidden'} animate-fade-in flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1`
+            }>
+            <CheckIcon className="h-4 w-4 text-white " />
           </div>
-        ) : (
-          <Button variant="outline" className="text-xs sm:text-md mt-2">Add</Button>
-        )}      </CardContent>
+        </Button>
+      </CardContent>
     </Card>
   );
 };

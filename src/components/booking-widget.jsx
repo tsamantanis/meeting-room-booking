@@ -84,6 +84,9 @@ export function BookingWidget() {
     
   }, [venue, isMultiDay, endDate, facilitiesSelected, cateringSelected]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, [currentStep]);
 
   // Mock Data
   const mockVenues = [
@@ -263,7 +266,6 @@ export function BookingWidget() {
   // };
 
   const isStep1Valid = () => {
-    checkStep1Errors();
     return (
       guests > 0 
       && date !== '' 
@@ -291,10 +293,11 @@ export function BookingWidget() {
     if (endDate && endDate < date) {
       setEndDateError("End date must be after start date");
     }
+    return true;
+
   }
 
   const isStep3Valid = () => {
-    checkStep3Errors();
     return company !== '' && firstName !== '' && lastName !== '' && email !== '' && phone !== '' && agreeTerms;
   };
 
@@ -323,10 +326,17 @@ export function BookingWidget() {
     if (!agreeTerms) {
       setAgreeTermsError("Please agree to the terms and conditions");
     }
+    return true;
+  }
+
+  const scrollToTop = () => {
+    // scroll modal content to top
+   console.log('scrolling to top');
+    document.getElementById('modal-content').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
   }
 
   const handleSubmit = () => {
-    if (isStep1Valid() && isStep3Valid()) {
+    if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
       console.log('Submit data to Comidor');
       
       let event_end_date = new Date(date);
@@ -385,7 +395,7 @@ export function BookingWidget() {
   
   return (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
-      <div className="min-w-[90vw] w-full lg:min-w-fit lg:w-3/4 p-2 md:p-8 mt-8 overflow-scroll">
+      <div id="modal-content" className="min-w-[90vw] w-full lg:min-w-fit lg:w-3/4 p-2 md:p-8 mt-8 overflow-scroll">  
         {currentStep === 1 && (
           <>
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>
@@ -394,6 +404,7 @@ export function BookingWidget() {
               guests={guests}
               setGuests={setGuests}
               guestsError={guestsError}
+              setGuestsError={setGuestsError}
               date={date}
               setDate={setDate}
               dateError={dateError}
@@ -417,7 +428,7 @@ export function BookingWidget() {
               venues={venues}
             />
             <div className="mt-12 space-y-8 flex flex-col items-center">
-              <Button className="mt-8" onClick={() => isStep1Valid() && setCurrentStep(2)}>
+              <Button className="mt-8" onClick={() => checkStep1Errors() && isStep1Valid() && setCurrentStep(2)}>
                 Add Event Options <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
               </Button>
             </div>
@@ -470,7 +481,7 @@ export function BookingWidget() {
               agreeTermsError={agreeTermsError}
               isStep3Valid={isStep3Valid}
             />
-            <div className="hidden md:visible mt-12 flex justify-between items-center">
+            <div className="hidden md:flex mt-12 flex justify-between items-center">
               <span className="text-muted-foreground">Step 3 of 3</span>
               <div className='flex space-x-4 items-center'>
                 <Button variant="outline" onClick={() => setCurrentStep(2)}>
@@ -495,7 +506,9 @@ export function BookingWidget() {
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
         isStep1Valid={isStep1Valid}
+        checkStep1Errors={checkStep1Errors}
         isStep3Valid={isStep3Valid}
+        checkStep3Errors={checkStep3Errors}
         selectedEventPackages={selectedEventPackages.map(item => ({ 
           ...item, 
           duration: eventPackages.find(pkg => pkg.id === item)?.duration_hours,

@@ -18,6 +18,7 @@ const Step1 = ({
   guests, 
   setGuests, 
   guestsError,
+  setGuestsError,
   date, 
   setDate, 
   dateError,

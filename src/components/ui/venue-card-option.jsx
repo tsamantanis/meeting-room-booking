@@ -36,15 +36,14 @@ export function VenueCardOption({
           <p className="text-sm">{`${area} m^2`}</p>
         </div>
         
-        {isSelected ? (
-          <div className="absolute bottom-2 left-2 flex items-center justify-center rounded bg-primary">
-            <div className="flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1">
-              <CheckIcon className="h-4 w-4 text-white" />
-            </div>
+        <Button className="mt-4 outline-none" onClick={onClick}>
+          <span className={isSelected && 'hidden'}>Choose</span>            
+          <div className={
+            `${!isSelected && 'hidden'} animate-fade-in flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1`
+            }>
+            <CheckIcon className="h-4 w-4 text-white " />
           </div>
-        ) : (
-          <Button className="mt-4" onClick={onClick}>{isSelected ? "Selected" : "Choose" }</Button>
-        )}
+        </Button>
       </CardContent>
     </Card>
   )
