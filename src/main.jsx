@@ -10,8 +10,9 @@ import './index.css'
 // )
 
 window.MeetingRoomBookingWidget = (elementId) => {
-  ReactDOM.render(
+  ReactDOM.createRoot(
+    document.getElementById(elementId)
+  ).render(
     <App />
-  , 
-  document.getElementById(elementId))
+  )
 }
