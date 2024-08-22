@@ -18,7 +18,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   postcss: "./postcss.config.js", // If you have a PostCSS config
-
+  define: {
+    "process.env": {}, // This adds a polyfill for process.env
+  },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },
