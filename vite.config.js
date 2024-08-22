@@ -17,6 +17,8 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  postcss: "./postcss.config.js", // If you have a PostCSS config
+
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },
@@ -36,5 +38,6 @@ export default defineConfig({
         },
       },
     },
+    cssCodeSplit: true, // Enable this to split CSS into a separate file
   },
 });
