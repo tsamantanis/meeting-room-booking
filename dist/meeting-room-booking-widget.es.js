@@ -14729,9 +14729,9 @@ function mC() {
     /* @__PURE__ */ u.jsx(kf, { className: "h-[95%] md:h-[95vh] max-w-[95vw] p-0 md:overflow-scroll", children: /* @__PURE__ */ u.jsx(lC, {}) })
   ] }) });
 }
-window.MeetingRoomBookingWidget = () => {
+window.MeetingRoomBookingWidget = (e) => {
   yr.render(
-    /* @__PURE__ */ u.jsx(M.StrictMode, { children: /* @__PURE__ */ u.jsx(mC, {}) }),
-    document.getElementById("meeting-room-booking-widget")
+    /* @__PURE__ */ u.jsx(mC, {}),
+    document.getElementById(e)
   );
 };

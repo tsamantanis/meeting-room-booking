@@ -9,11 +9,9 @@ import './index.css'
 //   </React.StrictMode>,
 // )
 
-window.MeetingRoomBookingWidget = () => {
+window.MeetingRoomBookingWidget = (elementId) => {
   ReactDOM.render(
-    (<React.StrictMode>
-      <App />
-    </React.StrictMode>)
+    <App />
   , 
-  document.getElementById('meeting-room-booking-widget'))
+  document.getElementById(elementId))
 }
