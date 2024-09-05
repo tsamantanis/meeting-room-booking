@@ -19,6 +19,9 @@ export default defineConfig(({ command, mode }) => {
       },
       vercel(),
     ],
+    define: {
+      "process.env": {}, // This adds a polyfill for process.env
+    },
     postcss: "./postcss.config.js", // If you have a PostCSS config
     resolve: {
       alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
