@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 // import vercel from "vite-plugin-vercel";
 import path from "path";
+import env from "vite-plugin-env-compatible";
 
 export default defineConfig(() => {
   return {
@@ -17,13 +18,13 @@ export default defineConfig(() => {
           });
         },
       },
-      // vercel(),
+      env(),
     ],
     define: {
       "process.env.NODE_ENV": JSON.stringify(
         process.env.NODE_ENV || "production",
       ), // Set default NODE_ENV
-      process: {}, // This adds a polyfill for process.env
+      // process: {}, // This adds a polyfill for process.env
     },
     postcss: "./postcss.config.js", // If you have a PostCSS config
     resolve: {
