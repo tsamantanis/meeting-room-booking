@@ -48,7 +48,7 @@ export function BookingWidget() {
     const [emailError, setEmailError] = useState(null);
     const [phoneError, setPhoneError] = useState(null);
     const [agreeTermsError, setAgreeTermsError] = useState(null);
- 
+
   useEffect(() => {
     // fetchVenues();
     // fetchEventPackages();
