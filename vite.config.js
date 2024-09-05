@@ -20,7 +20,8 @@ export default defineConfig(() => {
       // vercel(),
     ],
     define: {
-      "process.env": process.env, // This adds a polyfill for process.env
+      "process.env": {}, // This adds a polyfill for process.env
+      "process.env.NODE_ENV": "production",
     },
     postcss: "./postcss.config.js", // If you have a PostCSS config
     resolve: {

@@ -438,7 +438,6 @@ export function BookingWidget() {
   }
 
   const sendToGoogleSheets = async (dataToGoogleSheets) => {
-    console.log(import.meta.env.VITE_GSAPI_WRAPPER_URL);
     const dataArray = [
       dataToGoogleSheets['First Name'],
       dataToGoogleSheets['Last Name'],
@@ -456,8 +455,8 @@ export function BookingWidget() {
     ];
     
     try {
-      // const response = await fetch(`${import.meta.env.VITE_GSAPI_WRAPPER_URL}append-data`, {
-        const response = await fetch(`http://localhost:5001/append-data`, {
+      const response = await fetch(`${import.meta.env.VITE_GSAPI_WRAPPER_URL}append-data`, {
+        // const response = await fetch(`http://localhost:5001/append-data`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
