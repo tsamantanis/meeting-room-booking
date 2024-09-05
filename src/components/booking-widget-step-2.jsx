@@ -17,7 +17,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
     if (isAlreadySelected) {
       setCateringSelected(cateringSelected.filter(item => item.id !== id));
     } else {
-      setCateringSelected([...cateringSelected, { id, quantity: 1 }]); // Default quantity is 1
+      setCateringSelected([...cateringSelected, { id, quantity: guests }]); // Default quantity is 1
     }
   };
 

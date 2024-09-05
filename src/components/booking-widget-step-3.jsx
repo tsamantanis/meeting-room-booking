@@ -54,11 +54,12 @@ const Step3 = ({
       </div>
 
       <div className="mt-4">
-        <label className="inline-flex items-center">
+        <label className="inline-flex items-center" htmlFor="agree-terms">
           <Checkbox
+            id="agree-terms"
             className={agreeTermsError ? 'border-red-500' : ''}
             checked={agreeTerms}
-            onChange={(e) => setAgreeTerms(e.target.checked)}
+            onCheckedChange={() => setAgreeTerms(!agreeTerms)}
           />
           <span className="ml-2 text-muted-foreground text-sm">I agree to the terms & conditions and EU data processing</span>
         </label>

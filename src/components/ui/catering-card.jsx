@@ -33,7 +33,7 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
                 variant="outline" 
                 className="!h-7 !w-7 p-1 group rounded-full flex items-center justify-center border-primary text-primary hover:bg-primary hover:text-white text-lg" 
                 onClick={() => onQuantityChange(quantity - 1)}
-                disabled={quantity <= 0}  
+                disabled={true} // {quantity <= 0}  
               >
                 <MinusIcon className="h-5 w-5 text-primary group-hover:text-white" />
               </Button>
@@ -41,7 +41,7 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
                 variant="outline" 
                 className="!h-7 !w-7 p-1 group rounded-full flex items-center justify-center border-primary text-primary hover:bg-primary hover:text-white text-lg" 
                 onClick={() => onQuantityChange(quantity + 1)}
-                disabled={quantity >= guests}
+                disabled={true} // {quantity >= guests}
               >
                 <PlusIcon className="h-6 w-6 text-primary group-hover:text-white" />
               </Button>
