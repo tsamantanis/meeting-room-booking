@@ -240,7 +240,7 @@ function T4() {
      * This source code is licensed under the MIT license found in the
      * LICENSE file in the root directory of this source tree.
      */
-    o.NODE_ENV !== "production" && function() {
+    o.env.NODE_ENV !== "production" && function() {
       typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
       var u = "18.3.1", f = Symbol.for("react.element"), p = Symbol.for("react.portal"), m = Symbol.for("react.fragment"), v = Symbol.for("react.strict_mode"), D = Symbol.for("react.profiler"), x = Symbol.for("react.provider"), S = Symbol.for("react.context"), T = Symbol.for("react.forward_ref"), E = Symbol.for("react.suspense"), F = Symbol.for("react.suspense_list"), k = Symbol.for("react.memo"), A = Symbol.for("react.lazy"), j = Symbol.for("react.offscreen"), B = Symbol.iterator, I = "@@iterator";
       function z(N) {
@@ -1497,7 +1497,7 @@ Check the top-level render call using <` + ae + ">.");
   }(ym, ym.exports)), ym.exports;
 }
 var _4 = {};
-_4.NODE_ENV === "production" ? RC.exports = R4() : RC.exports = T4();
+_4.env.NODE_ENV === "production" ? RC.exports = R4() : RC.exports = T4();
 var O = RC.exports;
 const Ke = /* @__PURE__ */ fk(O), k4 = /* @__PURE__ */ E4({
   __proto__: null,
@@ -1540,7 +1540,7 @@ function N4() {
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
    */
-  return n.NODE_ENV !== "production" && function() {
+  return n.env.NODE_ENV !== "production" && function() {
     var a = O, o = Symbol.for("react.element"), u = Symbol.for("react.portal"), f = Symbol.for("react.fragment"), p = Symbol.for("react.strict_mode"), m = Symbol.for("react.profiler"), v = Symbol.for("react.provider"), D = Symbol.for("react.context"), x = Symbol.for("react.forward_ref"), S = Symbol.for("react.suspense"), T = Symbol.for("react.suspense_list"), E = Symbol.for("react.memo"), F = Symbol.for("react.lazy"), k = Symbol.for("react.offscreen"), A = Symbol.iterator, j = "@@iterator";
     function B(V) {
       if (V === null || typeof V != "object")
@@ -2133,7 +2133,7 @@ React keys must be passed directly to JSX without using spread:
   }(), sm;
 }
 var O4 = {};
-O4.NODE_ENV === "production" ? EC.exports = F4() : EC.exports = N4();
+O4.env.NODE_ENV === "production" ? EC.exports = F4() : EC.exports = N4();
 var b = EC.exports, Dm = {}, TC = { exports: {} }, Co = {}, R0 = { exports: {} }, Jx = {};
 /**
  * @license React
@@ -2357,7 +2357,7 @@ function M4() {
      * This source code is licensed under the MIT license found in the
      * LICENSE file in the root directory of this source tree.
      */
-    a.NODE_ENV !== "production" && function() {
+    a.env.NODE_ENV !== "production" && function() {
       typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
       var o = !1, u = !1, f = 5;
       function p(Pe, et) {
@@ -2623,7 +2623,7 @@ function dk() {
   if (qT) return R0.exports;
   qT = 1;
   var n = {};
-  return n.NODE_ENV === "production" ? R0.exports = A4() : R0.exports = M4(), R0.exports;
+  return n.env.NODE_ENV === "production" ? R0.exports = A4() : R0.exports = M4(), R0.exports;
 }
 /**
  * @license React
@@ -7807,7 +7807,7 @@ function P4() {
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
    */
-  return n.NODE_ENV !== "production" && function() {
+  return n.env.NODE_ENV !== "production" && function() {
     typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
     var a = O, o = dk(), u = a.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, f = !1;
     function p(e) {
@@ -21191,7 +21191,7 @@ You might need to use a local HTTP server (instead of file://): https://reactjs.
 var pk = {};
 function vk() {
   if (!(typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ > "u" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE != "function")) {
-    if (pk.NODE_ENV !== "production")
+    if (pk.env.NODE_ENV !== "production")
       throw new Error("^_^");
     try {
       __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(vk);
@@ -21200,11 +21200,11 @@ function vk() {
     }
   }
 }
-pk.NODE_ENV === "production" ? (vk(), TC.exports = j4()) : TC.exports = P4();
+pk.env.NODE_ENV === "production" ? (vk(), TC.exports = j4()) : TC.exports = P4();
 var nd = TC.exports;
 const L4 = /* @__PURE__ */ fk(nd);
 var B4 = {}, cm = nd;
-if (B4.NODE_ENV === "production")
+if (B4.env.NODE_ENV === "production")
   Dm.createRoot = cm.createRoot, Dm.hydrateRoot = cm.hydrateRoot;
 else {
   var T0 = cm.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
