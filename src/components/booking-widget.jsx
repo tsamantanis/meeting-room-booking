@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { gapi } from 'gapi-script';
 // import { createClient } from '@supabase/supabase-js';
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon, ArrowLeftIcon } from "@/components/icons";
@@ -88,19 +87,6 @@ export function BookingWidget() {
   useEffect(() => {
     scrollToTop();
   }, [currentStep]);
-
-  useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        apiKey: import.meta.env.VITE_GOOGLE_SHEETS_API_KEY,
-        clientId: import.meta.env.VITE_GOOGLE_SHEETS_CLIENT_ID,
-        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-      });
-    };
-
-    gapi.load('client:auth2', initClient);
-  }, []);
 
   // Mock Data
   const mockVenues = [
