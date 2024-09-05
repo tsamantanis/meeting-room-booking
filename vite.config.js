@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd());
   return {
     plugins: [
       react(),
@@ -20,7 +21,7 @@ export default defineConfig(({ command, mode }) => {
       // vercel(),
     ],
     define: {
-      "process.env": {}, // This adds a polyfill for process.env
+      "process.env": env, // This adds a polyfill for process.env
     },
     postcss: "./postcss.config.js", // If you have a PostCSS config
     resolve: {
