@@ -331,30 +331,44 @@ export function BookingWidget() {
 
   const scrollToTop = () => {
     // scroll modal content to top
-   console.log('scrolling to top');
     document.getElementById('modal-content').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
   }
 
-  const handleSubmit = () => {
+
+  async function getComidorAuthToken() {
+    const res = await fetch(
+      "https://betadev.comidor.com/Services?unit=APIAccessTokens&s_tokenAppId=jIcwr4eot11VMSKdVCz3&s_tokenTenantId=creativepointdev&s_tokenSecret=OLUJdj7nJoho080JomNd&contextCode=Default&client=creativepointdev&dataAction=s_getAccessToken&responseFormat=json&responseCodes=true"
+    );
+    const tokenData = await res.text();
+    const access_token = tokenData.substring(43, 244);
+    return access_token;
+  }
+
+  const handleSubmit = async () => {
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
       console.log('Submit data to Comidor');
+      const url = "https://betadev.comidor.com/Services";
       
+      const queryParams = new URLSearchParams(window.location.search)
+      console.log("queryParams: ", queryParams);
       let event_end_date = new Date(date);
       if (isMultiDay) {
         event_end_date = new Date(endDate);
       }
-
+      const selectedVenueName = venues.find(v => v.id === venue)?.name.split(' ')[0]
+     
+      // dates need to have yyyymmdd format
       const data = {
         u_contactFirstName: firstName,
         u_contactLastName: lastName,
         u_email: email,
-        u_resStartDate: date,
-        u_resEndDate: event_end_date,
+        u_resStartDate: new Date(date).toISOString().slice(0, 10).replace(/-/g, ""),
+        u_resEndDate: new Date(event_end_date).toISOString().slice(0, 10).replace(/-/g, ""),
         u_resStartTime: time,
         u_resEndTime: endTime,
         u_duration: selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours),
         u_teamSize: guests,
-        u_venueName: venue,
+        u_venueName: selectedVenueName,
         u_tableLayout: tableSetup,
         u_hasHardware: facilitiesSelected.includes(1) ? 1 : 0,
         u_hasFlipcharts: facilitiesSelected.includes(2) ? 1 : 0,
@@ -371,28 +385,101 @@ export function BookingWidget() {
         responseFormat: "json",
       };
 
+      
+      const authToken = await getComidorAuthToken();
       const params = new URLSearchParams(data);
       const full_url = url + "?" + params.toString();
+      console.log("full_url: ", full_url);
+      console.log("authToken: ", authToken);
+      
+      // handle response
+      // fetch(full_url, {
+      //   method: "POST",
+      //   headers: {
+      //     Authorization: `Bearer ${authToken}`,
+      //     Accept: "application/json",
+      //     "Content-Type": "application/xml",
+      //   },
+      // }).then(async (response) => {
+      //   const data = await response.json();
+      //   return data;
+      // })
+      // .then((data) => {
+      //   console.log("Message: ", data.message, "Status: ", data.status);
+      //   console.log(data);
+      // }).catch((error) => console.error("Error:", error)); // Handle any errors
 
-      fetch(full_url, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          Accept: "application/json",
-          "Content-Type": "application/xml",
-        },
-      }).then(async (response) => {
-        const data = await response.json();
-        return data;
-      })
-      .then((data) => {
-        console.log("proposal created successfully");
-        console.log(data);
-      }).catch((error) => console.error("Error:", error)); // Handle any errors
+      // send data to google sheets
+      // columns: First Name	Last Name	Company 	Team Size	Email	Phone	Quote Date	Event Start Date	Event End Date	Duration	Total Value	Venue	adsID
+      // get adsID from query params
+      const adsID = queryParams.get('adsID');
+      const quoteDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+      const duration = selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours).join(', ');
+      const totalValue = totalExclVat;
+      const venueName = selectedVenueName;
+      const dataToGoogleSheets = {
+        "First Name": firstName,
+        "Last Name": lastName,
+        "Company": company,
+        "Team Size": guests,
+        "Email": email,
+        "Phone": phone,
+        "Quote Date": quoteDate,
+        "Event Start Date": new Date(date).toISOString().slice(0, 10),
+        "Event End Date": new Date(event_end_date).toISOString().slice(0, 10),
+        "Duration": duration,
+        "Total Value": totalValue,
+        "Venue": venueName,
+        "adsID": adsID
+      };
+      await sendToGoogleSheets(dataToGoogleSheets);      
 
     }
   }
-  
+
+  const sendToGoogleSheets = async (dataToGoogleSheets) => {
+    console.log(import.meta.env.VITE_GSAPI_WRAPPER_URL);
+    const dataArray = [
+      dataToGoogleSheets['First Name'],
+      dataToGoogleSheets['Last Name'],
+      dataToGoogleSheets['Company'],
+      dataToGoogleSheets['Team Size'],
+      dataToGoogleSheets['Email'],
+      dataToGoogleSheets['Phone'],
+      dataToGoogleSheets['Quote Date'],
+      dataToGoogleSheets['Event Start Date'],
+      dataToGoogleSheets['Event End Date'],
+      dataToGoogleSheets['Duration'],
+      dataToGoogleSheets['Total Value'],
+      dataToGoogleSheets['Venue'],
+      dataToGoogleSheets['adsID'],
+    ];
+    
+    try {
+      // const response = await fetch(`${import.meta.env.VITE_GSAPI_WRAPPER_URL}append-data`, {
+        const response = await fetch(`http://localhost:5001/append-data`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: dataArray }), // Stringify the entire body
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // setMessage(result.message);
+        console.log('Data successfully submitted:', result)
+      } else {
+        // setMessage('Error appending data: ' + result.message);
+        console.error('Error appending data:', result);
+      }
+    } catch (error) {
+      // setMessage('Failed to submit data.');
+      console.error('Failed to submit data:', error);
+    }
+  };
+
   return (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
       <div id="modal-content" className="min-w-[90vw] w-full lg:min-w-fit lg:w-3/4 p-2 md:p-8 mt-8 overflow-scroll">  
