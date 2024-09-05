@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import vercel from "vite-plugin-vercel";
+// import vercel from "vite-plugin-vercel";
 import path from "path";
 
 export default defineConfig(({ command, mode }) => {
@@ -17,7 +17,7 @@ export default defineConfig(({ command, mode }) => {
           });
         },
       },
-      vercel(),
+      // vercel(),
     ],
     define: {
       "process.env": {}, // This adds a polyfill for process.env
