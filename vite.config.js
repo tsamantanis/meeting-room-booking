@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 // import vercel from "vite-plugin-vercel";
 import path from "path";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 export default defineConfig(() => {
   return {
@@ -18,16 +17,14 @@ export default defineConfig(() => {
           });
         },
       },
-      nodePolyfills({
-        process: true,
-      }),
+      // vercel(),
     ],
-    // define: {
-    //   "process.env.NODE_ENV": JSON.stringify(
-    //     process.env.NODE_ENV || "production",
-    //   ), // Set default NODE_ENV
-    //   process: {}, // This adds a polyfill for process.env
-    // },
+    define: {
+      "process.env.NODE_ENV": JSON.stringify(
+        process.env.NODE_ENV || "production",
+      ), // Set default NODE_ENV
+      process: {}, // This adds a polyfill for process.env
+    },
     postcss: "./postcss.config.js", // If you have a PostCSS config
     resolve: {
       alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
@@ -40,7 +37,7 @@ export default defineConfig(() => {
       },
       rollupOptions: {
         // Make sure to externalize dependencies that shouldn't be bundled
-        external: ["react", "react-dom"], // Ensure React and ReactDOM are not bundled
+        external: [],
         output: {
           globals: {
             react: "React",
