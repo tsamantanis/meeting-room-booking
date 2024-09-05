@@ -40,7 +40,7 @@ export default defineConfig(() => {
       },
       rollupOptions: {
         // Make sure to externalize dependencies that shouldn't be bundled
-        external: [],
+        external: ["react", "react-dom"], // Ensure React and ReactDOM are not bundled
         output: {
           globals: {
             react: "React",
