@@ -8,8 +8,6 @@ function App() {
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   return (
-    <div className="fixed right-10 bottom-10">
-      {/* Button to trigger dialog */}
       <Dialog>
         <DialogTrigger asChild>
           <Button onClick={() => setDialogOpen(true)}>Book Now</Button>
@@ -18,10 +16,6 @@ function App() {
           <BookingWidget />
         </DialogContent>
       </Dialog>
-
-      {/* Optionally, include BookingWidget directly on the page wherever needed */}
-      {/* <BookingWidget /> */}
-    </div>
   );
 }
 
