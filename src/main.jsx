@@ -20,7 +20,7 @@ class MeetingRoomBookingWidget extends HTMLElement {
     this.style.position = 'fixed';
     this.style.bottom = '20px';
     this.style.right = '20px';
-    this.style.zIndex = '1000';
+    this.style.zIndex = '49';
     if (isDevelopment) {
       // Development mode: Vite injects styles automatically, so we don't need to load CSS
       console.log('Development mode: styles are injected automatically by Vite.');
