@@ -19853,7 +19853,7 @@ class _4 extends HTMLElement {
   connectedCallback() {
     console.log("Development mode:", P4);
     const t = document.createElement("div");
-    this.shadowRoot.appendChild(t), this.style.position = "fixed", this.style.bottom = "20px", this.style.right = "20px";
+    this.shadowRoot.appendChild(t), this.style.position = "fixed", this.style.bottom = "20px", this.style.right = "20px", this.style.zIndex = "1000";
     {
       const n = document.createElement("link");
       n.rel = "stylesheet", n.href = new URL("./main.css", import.meta.url).href, this.shadowRoot.appendChild(n);
