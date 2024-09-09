@@ -10648,7 +10648,7 @@ var lb = function(e) {
   return o ? (r.push.apply(r, Array.from(o.querySelectorAll("[aria-live]"))), ub(r, o, n, "aria-hidden")) : function() {
     return null;
   };
-}, wf = "Dialog", [_0, A4] = wr(wf), [cb, Qt] = _0(wf), j0 = (e) => {
+}, wf = "Dialog", [_0, O4] = wr(wf), [cb, Qt] = _0(wf), j0 = (e) => {
   const {
     __scopeDialog: t,
     children: n,
@@ -10852,7 +10852,7 @@ H0.displayName = z0;
 function Ef(e) {
   return e ? "open" : "closed";
 }
-var V0 = "DialogTitleWarning", [O4, U0] = ZE(V0, {
+var V0 = "DialogTitleWarning", [T4, U0] = ZE(V0, {
   contentName: Xr,
   titleName: Cf,
   docsSlug: "dialog"
@@ -11929,7 +11929,7 @@ function Zc(e, [t, n]) {
 function zb(e, t) {
   return D.useReducer((n, r) => t[n][r] ?? n, e);
 }
-var Pf = "ScrollArea", [my, T4] = wr(Pf), [Hb, Tt] = my(Pf), hy = D.forwardRef(
+var Pf = "ScrollArea", [my, R4] = wr(Pf), [Hb, Tt] = my(Pf), hy = D.forwardRef(
   (e, t) => {
     const {
       __scopeScrollArea: n,
@@ -14895,7 +14895,7 @@ function Xf(e) {
       n(void 0);
   }, [e]), t;
 }
-var Gf = "Switch", [xP, R4] = wr(Gf), [CP, EP] = xP(Gf), SD = D.forwardRef(
+var Gf = "Switch", [xP, M4] = wr(Gf), [CP, EP] = xP(Gf), SD = D.forwardRef(
   (e, t) => {
     const {
       __scopeSwitch: n,
@@ -17714,7 +17714,7 @@ function sw(e) {
   const [t, n = "center"] = e.split("-");
   return [t, n];
 }
-var uw = nw, fp = ow, cw = iw, dw = lw, pp = "Popover", [fw, M4] = wr(pp, [
+var uw = nw, fp = ow, cw = iw, dw = lw, pp = "Popover", [fw, L4] = wr(pp, [
   Vs
 ]), Fa = Vs(), [w3, Er] = fw(pp), pw = (e) => {
   const {
@@ -18031,7 +18031,7 @@ var R3 = "VisuallyHidden", Sw = D.forwardRef(
   )
 );
 Sw.displayName = R3;
-var M3 = [" ", "Enter", "ArrowUp", "ArrowDown"], L3 = [" ", "Enter"], ka = "Select", [Us, Ys, I3] = T3(ka), [ii, L4] = wr(ka, [
+var M3 = [" ", "Enter", "ArrowUp", "ArrowDown"], L3 = [" ", "Enter"], ka = "Select", [Us, Ys, I3] = T3(ka), [ii, I4] = wr(ka, [
   I3,
   Vs
 ]), Ks = Vs(), [B3, Sr] = ii(ka), [$3, W3] = ii(ka), bw = (e) => {
@@ -19218,7 +19218,7 @@ const f4 = ({
     ] })
   ] });
 };
-var vp = "Checkbox", [v4, I4] = wr(vp), [g4, y4] = v4(vp), c1 = D.forwardRef(
+var vp = "Checkbox", [v4, B4] = wr(vp), [g4, y4] = v4(vp), c1 = D.forwardRef(
   (e, t) => {
     const {
       __scopeCheckbox: n,
@@ -19847,18 +19847,23 @@ function N4() {
     /* @__PURE__ */ c.jsx(g1, { className: "h-[95%] md:h-[95vh] max-w-[95vw] p-0 md:overflow-scroll", children: /* @__PURE__ */ c.jsx(C4, {}) })
   ] });
 }
-const P4 = !1;
-class _4 extends HTMLElement {
+const P4 = "", _4 = !1;
+class j4 extends HTMLElement {
   constructor() {
     super(), this.attachShadow({ mode: "open" });
   }
   connectedCallback() {
-    console.log("Development mode:", P4);
+    console.log("Development mode:", _4);
     const t = document.createElement("div");
-    this.shadowRoot.appendChild(t), this.style.position = "fixed", this.style.bottom = "20px", this.style.right = "20px", this.style.zIndex = "49", bl.createRoot(t).render(/* @__PURE__ */ c.jsx(N4, {}));
+    this.shadowRoot.appendChild(t), this.style.position = "fixed", this.style.bottom = "20px", this.style.right = "20px", this.style.zIndex = "49";
+    {
+      const n = document.createElement("style");
+      n.textContent = P4, this.shadowRoot.appendChild(n);
+    }
+    bl.createRoot(t).render(/* @__PURE__ */ c.jsx(N4, {}));
   }
   disconnectedCallback() {
     bl.unmountComponentAtNode(this.shadowRoot);
   }
 }
-customElements.define("meeting-room-widget", _4);
+customElements.define("meeting-room-widget", j4);
