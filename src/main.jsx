@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import './index.css'
+// import './index.css'
 
 // Check if we're in development mode
 const isDevelopment = import.meta.env.DEV;
