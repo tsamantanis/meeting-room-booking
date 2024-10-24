@@ -140,13 +140,13 @@ export function BookingWidget() {
       id: '1',
       venue_id: '1',
       package_id: '1',
-      price: 520
+      price: 590
     },
     {
       id: '2',
       venue_id: '1',
       package_id: '2',
-      price: 320
+      price: 390
     },
     {
       id: '3',
@@ -158,19 +158,19 @@ export function BookingWidget() {
       id: '4',
       venue_id: '2',
       package_id: '1',
-      price: 480
+      price: 590
     },
     {
       id: '5',
       venue_id: '2',
       package_id: '2',
-      price: 280
+      price: 390
     },
     {
       id: '6',
       venue_id: '2',
       package_id: '3',
-      price: 80
+      price: 120
     }
   ]
 
@@ -181,7 +181,7 @@ export function BookingWidget() {
     { id: 2, title: 'Post-its & Markers', price: 20, 
       description: 'Various colours/sizes of markers and post-its.', 
       image: new URL('./postits_form_m.jpg', import.meta.url).href },
-    { id: 3, title: 'Conference System', price: 150, 
+    { id: 3, title: 'Conference System', price: 50, 
       description: 'Wide angle camera with external microphones.', 
       image:  new URL('./conference_form_m.jpg', import.meta.url).href },
     { id: 4, title: 'Flip Charts', price: 30, 
@@ -190,16 +190,16 @@ export function BookingWidget() {
   ];
   
   const catering = [
-    { id: 1, title: 'Beverages', price: 10, 
+    { id: 1, title: 'Beverages', price: 7, 
       description: 'Unlimited Coffee, tea and soft drinks.', 
       image: new URL('./beverages_form_m.jpg', import.meta.url).href },
-    { id: 2, title: 'Snacks', price: 15, 
+    { id: 2, title: 'Snacks', price: 9, 
       description: 'Prepared during your check-in.', 
       image: new URL('./snacks_form_m.jpg', import.meta.url).href },
-    { id: 3, title: 'Breakfast', price: 25, 
+    { id: 3, title: 'Breakfast', price: 17, 
       description: 'Via catering partners. Time of delivery specified later.', 
       image: new URL('./breakfast_form_m.jpg', import.meta.url).href },
-    { id: 4, title: 'Lunch', price: 40, 
+    { id: 4, title: 'Lunch', price: 22, 
       description: 'Via catering partners. Time of delivery specified later.', 
       image: new URL('./lunch_form_m.jpg', import.meta.url).href },
   ];
