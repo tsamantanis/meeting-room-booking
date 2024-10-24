@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React, { useState } from "react"
 import { CalendarDaysIcon as CalendarIcon } from "@/components/icons"
 import { format } from "date-fns"
 
@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/popover"
 
 export function DatePicker({ date, setDate }) {
-
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -33,7 +33,11 @@ export function DatePicker({ date, setDate }) {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={(date) => {
+            setDate(date);
+            // close the popover
+            setIsOpen(false);
+          }}
           initialFocus
           disabled={(date) =>
             date < new Date() || date > new Date().setFullYear(new Date().getFullYear() + 1)

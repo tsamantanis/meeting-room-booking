@@ -51,7 +51,7 @@ const Step1 = ({
   return (
     <>
       <div className="space-y-4 mt-8 grid grid-rows-2 justify-center lg:max-w-[680px] mx-auto">
-        <div className="grid md:grid-cols-2 space-y-8 md:space-y-0 md:space-x-4 ">
+        <div className="grid md:grid-cols-2 space-y-4 md:space-y-0 md:space-x-4 ">
           <div className="lg:max-w-[330px] w-full">
             <Label htmlFor="guests">Number of guests</Label>
             <div className="relative mt-2">
@@ -138,9 +138,9 @@ const Step1 = ({
             </div>
           </>
         )}
-      <div className="mt-12 space-y-8 flex flex-col items-center">
+      <div className="pt-8 space-y-8 flex flex-col items-center">
         <h3 className="text-center text-lg font-bold">
-          {`Select Packages${isMultiDay ? " for each day" : ""}`}
+          {`Select Duration${isMultiDay ? "s for each day" : ""}`}
         </h3>
         { isMultiDay && date && endDate ? Array.from({ length: (new Date(endDate).getDate() - new Date(date).getDate() + 1) }, (date, index) => (
           <div key={index} className="flex flex-col items-center space-y-4">

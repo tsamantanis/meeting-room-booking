@@ -70,10 +70,6 @@ const Overview = ({
         <h4 className="text-sm font-bold">Always included</h4>
         <div className="flex items-center space-x-2">
           <CheckIcon className="h-5 w-5 text-muted-foreground" />
-          <p className="text-sm">Conference system</p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <CheckIcon className="h-5 w-5 text-muted-foreground" />
           <p className="text-sm">Presentation screen</p>
         </div>
         <div className="flex items-center space-x-2">

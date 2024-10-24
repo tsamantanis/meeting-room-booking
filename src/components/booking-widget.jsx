@@ -279,18 +279,22 @@ export function BookingWidget() {
   const checkStep1Errors = () => {
 
     if (!guests || guests <= 0) {
+      scrollToTop();
       setGuestsError("Please select the number of guests");
     }
 
     if (!date) {
+      scrollToTop();
       setDateError("Please select a date");
     }
 
     if (!time) {
+      scrollToTop();
       setTimeError("Please select a time");
     }
 
     if (endDate && endDate < date) {
+      scrollToTop();
       setEndDateError("End date must be after start date");
     }
     return true;
@@ -481,7 +485,7 @@ export function BookingWidget() {
 
   return (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
-      <div id="modal-content" className="min-w-[90vw] w-full lg:min-w-fit lg:w-3/4 p-2 md:p-8 mt-8 overflow-scroll">  
+      <div id="modal-content" className="w-full p-2 md:p-8 mt-8 overflow-scroll">  
         {currentStep === 1 && (
           <>
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>

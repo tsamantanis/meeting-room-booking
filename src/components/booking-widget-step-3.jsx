@@ -26,8 +26,8 @@ const Step3 = ({
 }) => {
   return (
     <div className="flex flex-col space-y-8 mt-8 max-w-[480px] mx-auto">
-      <h2 className="text-2xl font-bold text-center">Your contact details</h2>
-      <p className="text-center text-muted-foreground">Your Free Quote is almost there. No strings attached ;)</p>
+      <h2 className="text-2xl font-bold text-center">Almost there!</h2>
+      <p className="text-center text-muted-foreground">Your Free proposal is almost there. No strings attached ;)</p>
 
       <div className="grid grid-cols-2 gap-4">
         <Input placeholder="Event name (optional)" />

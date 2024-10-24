@@ -36,7 +36,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
   return (
     <div className="flex flex-col space-y-8 mt-8">
       <h2 className="text-2xl font-bold text-center">Make your event complete</h2>
-      <p className="text-center text-muted-foreground">Choose one of the default packages or create your custom event</p>
+      <p className="text-center text-muted-foreground">Choose facilities & catering</p>
 
       <div>
         <h3 className="text-lg text-primary font-medium">Facilities</h3>

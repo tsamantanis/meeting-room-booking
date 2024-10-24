@@ -6,9 +6,10 @@ import { cn } from '@/lib/utils';
 export function CardOption({ title, id, description, onClick, isSelected, noneSelected, isDisabled }) {
 
   return (
-    <Card className={cn("relative hover:opacity-[1] bg-gray-50", 
+    <Card className={cn("relative hover:opacity-[1] bg-gray-50 cursor-pointer", 
       isSelected ? "border-primary" : !noneSelected ? "opacity-[0.5]" : '',
-      isDisabled ? "cursor-not-allowed opacity-[0.5] hover:opacity-[0.5]" : '')}> 
+      isDisabled ? "cursor-not-allowed opacity-[0.5] hover:opacity-[0.5]" : '')}
+      onClick={onClick}> 
       <CardContent className="p-6">
         <h4 className="text-lg font-bold">{title}</h4>
         <p className="text-sm">{description}</p>
