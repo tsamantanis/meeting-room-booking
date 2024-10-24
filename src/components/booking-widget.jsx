@@ -38,16 +38,18 @@ export function BookingWidget() {
   const [totalExclVat, setTotalExclVat] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   // const [multiDayPackages, setMultiDayPackages] = useState([{}]); // state for multiple days packages
-   const [guestsError, setGuestsError] = useState(null);
-   const [dateError, setDateError] = useState(null);
-   const [timeError, setTimeError] = useState(null)
-   const [endDateError, setEndDateError] = useState(null)
-    const [companyError, setCompanyError] = useState(null);
-    const [firstNameError, setFirstNameError] = useState(null);
-    const [lastNameError, setLastNameError] = useState(null);
-    const [emailError, setEmailError] = useState(null);
-    const [phoneError, setPhoneError] = useState(null);
-    const [agreeTermsError, setAgreeTermsError] = useState(null);
+  const [guestsError, setGuestsError] = useState(null);
+  const [dateError, setDateError] = useState(null);
+  const [timeError, setTimeError] = useState(null)
+  const [endDateError, setEndDateError] = useState(null);
+  const [eventPackagesError, setEventPackagesError] = useState(null);
+  const [venueError, setVenueError] = useState(null);
+  const [companyError, setCompanyError] = useState(null);
+  const [firstNameError, setFirstNameError] = useState(null);
+  const [lastNameError, setLastNameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [phoneError, setPhoneError] = useState(null);
+  const [agreeTermsError, setAgreeTermsError] = useState(null);
 
   useEffect(() => {
     // fetchVenues();
@@ -297,6 +299,16 @@ export function BookingWidget() {
       scrollToTop();
       setEndDateError("End date must be after start date");
     }
+
+    if (selectedEventPackages.length === 0) {
+      scrollToTop();
+      setEventPackagesError("Please select at least one duration");
+    }
+
+    if (!venue) {
+      setVenueError("Please select a venue");
+    }
+
     return true;
 
   }
@@ -483,6 +495,14 @@ export function BookingWidget() {
     }
   };
 
+  useEffect(() => {
+    setEventPackagesError(null)
+  }, [selectedEventPackages]);
+
+  useEffect(() => {
+    setVenueError(null)
+  }, [venue]);
+
   return (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
       <div id="modal-content" className="w-full p-2 md:p-8 mt-8 overflow-scroll">  
@@ -512,7 +532,9 @@ export function BookingWidget() {
               setTableSetup={setTableSetup}
               venue={venue}
               setVenue={setVenue}
+              venueError={venueError}
               eventPackages={eventPackages}
+              eventPackagesError={eventPackagesError}
               selectedEventPackages={selectedEventPackages}
               setSelectedEventPackages={setSelectedEventPackages}
               venues={venues}

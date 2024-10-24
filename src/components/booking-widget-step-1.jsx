@@ -36,7 +36,9 @@ const Step1 = ({
   setTableSetup, 
   venue,
   setVenue, 
+  venueError,
   eventPackages,
+  eventPackagesError,
   selectedEventPackages,
   setSelectedEventPackages,
   venues 
@@ -176,6 +178,7 @@ const Step1 = ({
             ))}
           </div>
         )}
+      { eventPackagesError && <p className="text-red-500 text-sm mt-1">{eventPackagesError}</p> }
       </div>
       </div>
       <div className="mt-12 space-y-8 flex flex-col items-center">
@@ -209,6 +212,7 @@ const Step1 = ({
             />
           ))}
         </div>
+        { venueError && <p className="text-red-500 text-sm mt-1">{venueError}</p> }
       </div>
     </>
   );
