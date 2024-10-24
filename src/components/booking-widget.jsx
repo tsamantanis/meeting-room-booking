@@ -94,7 +94,7 @@ export function BookingWidget() {
       id: '1',
       name: 'Blossom Private Space',
       description: 'With a spacious garden can host teams up to...',
-      images: [new URL('./Blossom_hero_widget.jpg', import.meta.url).href],  // Correctly resolve the image
+      images: ['./Blossom_hero_widget.jpg'],  // Correctly resolve the image
       capacity: 22,
       area: 70
     },
@@ -102,7 +102,7 @@ export function BookingWidget() {
       id: '2',
       name: 'Aurora Private Space',
       description: 'With a spacious garden can host teams up to...',
-      images: [new URL('./Aurora_hero_widget.jpg', import.meta.url).href],  // Correctly resolve the image
+      images: ['./Aurora_hero_widget.jpg'],  // Correctly resolve the image
       capacity: 22,
       area: 70
     }
@@ -177,31 +177,31 @@ export function BookingWidget() {
   const facilities = [
     { id: 1, title: 'Presentation Screen', price: 100, 
       description: '60" portable screen with wireless and HDMI connection.', 
-      image: new URL('./presentation_form_m.jpg', import.meta.url).href },
+      image: './presentation_form_m.jpg' },
     { id: 2, title: 'Post-its & Markers', price: 20, 
       description: 'Various colours/sizes of markers and post-its.', 
-      image: new URL('./postits_form_m.jpg', import.meta.url).href },
+      image: './postits_form_m.jpg' },
     { id: 3, title: 'Conference System', price: 50, 
       description: 'Wide angle camera with external microphones.', 
-      image:  new URL('./conference_form_m.jpg', import.meta.url).href },
+      image:  './conference_form_m.jpg' },
     { id: 4, title: 'Flip Charts', price: 30, 
       description: 'Set of 2 flip-charts with paper.', 
-      image: new URL('./flipcharts_form_m.jpg', import.meta.url).href }
+      image: './flipcharts_form_m.jpg' }
   ];
   
   const catering = [
     { id: 1, title: 'Beverages', price: 7, 
       description: 'Unlimited Coffee, tea and soft drinks.', 
-      image: new URL('./beverages_form_m.jpg', import.meta.url).href },
+      image: './beverages_form_m.jpg' },
     { id: 2, title: 'Snacks', price: 9, 
       description: 'Prepared during your check-in.', 
-      image: new URL('./snacks_form_m.jpg', import.meta.url).href },
+      image: './snacks_form_m.jpg' },
     { id: 3, title: 'Breakfast', price: 17, 
       description: 'Via catering partners. Time of delivery specified later.', 
-      image: new URL('./breakfast_form_m.jpg', import.meta.url).href },
+      image: './breakfast_form_m.jpg' },
     { id: 4, title: 'Lunch', price: 22, 
       description: 'Via catering partners. Time of delivery specified later.', 
-      image: new URL('./lunch_form_m.jpg', import.meta.url).href },
+      image: './lunch_form_m.jpg' },
   ];
 
   // comidor post request data structure
