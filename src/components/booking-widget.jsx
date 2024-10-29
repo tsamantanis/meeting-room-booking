@@ -177,12 +177,12 @@ export function BookingWidget() {
   ]
 
   const facilities = [
-    { id: 1, title: 'Presentation Screen', price: 100, 
-      description: '60" portable screen with wireless and HDMI connection.', 
-      image: './presentation_form_m.jpg' },
-    { id: 2, title: 'Post-its & Markers', price: 20, 
-      description: 'Various colours/sizes of markers and post-its.', 
-      image: './postits_form_m.jpg' },
+    // { id: 1, title: 'Presentation Screen', price: 100, 
+    //   description: '60" portable screen with wireless and HDMI connection.', 
+    //   image: './presentation_form_m.jpg' },
+    // { id: 2, title: 'Post-its & Markers', price: 20, 
+    //   description: 'Various colours/sizes of markers and post-its.', 
+    //   image: './postits_form_m.jpg' },
     { id: 3, title: 'Conference System', price: 50, 
       description: 'Wide angle camera with external microphones.', 
       image:  './conference_form_m.jpg' },
@@ -592,6 +592,8 @@ export function BookingWidget() {
               phoneError={phoneError}
               agreeTermsError={agreeTermsError}
               isStep3Valid={isStep3Valid}
+              checkStep3Errors={checkStep3Errors}
+              handleSubmit={handleSubmit}
             />
             <div className="hidden md:flex mt-12 flex justify-between items-center">
               <span className="text-muted-foreground">Step 3 of 3</span>
@@ -599,7 +601,11 @@ export function BookingWidget() {
                 <Button variant="outline" onClick={() => setCurrentStep(2)}>
                   <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                 </Button>
-                <Button onClick={() => isStep3Valid() && handleSubmit()}>
+                <Button onClick={() => {
+                    if (checkStep3Errors() && isStep3Valid()) {
+                      handleSubmit()
+                    }
+                  }}>
                   Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                 </Button>
               </div>
@@ -629,6 +635,7 @@ export function BookingWidget() {
         facilitiesSelected={facilities.filter(facility => facilitiesSelected.includes(facility.id))}
         cateringSelected={cateringSelected.map(item => ({ ...item, name: catering.find(cater => cater.id === item.id).title, price: catering.find(cater => cater.id === item.id).price}))}
         totalExclVat={totalExclVat}
+        handleSubmit={handleSubmit}
       />
     </div>
   );

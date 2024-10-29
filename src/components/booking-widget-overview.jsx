@@ -23,7 +23,8 @@ const Overview = ({
   facilitiesSelected, 
   cateringSelected, 
   selectedEventPackages,
-  totalExclVat
+  totalExclVat,
+  handleSubmit
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isWindowWidthMd = useMediaQuery("(min-width: 1024px)")
@@ -175,7 +176,11 @@ const Overview = ({
                   <Button variant="outline" onClick={() => setCurrentStep(2)}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
-                  <Button onClick={() => checkStep3Errors() && isStep3Valid() && handleSubmit()}>
+                  <Button disabled={!isStep3Valid()} onClick={() => {
+                    if (checkStep3Errors() && isStep3Valid()) {
+                      handleSubmit()
+                    }
+                  }}>
                     Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                   </Button>
                 </div>
@@ -218,7 +223,14 @@ const Overview = ({
                   }}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
-                  <Button className="w-full" disabled={!isStep3Valid()}>
+                  <Button 
+                    className="w-full"
+                    disabled={!isStep3Valid()} 
+                    onClick={() => {
+                      if (checkStep3Errors() && isStep3Valid()) {
+                        handleSubmit()
+                      }
+                    }}>
                     Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                   </Button>
                 </div>

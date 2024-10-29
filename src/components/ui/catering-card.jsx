@@ -9,7 +9,7 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
     <Card className={
       cn("relative bg-gray-50 border-2 shadow-sm border-transparent hover:border-primary cursor-pointer", isSelected && "border-primary")
     }
-      onClick={() => { if (isSelected) {return} else onClick() }}
+      onClick={onClick}
     >
       <CardContent className="p-6 flex flex-col items-left justify-between cursor-pointer h-full">
         <div className="flex flex-col items-left h-full">

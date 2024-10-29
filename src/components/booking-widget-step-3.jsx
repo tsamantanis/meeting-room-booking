@@ -22,7 +22,9 @@ const Step3 = ({
   emailError,
   phoneError,
   agreeTermsError,
-  isStep3Valid 
+  isStep3Valid,
+  checkStep3Errors,
+  handleSubmit
 }) => {
   return (
     <div className="flex flex-col space-y-8 mt-8 max-w-[480px] mx-auto">
@@ -69,7 +71,13 @@ const Step3 = ({
         We will prepare a proposal for your event without any commitment. You will gain access to a personalised portal where you can manage your proposal online.
       </p>
       <div className="mt-4 text-center">
-        <Button className="w-full" disabled={!isStep3Valid()}>Request Proposal</Button>
+        <Button 
+          className="w-full" 
+          disabled={!isStep3Valid()} onClick={() => {
+            if (checkStep3Errors() && isStep3Valid()) {
+              handleSubmit()
+            }
+          }}>Request Proposal</Button>
       </div>
 
     </div>
