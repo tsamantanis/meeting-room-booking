@@ -374,7 +374,7 @@ export function BookingWidget() {
       const selectedVenueName = venues.find(v => v.id === venue)?.name.split(' ')[0]
      
       // dates need to have yyyymmdd format
-      const data = {
+      const dataToComidor = {
         u_contactFirstName: firstName,
         u_contactLastName: lastName,
         u_email: email,
@@ -400,34 +400,7 @@ export function BookingWidget() {
         u_preventEmailCommunications: 1,
         responseFormat: "json",
       };
-
-      
-      const authToken = await getComidorAuthToken();
-      const params = new URLSearchParams(data);
-      const full_url = url + "?" + params.toString();
-      console.log("full_url: ", full_url);
-      console.log("authToken: ", authToken);
-      
-      // handle response
-      // fetch(full_url, {
-      //   method: "POST",
-      //   headers: {
-      //     Authorization: `Bearer ${authToken}`,
-      //     Accept: "application/json",
-      //     "Content-Type": "application/xml",
-      //   },
-      // }).then(async (response) => {
-      //   const data = await response.json();
-      //   return data;
-      // })
-      // .then((data) => {
-      //   console.log("Message: ", data.message, "Status: ", data.status);
-      //   console.log(data);
-      // }).catch((error) => console.error("Error:", error)); // Handle any errors
-
-      // send data to google sheets
-      // columns: First Name	Last Name	Company 	Team Size	Email	Phone	Quote Date	Event Start Date	Event End Date	Duration	Total Value	Venue	adsID
-      // get adsID from query params
+      const comidorSuccess = await sendToComidor(dataToComidor);
       const adsID = queryParams.get('adsID');
       const quoteDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
       const duration = selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours).join(', ');
@@ -448,9 +421,55 @@ export function BookingWidget() {
         "Venue": venueName,
         "adsID": adsID
       };
-      await sendToGoogleSheets(dataToGoogleSheets);      
+      const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
+      if (comidorSuccess && googleSheetsSuccess) {
+        setCurrentStep(4);
+      }
 
     }
+  }
+
+  const sendToComidor = async ({
+    dataToComidor
+  }) => {
+    let authToken;
+    let full_url;
+    try {
+      authToken = await getComidorAuthToken();
+      const params = new URLSearchParams(dataToComidor);
+      full_url = url + "?" + params.toString();
+      console.log("full_url: ", full_url);
+      console.log("authToken: ", authToken);
+    } catch (error) {
+      console.error('Error getting auth token:', error);
+    }
+      
+    if (!authToken || !full_url) {
+      console.error('Something went wrong with the auth token');
+      return;
+    }
+    // handle response
+    fetch(full_url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        Accept: "application/json",
+        "Content-Type": "application/xml",
+      },
+    }).then(async (response) => {
+      const data = await response.json();
+      return data;
+    })
+    .then((data) => {
+      console.log("Message: ", data.message, "Status: ", data.status);
+      console.log(data);
+      return true;
+    }).catch((error) => {
+      console.error("Error:", error)
+      return false;
+    }); // Handle any errors
+
+    
   }
 
   const sendToGoogleSheets = async (dataToGoogleSheets) => {
@@ -485,15 +504,19 @@ export function BookingWidget() {
       if (response.ok) {
         // setMessage(result.message);
         console.log('Data successfully submitted:', result)
+        return true;
       } else {
         // setMessage('Error appending data: ' + result.message);
         console.error('Error appending data:', result);
+        return false;
       }
     } catch (error) {
       // setMessage('Failed to submit data.');
       console.error('Failed to submit data:', error);
+      return false;
     }
   };
+  
 
   useEffect(() => {
     setEventPackagesError(null)
@@ -503,7 +526,10 @@ export function BookingWidget() {
     setVenueError(null)
   }, [venue]);
 
-  return (
+  return currentStep === 4 ? (
+      <ThankYou />
+    )
+  : (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
       <div id="modal-content" className="w-full p-2 md:p-8 mt-8 overflow-scroll">  
         {currentStep === 1 && (
@@ -638,5 +664,5 @@ export function BookingWidget() {
         handleSubmit={handleSubmit}
       />
     </div>
-  );
+  )
 }
