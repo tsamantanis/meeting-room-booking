@@ -6,6 +6,8 @@ import Overview from '@/components/booking-widget-overview';
 import Step1 from '@/components/booking-widget-step-1';
 import Step2 from '@/components/booking-widget-step-2';
 import Step3 from '@/components/booking-widget-step-3';
+import ThankYou from '@/components/thank-you';
+import { set } from 'date-fns';
 
 // Initialize Supabase client
 // const supabaseUrl = 'https://your-supabase-url.supabase.co';
@@ -50,6 +52,7 @@ export function BookingWidget() {
   const [emailError, setEmailError] = useState(null);
   const [phoneError, setPhoneError] = useState(null);
   const [agreeTermsError, setAgreeTermsError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     // fetchVenues();
@@ -363,7 +366,7 @@ export function BookingWidget() {
   const handleSubmit = async () => {
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
       console.log('Submit handling');
-      
+      setSubmitting(true);
       const queryParams = new URLSearchParams(window.location.search)
       console.log("queryParams: ", queryParams);
       let event_end_date = new Date(date);
@@ -427,6 +430,7 @@ export function BookingWidget() {
         console.log('Success!');
         setCurrentStep(4);
       }
+      setSubmitting(false);
 
     }
   }
@@ -638,7 +642,15 @@ export function BookingWidget() {
                       handleSubmit()
                     }
                   }}>
-                  Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                  {submitting ? 
+                    (
+                      <span>Requesting <Spinner className="ml-2 h-5 w-5 text-white animate-spin" />
+                      </span>
+                    )
+                  : (
+                    <span>Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    </span>
+                  )}
                 </Button>
               </div>
             </div>
