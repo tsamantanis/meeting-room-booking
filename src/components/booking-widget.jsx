@@ -431,13 +431,12 @@ export function BookingWidget() {
     }
   }
 
-  const sendToComidor = async ({
-    dataToComidor
-  }) => {
+  const sendToComidor = async ({ dataToComidor }) => {
     console.log('Submit data to Comidor');
     const url = "https://betadev.comidor.com/Services";
     let authToken;
     let full_url;
+  
     try {
       authToken = await getComidorAuthToken();
       const params = new URLSearchParams(dataToComidor);
@@ -446,33 +445,37 @@ export function BookingWidget() {
       console.log("authToken: ", authToken);
     } catch (error) {
       console.error('Error getting auth token:', error);
+      return false;
     }
-      
+  
     if (!authToken || !full_url) {
       console.error('Something went wrong with the auth token');
-      return;
-    }
-    // handle response
-    fetch(full_url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-        Accept: "application/json",
-        "Content-Type": "application/xml",
-      },
-    }).then(async (response) => {
-      console.log("Message: ", response.message, "Status: ", response.status);
-      return response;
-    })
-    .then((data) => {
-      console.log(data);
-      return true;
-    }).catch((error) => {
-      console.error("Error:", error)
       return false;
-    }); // Handle any errors
-
-    
+    }
+  
+    try {
+      const response = await fetch(full_url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/xml",
+        },
+      });
+  
+      console.log("Message: ", response.message, "Status: ", response.status);
+  
+      if (response.ok) {
+        console.log('Request completed successfully');
+        return true;
+      } else {
+        console.error('Request failed with status:', response.status);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+      return false;
+    }
   }
 
   const sendToGoogleSheets = async (dataToGoogleSheets) => {
