@@ -349,7 +349,9 @@ export function BookingWidget() {
 
   const scrollToTop = () => {
     // scroll modal content to top
-    document.getElementById('modal-content').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+    if (document.getElementById('modal-content')) {
+      document.getElementById('modal-content').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+    }
   }
 
 
@@ -364,7 +366,7 @@ export function BookingWidget() {
 
   const handleSubmit = async () => {
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
-      console.log('Submit handling');
+      // console.log('Submit handling');
       setSubmitting(true);
       const queryParams = new URLSearchParams(window.location.search)
       console.log("queryParams: ", queryParams);
@@ -423,8 +425,8 @@ export function BookingWidget() {
         "adsID": adsID
       };
       const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
-      console.log('Google Sheets success:', googleSheetsSuccess);
-      console.log('Comidor success:', comidorSuccess);
+      // console.log('Google Sheets success:', googleSheetsSuccess);
+      // console.log('Comidor success:', comidorSuccess);
       if (comidorSuccess && googleSheetsSuccess) {
         console.log('Success!');
         setCurrentStep(4);
@@ -444,8 +446,8 @@ export function BookingWidget() {
       authToken = await getComidorAuthToken();
       const params = new URLSearchParams(dataToComidor);
       full_url = url + "?" + params.toString();
-      console.log("full_url: ", full_url);
-      console.log("authToken: ", authToken);
+      // console.log("full_url: ", full_url);
+      // console.log("authToken: ", authToken);
     } catch (error) {
       console.error('Error getting auth token:', error);
       return false;
@@ -466,10 +468,10 @@ export function BookingWidget() {
         },
       });
   
-      console.log("Message: ", response.message, "Status: ", response.status);
+      // console.log("Message: ", response.message, "Status: ", response.status);
   
       if (response.ok) {
-        console.log('Request completed successfully');
+        // console.log('Request completed successfully');
         return true;
       } else {
         console.error('Request failed with status:', response.status);
