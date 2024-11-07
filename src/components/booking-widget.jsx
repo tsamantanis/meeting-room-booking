@@ -421,7 +421,10 @@ export function BookingWidget() {
         "adsID": adsID
       };
       const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
+      console.log('Google Sheets success:', googleSheetsSuccess);
+      console.log('Comidor success:', comidorSuccess);
       if (comidorSuccess && googleSheetsSuccess) {
+        console.log('Success!');
         setCurrentStep(4);
       }
 
