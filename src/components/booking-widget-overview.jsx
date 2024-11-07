@@ -249,7 +249,7 @@ const Overview = ({
                       </svg>
                     )
                   : (
-                    <span>Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    <span>Request <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                     </span>
                   )}
                   </Button>
