@@ -362,8 +362,7 @@ export function BookingWidget() {
 
   const handleSubmit = async () => {
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
-      console.log('Submit data to Comidor');
-      const url = "https://betadev.comidor.com/Services";
+      console.log('Submit handling');
       
       const queryParams = new URLSearchParams(window.location.search)
       console.log("queryParams: ", queryParams);
@@ -432,6 +431,8 @@ export function BookingWidget() {
   const sendToComidor = async ({
     dataToComidor
   }) => {
+    console.log('Submit data to Comidor');
+    const url = "https://betadev.comidor.com/Services";
     let authToken;
     let full_url;
     try {
@@ -457,11 +458,10 @@ export function BookingWidget() {
         "Content-Type": "application/xml",
       },
     }).then(async (response) => {
-      const data = await response.json();
-      return data;
+      console.log("Message: ", response.message, "Status: ", response.status);
+      return response;
     })
     .then((data) => {
-      console.log("Message: ", data.message, "Status: ", data.status);
       console.log(data);
       return true;
     }).catch((error) => {
