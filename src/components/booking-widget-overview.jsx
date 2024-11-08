@@ -235,7 +235,7 @@ const Overview = ({
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
                   <Button 
-                    className="w-full"
+                    className="w-full min-w-fit"
                     disabled={!isStep3Valid()} 
                     onClick={() => {
                       if (checkStep3Errors() && isStep3Valid()) {
@@ -250,7 +250,7 @@ const Overview = ({
                       </svg>
                     )
                   : (
-                    <span className="flex space-x-2">Request Proposal<ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    <span className="flex space-x-2">Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                     </span>
                   )}
                   </Button>

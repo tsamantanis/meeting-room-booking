@@ -652,7 +652,7 @@ export function BookingWidget() {
                       </svg>
                     )
                   : (
-                    <span>Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    <span className="flex space-x-2">Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                     </span>
                   )}
                 </Button>
