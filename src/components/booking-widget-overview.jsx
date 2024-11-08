@@ -24,7 +24,8 @@ const Overview = ({
   cateringSelected, 
   selectedEventPackages,
   totalExclVat,
-  handleSubmit
+  handleSubmit,
+  submitting
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isWindowWidthMd = useMediaQuery("(min-width: 1024px)")
@@ -189,7 +190,7 @@ const Overview = ({
                       </svg>
                     )
                   : (
-                    <span>Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    <span className="flex space-x-2">Request <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                     </span>
                   )}
                   </Button>
@@ -249,7 +250,7 @@ const Overview = ({
                       </svg>
                     )
                   : (
-                    <span>Request <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    <span className="flex space-x-2">Request Proposal<ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                     </span>
                   )}
                   </Button>
