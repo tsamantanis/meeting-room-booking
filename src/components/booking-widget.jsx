@@ -359,7 +359,7 @@ export function BookingWidget() {
     // scroll modal content to top
     if (widgetRef) {
       console.log(widgetRef)
-      widgetRef.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+      widgetRef.current.scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"})
     }
   }
 
