@@ -356,7 +356,7 @@ export function BookingWidget() {
   const scrollToTop = () => {
     // scroll modal content to top
     if (document.getElementById('booking-widget')) {
-      document.getElementById('booking-widget').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+      document.getElementById('booking-widget').scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"});//.scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
     }
   }
 

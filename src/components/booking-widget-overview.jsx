@@ -156,7 +156,7 @@ const Overview = ({
             {/* <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" /> */}
             <div className="w-full flex flex-row items-center justify-between p-2">
               {/* circle icon arrow up */}
-              <div className="flex items-center space-x-2 bg-gray-50 rounded-full p-1 px-2 text-primary" onClick={() => setIsDrawerOpen(true)}>
+              <div className="flex items-center space-x-2 bg-gray-50 rounded-full p-1 px-2 text-primary" onClick={(event) => {event.preventDefault(); setIsDrawerOpen(true)}}>
                   <span className="text-sm text-muted-foreground font-medium">Overview</span>
                 <div className="flex items-center justify-center bg-gray-100 h-8 w-8 rounded-full m-1">
                   <ArrowUpCircleIcon className="h-8 w-8 text-primary" />
