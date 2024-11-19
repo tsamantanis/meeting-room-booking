@@ -17,7 +17,7 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
             src={image_url}
             alt={title}
             loading="lazy"
-            className="w-full aspect-ratio-1 rounded-md object-cover" />
+            className="w-full aspect-[4/3] md:aspect-square rounded-md object-cover" />
           <h4 className="text-sm sm:text-md font-medium mt-4">{title}</h4>
           <p className="text-xs sm:text-sm mt-2">{description}</p>
         </div>

@@ -150,7 +150,7 @@ const Overview = ({
     );
   } else {
     return (
-      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} className="scroll-auto">
         {/* <DrawerTrigger > */}
           <div className="h-fit inset-x-0 z-[40] m-0 flex items-center h-auto flex-col rounded-t-[10px] border bg-background">
             {/* <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" /> */}

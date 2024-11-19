@@ -28,14 +28,14 @@ const Step3 = ({
   submitting
 }) => {
   return (
-    <div className="flex flex-col space-y-8 mt-8 max-w-[480px] mx-auto">
+    <div className="flex flex-col space-y-4 md:space-y-8 mt-0 md:mt-8 max-w-[480px] mx-auto">
       <h2 className="text-2xl font-bold text-center">Almost there!</h2>
       <p className="text-center text-muted-foreground">Your Free proposal is almost there. No strings attached ;)</p>
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input placeholder="Event name (optional)" />
         <Input placeholder="Team name (optional)" />
-      </div>
+      </div> */}
 
       <div className="mt-4">
         <h3 className="text-lg">Contact Details <span className="text-sm text-red-400">(required)</span></h3>
@@ -56,7 +56,7 @@ const Step3 = ({
         </div>
       </div>
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <label className="inline-flex items-center" htmlFor="agree-terms">
           <Checkbox
             id="agree-terms"
@@ -67,7 +67,7 @@ const Step3 = ({
           <span className="ml-2 text-muted-foreground text-sm">I agree to the terms & conditions and EU data processing</span>
         </label>
         {agreeTermsError && <p className="text-red-500 text-sm mt-1">{agreeTermsError}</p>}
-      </div>
+      </div> */}
       <p className='text-muted-foreground text-sm'>
         We will prepare a proposal for your event without any commitment. You will gain access to a personalised portal where you can manage your proposal online.
       </p>

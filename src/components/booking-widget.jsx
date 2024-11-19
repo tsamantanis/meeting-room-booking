@@ -31,7 +31,7 @@ export function BookingWidget() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(true);
   const [venues, setVenues] = useState([]);
   const [eventPackages, setEventPackages] = useState([]);
   // const [event_package_price, setEventPackagePrice] = useState(0);
@@ -92,6 +92,12 @@ export function BookingWidget() {
     scrollToTop();
   }, [currentStep]);
 
+  useEffect(() => {
+    console.log("Boardroom Setup change");
+    console.log(tableSetup)
+    console.log(venue)
+  }, [tableSetup])
+
   // Mock Data
   const mockVenues = [
     {
@@ -99,7 +105,7 @@ export function BookingWidget() {
       name: 'Blossom Private Space',
       description: 'With a spacious garden can host teams up to...',
       images: ['./Blossom_hero_widget.jpg'],  // Correctly resolve the image
-      capacity: 22,
+      capacity: 20,
       area: 70
     },
     {
@@ -107,7 +113,7 @@ export function BookingWidget() {
       name: 'Aurora Private Space',
       description: 'With a spacious garden can host teams up to...',
       images: ['./Aurora_hero_widget.jpg'],  // Correctly resolve the image
-      capacity: 22,
+      capacity: 20,
       area: 70
     }
   ];
@@ -197,15 +203,15 @@ export function BookingWidget() {
     { id: 1, title: 'Beverages', price: 7, 
       description: 'Unlimited Coffee, tea and soft drinks.', 
       image: './beverages_form_m.jpg' },
+      { id: 4, title: 'Lunch', price: 22, 
+        description: 'Via catering partners. Time of delivery specified later.', 
+        image: './lunch_form_m.jpg' },
     { id: 2, title: 'Snacks', price: 9, 
       description: 'Prepared during your check-in.', 
       image: './snacks_form_m.jpg' },
     { id: 3, title: 'Breakfast', price: 17, 
       description: 'Via catering partners. Time of delivery specified later.', 
       image: './breakfast_form_m.jpg' },
-    { id: 4, title: 'Lunch', price: 22, 
-      description: 'Via catering partners. Time of delivery specified later.', 
-      image: './lunch_form_m.jpg' },
   ];
 
   // comidor post request data structure
@@ -349,8 +355,8 @@ export function BookingWidget() {
 
   const scrollToTop = () => {
     // scroll modal content to top
-    if (document.getElementById('modal-content')) {
-      document.getElementById('modal-content').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+    if (document.getElementById('booking-widget')) {
+      document.getElementById('booking-widget').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
     }
   }
 
@@ -542,7 +548,7 @@ export function BookingWidget() {
     )
   : (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
-      <div id="modal-content" className="w-full p-2 md:p-8 mt-8 overflow-scroll">  
+      <div id="booking-widget" className="w-full p-4 md:p-8 mt-8 overflow-scroll">  
         {currentStep === 1 && (
           <>
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>

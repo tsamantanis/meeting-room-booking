@@ -34,9 +34,9 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
   };
 
   return (
-    <div className="flex flex-col space-y-8 mt-8">
-      <h2 className="text-2xl font-bold text-center">Make your event complete</h2>
-      <p className="text-center text-muted-foreground">Choose facilities & catering</p>
+    <div className="flex flex-col space-y-4 md:space-y-8 mt-8">
+      <h2 className="text-2xl font-bold text-center">Choose facilities & catering</h2>
+      <p className="text-center text-muted-foreground">Make your event complete</p>
 
       <div>
         <h3 className="text-lg text-primary font-medium">Facilities</h3>

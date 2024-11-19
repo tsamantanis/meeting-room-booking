@@ -62,7 +62,7 @@ const Step1 = ({
                 type="number" 
                 id="guests" 
                 placeholder="12" 
-                max="22" 
+                max="20" 
                 value={guests} 
                 onChange={(e) => {setGuests(e.target.value); setGuestsError(null)}}
               />
@@ -89,7 +89,7 @@ const Step1 = ({
           <div className="flex-1 lg:max-w-[330px]">
             <Label htmlFor="time">Time of arrival</Label>
             <div className="relative mt-2">
-              <Input type="time" id="time" placeholder="09:00 am" value={time} 
+              <Input type="time" id="time" placeholder="09:00 am" value={time} step="1800"
                 className={`w-full ${timeError && "border-red-500"}`}
                 onChange={(e) => {
                   setTime(e.target.value);
@@ -147,7 +147,7 @@ const Step1 = ({
         { isMultiDay && date && endDate ? Array.from({ length: (new Date(endDate).getDate() - new Date(date).getDate() + 1) }, (date, index) => (
           <div key={index} className="flex flex-col items-center space-y-4">
             <div>Day {index + 1}</div>
-            <div className="flex space-x-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 space-y-4 md:space-y-0 md:space-x-4 mt-4">
               {eventPackages.map(pkg => (
                 <CardOption
                   key={pkg.id}
@@ -186,7 +186,7 @@ const Step1 = ({
           Venue Preference <span className="text-muted-foreground">(optional)</span>
         </h3>
         <div className="flex items-center space-x-2 mt-4">
-          <Select onValueChange={(value) => setTableSetup(value)} defaultValue="Boardroom">
+          <Select onValueChange={(value) => setTableSetup(value)} defaultValue="Boardroom" >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Boardroom Setup" />
             </SelectTrigger>
@@ -208,7 +208,7 @@ const Step1 = ({
               capacity={v.capacity}
               area={v.area}
               isSelected={v.id === venue}
-              onClick={() => setVenue(v.id)}
+              onClick={() => {console.log("Onclick fired"); setVenue(v.id)}}
             />
           ))}
         </div>
