@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import { createClient } from '@supabase/supabase-js';
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon, ArrowLeftIcon } from "@/components/icons";
@@ -52,6 +52,8 @@ export function BookingWidget() {
   const [phoneError, setPhoneError] = useState(null);
   const [agreeTermsError, setAgreeTermsError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+
+  const widgetRef = useRef(null)
 
   useEffect(() => {
     // fetchVenues();
@@ -355,8 +357,9 @@ export function BookingWidget() {
 
   const scrollToTop = () => {
     // scroll modal content to top
-    if (document.getElementById('booking-widget')) {
-      document.getElementById('booking-widget').scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"});//.scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
+    if (widgetRef) {
+      console.log(widgetRef)
+      widgetRef.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
     }
   }
 
@@ -548,7 +551,7 @@ export function BookingWidget() {
     )
   : (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
-      <div id="booking-widget" className="w-full p-4 md:p-8 mt-8 overflow-scroll">  
+      <div id="booking-widget" className="w-full p-4 md:p-8 mt-8 overflow-scroll" ref={widgetRef}>  
         {currentStep === 1 && (
           <>
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>
