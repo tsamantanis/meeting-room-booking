@@ -356,10 +356,19 @@ export function BookingWidget() {
   }
 
   const scrollToTop = () => {
-    // scroll modal content to top
+    
     if (widgetRef) {
-      console.log(widgetRef)
-      widgetRef.current.scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"})
+      // scroll within widgetRef without scrolling the window
+      
+      // get current window scroll position
+      const scrollY = window.scrollY;
+      // get the top position of the widgetRef
+      const widgetTop = widgetRef.current.getBoundingClientRect().top;
+      // calculate the scroll position to the top of the widgetRef
+      const scrollTo = scrollY + widgetTop;
+      // scroll to the top of the widgetRef
+      widgetRef.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest", offsetTop: 60})
+      window.scrollTo(0, scrollY)
     }
   }
 
