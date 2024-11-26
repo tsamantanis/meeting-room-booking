@@ -357,7 +357,7 @@ export function BookingWidget() {
 
   const scrollToTop = () => {
     
-    if (widgetRef) {
+    if (widgetRef && widgetRef.current) {
       // scroll within widgetRef without scrolling the window
       widgetRef.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest", offsetTop: 60})
     }
