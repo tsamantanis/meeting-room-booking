@@ -523,16 +523,16 @@ export function BookingWidget() {
 
       if (response.ok) {
         // setMessage(result.message);
-        console.log('Data successfully submitted:', result)
+        // console.log('Data successfully submitted:', result)
         return true;
       } else {
         // setMessage('Error appending data: ' + result.message);
-        console.error('Error appending data:', result);
+        // console.error('Error appending data:', result);
         return false;
       }
     } catch (error) {
       // setMessage('Failed to submit data.');
-      console.error('Failed to submit data:', error);
+      // console.error('Failed to submit data:', error);
       return false;
     }
   };
