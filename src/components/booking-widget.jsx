@@ -378,7 +378,7 @@ export function BookingWidget() {
       // console.log('Submit handling');
       setSubmitting(true);
       const queryParams = new URLSearchParams(window.location.search)
-      console.log("queryParams: ", queryParams);
+      // console.log("queryParams: ", queryParams);
       let event_end_date = new Date(date);
       if (isMultiDay) {
         event_end_date = new Date(endDate);
@@ -412,7 +412,7 @@ export function BookingWidget() {
         u_preventEmailCommunications: 1,
         responseFormat: "json",
       };
-      const comidorSuccess = await sendToComidor(dataToComidor);
+      const comidorSuccess = await sendToComidor({dataToComidor});
       const adsID = queryParams.get('adsID');
       const quoteDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
       const duration = selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours).join(', ');
@@ -437,7 +437,7 @@ export function BookingWidget() {
       // console.log('Google Sheets success:', googleSheetsSuccess);
       // console.log('Comidor success:', comidorSuccess);
       if (comidorSuccess && googleSheetsSuccess) {
-        console.log('Success!');
+        // console.log('Success!');
         setCurrentStep(4);
       }
       setSubmitting(false);
@@ -446,7 +446,7 @@ export function BookingWidget() {
   }
 
   const sendToComidor = async ({ dataToComidor }) => {
-    console.log('Submit data to Comidor');
+    // console.log('Submit data to Comidor');
     const url = "https://betadev.comidor.com/Services";
     let authToken;
     let full_url;
@@ -458,15 +458,15 @@ export function BookingWidget() {
       // console.log("full_url: ", full_url);
       // console.log("authToken: ", authToken);
     } catch (error) {
-      console.error('Error getting auth token:', error);
+      // console.error('Error getting auth token:', error);
       return false;
     }
   
     if (!authToken || !full_url) {
-      console.error('Something went wrong with the auth token');
+      // console.error('Something went wrong with the auth token');
       return false;
     }
-  
+    console.log(full_url)
     try {
       const response = await fetch(full_url, {
         method: "POST",
@@ -483,11 +483,11 @@ export function BookingWidget() {
         // console.log('Request completed successfully');
         return true;
       } else {
-        console.error('Request failed with status:', response.status);
+        // console.error('Request failed with status:', response.status);
         return false;
       }
     } catch (error) {
-      console.error("Error during fetch:", error);
+      // console.error("Error during fetch:", error);
       return false;
     }
   }

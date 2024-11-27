@@ -6,7 +6,7 @@ import { ArrowRightIcon } from "@/components/icons";
 
 export default function ThankYou () {
   return (
-    <div className="flex flex-col w-full min-h-[50vh] h-full space-y-8 mt-8">
+    <div className="flex flex-col w-full min-h-[50vh] h-full space-y-8 mt-8 p-2">
       {/* animated checkmark */}
       <div className="flex w-full h-full items-center justify-center">
         <svg className="h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
