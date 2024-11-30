@@ -368,8 +368,8 @@ export function BookingWidget() {
     const res = await fetch(
       "https://betadev.comidor.com/Services?unit=APIAccessTokens&s_tokenAppId=jIcwr4eot11VMSKdVCz3&s_tokenTenantId=creativepointdev&s_tokenSecret=OLUJdj7nJoho080JomNd&contextCode=Default&client=creativepointdev&dataAction=s_getAccessToken&responseFormat=json&responseCodes=true"
     );
-    const tokenData = await res.text();
-    const access_token = tokenData.substring(43, 244);
+    const tokenData = await res.json();
+    const access_token = tokenData.access_token;
     return access_token;
   }
 
