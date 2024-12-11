@@ -123,36 +123,43 @@ export function BookingWidget() {
   const mockEventPackages = [
     {
       id: '1',
+      zoho_id: '294101000000450227', // Full day event (8 hours)
       duration_hours: 8,
       duration_minutes: 0,
       description: 'Includes Post-its, markers & Presentation screen.',
       is_multi_day: true,
-      is_increment_rate: null
+      is_increment_rate: null,
+      rate: 590.0
     },
     {
       id: '2',
+      zoho_id: '294101000000450240', // Half day event (4 hours)
       duration_hours: 4,
       duration_minutes: 0,
       description: 'Includes Post-its, markers & Presentation screen.',
       is_multi_day: true,
-      is_increment_rate: null
+      is_increment_rate: null,
+      rate: 390.0
     },
     {
       id: '3',
+      zoho_id: '294101000000450262', // Hourly rate
       duration_hours: 1,
       duration_minutes: 0,
       description: 'Includes Post-its, markers & Presentation screen.',
       is_multi_day: false,
-      is_increment_rate: 1
+      is_increment_rate: 1,
+      rate: 120.0
     }
   ];
+  
 
   const mockVenuePackages = [
     {
       id: '1',
       venue_id: '1',
       package_id: '1',
-      price: 590
+      price: 650
     },
     {
       id: '2',
@@ -170,7 +177,7 @@ export function BookingWidget() {
       id: '4',
       venue_id: '2',
       package_id: '1',
-      price: 590
+      price: 650
     },
     {
       id: '5',
@@ -187,34 +194,60 @@ export function BookingWidget() {
   ]
 
   const facilities = [
-    // { id: 1, title: 'Presentation Screen', price: 100, 
-    //   description: '60" portable screen with wireless and HDMI connection.', 
-    //   image: './presentation_form_m.jpg' },
-    // { id: 2, title: 'Post-its & Markers', price: 20, 
-    //   description: 'Various colours/sizes of markers and post-its.', 
-    //   image: './postits_form_m.jpg' },
-    { id: 3, title: 'Conference System', price: 50, 
-      description: 'Wide angle camera with external microphones.', 
-      image:  './conference_form_m.jpg' },
-    { id: 4, title: 'Flip Charts', price: 30, 
-      description: 'Set of 2 flip-charts with paper.', 
-      image: './flipcharts_form_m.jpg' }
+    {
+      id: 3,
+      zoho_id: '294101000000057154', // Conference system
+      title: 'Conference System',
+      price: 50,
+      description: 'Wide angle camera with external microphones.',
+      image: './conference_form_m.jpg'
+    },
+    {
+      id: 4,
+      zoho_id: '294101000000302075', // 2 x flip charts
+      title: 'Flip Charts',
+      price: 30,
+      description: 'Set of 2 flip-charts with paper.',
+      image: './flipcharts_form_m.jpg'
+    }
   ];
   
+  
   const catering = [
-    { id: 1, title: 'Beverages', price: 7, 
-      description: 'Unlimited Coffee, tea and soft drinks.', 
-      image: './beverages_form_m.jpg' },
-      { id: 4, title: 'Lunch', price: 22, 
-        description: 'Via catering partners. Time of delivery specified later.', 
-        image: './lunch_form_m.jpg' },
-    { id: 2, title: 'Snacks', price: 9, 
-      description: 'Prepared during your check-in.', 
-      image: './snacks_form_m.jpg' },
-    { id: 3, title: 'Breakfast', price: 17, 
-      description: 'Via catering partners. Time of delivery specified later.', 
-      image: './breakfast_form_m.jpg' },
+    {
+      id: 1,
+      zoho_id: '294101000000134831', // Beverages
+      title: 'Beverages',
+      price: 2,
+      description: 'Unlimited Coffee, tea and soft drinks.',
+      image: './beverages_form_m.jpg'
+    },
+    {
+      id: 2,
+      zoho_id: '294101000000124242', // Snacks pack
+      title: 'Snacks',
+      price: 10,
+      description: 'Prepared during your check-in.',
+      image: './snacks_form_m.jpg'
+    },
+    {
+      id: 3,
+      zoho_id: '294101000000057137', // Breakfast pack
+      title: 'Breakfast',
+      price: 17,
+      description: 'Via catering partners. Time of delivery specified later.',
+      image: './breakfast_form_m.jpg'
+    },
+    {
+      id: 4,
+      zoho_id: '294101000000057128', // Lunch pack
+      title: 'Lunch',
+      price: 22,
+      description: 'Via catering partners. Time of delivery specified later.',
+      image: './lunch_form_m.jpg'
+    }
   ];
+  
 
   // comidor post request data structure
   // data = {
@@ -384,32 +417,34 @@ export function BookingWidget() {
         event_end_date = new Date(endDate);
       }
       const selectedVenueName = venues.find(v => v.id === venue)?.name.split(' ')[0]
-     
+     console.log(date)
       // dates need to have yyyymmdd format
       const dataToComidor = {
+        u_accountName: company,
         u_contactFirstName: firstName,
         u_contactLastName: lastName,
         u_email: email,
-        u_resStartDate: new Date(date).toISOString().slice(0, 10).replace(/-/g, ""),
-        u_resEndDate: new Date(event_end_date).toISOString().slice(0, 10).replace(/-/g, ""),
+        u_resStartDate: new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
+        u_resEndDate: new Date(new Date(event_end_date).setDate(new Date(event_end_date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
         u_resStartTime: time,
         u_resEndTime: endTime,
         u_duration: selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours),
         u_teamSize: guests,
         u_venueName: selectedVenueName,
         u_tableLayout: tableSetup,
-        u_hasHardware: facilitiesSelected.includes(1) ? 1 : 0,
-        u_hasFlipcharts: facilitiesSelected.includes(2) ? 1 : 0,
-        u_hasUnlimitedCoffee: cateringSelected.includes(1) ? 1 : 0,
-        u_hasBreakfast: cateringSelected.includes(3) ? 1 : 0,
-        u_hasLunch: cateringSelected.includes(4) ? 1 : 0,
-        u_hasSnacks: cateringSelected.includes(2) ? 1 : 0,
-        u_hasDinner: cateringSelected.includes(5) ? 1 : 0,
+        // facilities check with { id, quantity } where id is the facility id
+        u_hasHardware: facilitiesSelected.find(facility => facility === 1) ? 1 : 0,
+        u_hasFlipcharts: facilitiesSelected.find(facility => facility === 2) ? 1 : 0,
+        u_hasUnlimitedCoffee: cateringSelected.find(catering => catering.id === 1) ? 1 : 0,
+        u_hasBreakfast: cateringSelected.find(catering => catering.id === 3) ? 1 : 0,
+        u_hasLunch: cateringSelected.find(catering => catering.id === 4) ? 1 : 0,
+        u_hasSnacks: cateringSelected.find(catering => catering.id === 2) ? 1 : 0,
+        u_hasDinner: cateringSelected.find(catering => catering.id === 5) ? 1 : 0,
         client: "creativepointdev",
         unit: "APP_000134",
         dataAction: "u_createReservation",
         u_customQuote: 1,
-        u_preventEmailCommunications: 1,
+        u_preventEmailCommunications: 0,
         responseFormat: "json",
       };
       const comidorSuccess = await sendToComidor({dataToComidor});
@@ -436,6 +471,10 @@ export function BookingWidget() {
       const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
       // console.log('Google Sheets success:', googleSheetsSuccess);
       // console.log('Comidor success:', comidorSuccess);
+      const zohoEstimate = await createZohoEstimate();
+      if (!zohoEstimate) {
+        console.log('zoho estimate was not created')
+      }
       if (comidorSuccess && googleSheetsSuccess) {
         // console.log('Success!');
         setCurrentStep(4);
@@ -466,7 +505,7 @@ export function BookingWidget() {
       // console.error('Something went wrong with the auth token');
       return false;
     }
-    console.log(full_url)
+
     try {
       const response = await fetch(full_url, {
         method: "POST",
@@ -536,6 +575,119 @@ export function BookingWidget() {
       return false;
     }
   };
+
+  const createCustomer = async (customerData) => {
+    try {
+      const response = await fetch('http://localhost:5002/create-customer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(customerData),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error creating customer:', errorData.error);
+        alert('Error creating customer: ' + errorData.error);
+        return null;
+      }
+  
+      const data = await response.json();
+      console.log(data)
+      return data.contact_id;
+    } catch (error) {
+      console.error('Internal Server Error:', error);
+      alert('An error occurred while creating the customer. Please try again later.');
+      return null;
+    }
+  };
+  
+  const createZohoEstimate = async () => {
+    if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
+      setSubmitting(true);
+      
+      const customerData = {
+        contact_name: `${firstName} ${lastName}`,  
+        company_name: company,
+        email: email,
+        phone: phone,
+      };
+      
+      // Step 1: Create Customer if Necessary
+      let customer_id = await createCustomer(customerData);
+      if (!customer_id) {
+        setSubmitting(false);
+        return false; // Exit if customer creation failed
+      }
+  
+      // Step 2: Create `line_items` data for the estimate using `zoho_id`
+      const line_items = selectedEventPackages.map((pkg) => {
+        const foundPackage = mockEventPackages.find((eventPkg) => eventPkg.id === pkg);
+        return {
+          item_id: foundPackage?.zoho_id, // Use `zoho_id` from mockEventPackages
+          quantity: 1,                   // Default quantity is 1 for each event package
+        };
+      });
+  
+      facilitiesSelected.forEach((facilityId) => {
+        const facility = facilities.find((f) => f.id === facilityId);
+        if (facility) {
+          line_items.push({
+            item_id: facility.zoho_id,
+            quantity: 1,
+          });
+        }
+      });
+  
+      cateringSelected.forEach((cateringItem) => {
+        const cateringDetail = catering.find((cat) => cat.id === cateringItem.id);
+        if (cateringDetail) {
+          line_items.push({
+            item_id: cateringDetail.zoho_id,
+            quantity: cateringItem.quantity,
+          });
+        }
+      });
+  
+      // Step 3: Construct and send the estimate data
+      const estimateData = {
+        customer_id: customer_id,
+        line_items: line_items,
+        date: new Date().toISOString().split('T')[0],
+        notes: comments,
+      };
+  
+      try {
+        const response = await fetch('http://localhost:5002/create-estimate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(estimateData),
+        });
+  
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error creating estimate:', errorData.error);
+          return false
+        } else {
+          const data = await response.json();
+          console.log('Estimate created successfully:', data);
+          return true
+        }
+      } catch (error) {
+        console.error('Internal Server Error:', error);
+        return false
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
+      return false
+    }
+  };
+  
+  
   
 
   useEffect(() => {
