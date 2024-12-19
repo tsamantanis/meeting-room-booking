@@ -609,6 +609,8 @@ export function BookingWidget() {
       
       const customerData = {
         contact_name: `${firstName} ${lastName}`,  
+        first_name: firstName,
+        last_name: lastName,
         company_name: company,
         email: email,
         phone: phone,
