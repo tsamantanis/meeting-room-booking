@@ -578,7 +578,7 @@ export function BookingWidget() {
 
   const createCustomer = async (customerData) => {
     try {
-      const response = await fetch('http://localhost:5002/create-customer', {
+      const response = await fetch(`${import.meta.env.VITE_ZOHO_WRAPPER_URL}create-customer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -659,7 +659,7 @@ export function BookingWidget() {
       };
   
       try {
-        const response = await fetch('http://localhost:5002/create-estimate', {
+        const response = await fetch(`${import.meta.env.VITE_ZOHO_WRAPPER_URL}create-estimate`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
