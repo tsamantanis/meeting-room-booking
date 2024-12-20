@@ -608,9 +608,9 @@ export function BookingWidget() {
       setSubmitting(true);
       
       const customerData = {
-        contact_name: `${firstName} ${lastName}`,  
-        first_name: firstName,
-        last_name: lastName,
+        contact_name: `${firstName.trim()} ${lastName.trim()}`,  
+        first_name: firstName.trim(),
+        last_name: lastName.trim(),
         company_name: company,
         email: email,
         phone: phone,
