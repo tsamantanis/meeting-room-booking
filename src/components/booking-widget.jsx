@@ -356,8 +356,39 @@ export function BookingWidget() {
 
   }
 
+  // Company Name Validation
+  const validateCompany = (company) => {
+    const companyRegex = /^[A-Za-z0-9&.\-' ]{2,100}$/;
+    return company.trim().length >= 2 && company.trim().length <= 100 && companyRegex.test(company.trim());
+  };
+
+  // First and Last Name Validation
+  const validateName = (name) => {
+    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]{2,50}$/; // Supports accented characters
+    return name.trim().length >= 2 && name.trim().length <= 50 && nameRegex.test(name.trim());
+  };
+
+  // Email Validation
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email.trim());
+  };
+
+  // Phone Number Validation
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\+?\d{7,15}$/; // Allows optional '+' and 7-15 digits
+    return phoneRegex.test(phone.trim());
+  };
+    
   const isStep3Valid = () => {
-    return company !== '' && firstName !== '' && lastName !== '' && email !== '' && phone !== '' && agreeTerms;
+    return (
+      validateCompany(company) &&
+      validateName(firstName) &&
+      validateName(lastName) &&
+      validateEmail(email) &&
+      validatePhone(phone) &&
+      agreeTerms
+    );
   };
 
   const checkStep3Errors = () => {
@@ -417,13 +448,13 @@ export function BookingWidget() {
         event_end_date = new Date(endDate);
       }
       const selectedVenueName = venues.find(v => v.id === venue)?.name.split(' ')[0]
-     console.log(date)
+
       // dates need to have yyyymmdd format
       const dataToComidor = {
-        u_accountName: company,
-        u_contactFirstName: firstName,
-        u_contactLastName: lastName,
-        u_email: email,
+        u_accountName: company.trim(),
+        u_contactFirstName: firstName.trim(),
+        u_contactLastName: lastName.trim(),
+        u_email: email.trim(),
         u_resStartDate: new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
         u_resEndDate: new Date(new Date(event_end_date).setDate(new Date(event_end_date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
         u_resStartTime: time,
@@ -454,9 +485,9 @@ export function BookingWidget() {
       const totalValue = totalExclVat;
       const venueName = selectedVenueName;
       const dataToGoogleSheets = {
-        "First Name": firstName,
-        "Last Name": lastName,
-        "Company": company,
+        "First Name": firstName.trim(),
+        "Last Name": lastName.trim(),
+        "Company": company.trim(),
         "Team Size": guests,
         "Email": email,
         "Phone": phone,
@@ -611,7 +642,7 @@ export function BookingWidget() {
         contact_name: `${firstName.trim()} ${lastName.trim()}`,  
         first_name: firstName.trim(),
         last_name: lastName.trim(),
-        company_name: company,
+        company_name: company.trim(),
         email: email,
         phone: phone,
       };
@@ -802,7 +833,9 @@ export function BookingWidget() {
                 <Button variant="outline" onClick={() => setCurrentStep(2)}>
                   <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                 </Button>
-                <Button onClick={() => {
+                <Button 
+                  disabled={!isStep3Valid()}
+                  onClick={() => {
                     if (checkStep3Errors() && isStep3Valid()) {
                       handleSubmit()
                     }
