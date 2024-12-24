@@ -218,37 +218,37 @@ export function BookingWidget() {
   
   const catering = [
     {
+      id: 4,
+      zoho_id: '294101000000057128', // Lunch pack
+      title: 'Lunch',
+      price: 24,
+      description: 'Via catering partners. Time of delivery specified later.',
+      image: './lunch_form_m.jpg'
+    },
+    {
       id: 1,
       zoho_id: '294101000000134831', // Beverages
       title: 'Beverages',
-      price: 2,
+      price: 7,
       description: 'Unlimited Coffee, tea and soft drinks.',
       image: './beverages_form_m.jpg'
     },
     {
       id: 2,
       zoho_id: '294101000000124242', // Snacks pack
-      title: 'Snacks',
+      title: 'Fruits & Snacks',
       price: 10,
-      description: 'Prepared during your check-in.',
+      description: 'Fresh fruit, cake, energy bars, chocolate bites.',
       image: './snacks_form_m.jpg'
     },
     {
       id: 3,
       zoho_id: '294101000000057137', // Breakfast pack
       title: 'Breakfast',
-      price: 17,
+      price: 18,
       description: 'Via catering partners. Time of delivery specified later.',
       image: './breakfast_form_m.jpg'
     },
-    {
-      id: 4,
-      zoho_id: '294101000000057128', // Lunch pack
-      title: 'Lunch',
-      price: 22,
-      description: 'Via catering partners. Time of delivery specified later.',
-      image: './lunch_form_m.jpg'
-    }
   ];
   
 
