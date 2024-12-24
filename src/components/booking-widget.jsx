@@ -453,35 +453,35 @@ export function BookingWidget() {
       const selectedVenueName = venues.find(v => v.id === venue)?.name.split(' ')[0]
 
       // dates need to have yyyymmdd format
-      const dataToComidor = {
-        u_accountName: company.trim(),
-        u_contactFirstName: firstName.trim(),
-        u_contactLastName: lastName.trim(),
-        u_email: email.trim(),
-        u_resStartDate: new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
-        u_resEndDate: new Date(new Date(event_end_date).setDate(new Date(event_end_date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
-        u_resStartTime: time,
-        u_resEndTime: endTime,
-        u_duration: selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours),
-        u_teamSize: guests,
-        u_venueName: selectedVenueName,
-        u_tableLayout: tableSetup,
-        // facilities check with { id, quantity } where id is the facility id
-        u_hasHardware: facilitiesSelected.find(facility => facility === 1) ? 1 : 0,
-        u_hasFlipcharts: facilitiesSelected.find(facility => facility === 2) ? 1 : 0,
-        u_hasUnlimitedCoffee: cateringSelected.find(catering => catering.id === 1) ? 1 : 0,
-        u_hasBreakfast: cateringSelected.find(catering => catering.id === 3) ? 1 : 0,
-        u_hasLunch: cateringSelected.find(catering => catering.id === 4) ? 1 : 0,
-        u_hasSnacks: cateringSelected.find(catering => catering.id === 2) ? 1 : 0,
-        u_hasDinner: cateringSelected.find(catering => catering.id === 5) ? 1 : 0,
-        client: "creativepointdev",
-        unit: "APP_000134",
-        dataAction: "u_createReservation",
-        u_customQuote: 1,
-        u_preventEmailCommunications: 0,
-        responseFormat: "json",
-      };
-      const comidorSuccess = await sendToComidor({dataToComidor});
+      // const dataToComidor = {
+      //   u_accountName: company.trim(),
+      //   u_contactFirstName: firstName.trim(),
+      //   u_contactLastName: lastName.trim(),
+      //   u_email: email.trim(),
+      //   u_resStartDate: new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
+      //   u_resEndDate: new Date(new Date(event_end_date).setDate(new Date(event_end_date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
+      //   u_resStartTime: time,
+      //   u_resEndTime: endTime,
+      //   u_duration: selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours),
+      //   u_teamSize: guests,
+      //   u_venueName: selectedVenueName,
+      //   u_tableLayout: tableSetup,
+      //   // facilities check with { id, quantity } where id is the facility id
+      //   u_hasHardware: facilitiesSelected.find(facility => facility === 1) ? 1 : 0,
+      //   u_hasFlipcharts: facilitiesSelected.find(facility => facility === 2) ? 1 : 0,
+      //   u_hasUnlimitedCoffee: cateringSelected.find(catering => catering.id === 1) ? 1 : 0,
+      //   u_hasBreakfast: cateringSelected.find(catering => catering.id === 3) ? 1 : 0,
+      //   u_hasLunch: cateringSelected.find(catering => catering.id === 4) ? 1 : 0,
+      //   u_hasSnacks: cateringSelected.find(catering => catering.id === 2) ? 1 : 0,
+      //   u_hasDinner: cateringSelected.find(catering => catering.id === 5) ? 1 : 0,
+      //   client: "creativepointdev",
+      //   unit: "APP_000134",
+      //   dataAction: "u_createReservation",
+      //   u_customQuote: 1,
+      //   u_preventEmailCommunications: 0,
+      //   responseFormat: "json",
+      // };
+      // const comidorSuccess = await sendToComidor({dataToComidor});
       const adsID = queryParams.get('adsID');
       const quoteDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
       const duration = selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours).join(', ');
@@ -500,6 +500,7 @@ export function BookingWidget() {
         "Duration": duration,
         "Total Value": totalValue,
         "Venue": venueName,
+        "Comments": comments,
         "adsID": adsID
       };
       const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
@@ -509,7 +510,7 @@ export function BookingWidget() {
       if (!zohoEstimate) {
         console.log('zoho estimate was not created')
       }
-      if (comidorSuccess && googleSheetsSuccess) {
+      if (googleSheetsSuccess) {
         // console.log('Success!');
         setCurrentStep(4);
       }
@@ -579,6 +580,7 @@ export function BookingWidget() {
       dataToGoogleSheets['Duration'],
       dataToGoogleSheets['Total Value'],
       dataToGoogleSheets['Venue'],
+      dataToGoogleSheets['Comments'],
       dataToGoogleSheets['adsID'],
     ];
     
