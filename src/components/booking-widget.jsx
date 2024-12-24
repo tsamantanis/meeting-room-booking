@@ -126,6 +126,7 @@ export function BookingWidget() {
       zoho_id: '294101000000450227', // Full day event (8 hours)
       duration_hours: 8,
       duration_minutes: 0,
+      short_description: 'Full Day',
       description: 'Includes Post-its, markers & Presentation screen.',
       is_multi_day: true,
       is_increment_rate: null,
@@ -136,6 +137,7 @@ export function BookingWidget() {
       zoho_id: '294101000000450240', // Half day event (4 hours)
       duration_hours: 4,
       duration_minutes: 0,
+      short_description: 'Half Day',
       description: 'Includes Post-its, markers & Presentation screen.',
       is_multi_day: true,
       is_increment_rate: null,
@@ -146,6 +148,7 @@ export function BookingWidget() {
       zoho_id: '294101000000450262', // Hourly rate
       duration_hours: 1,
       duration_minutes: 0,
+      short_description: 'Hourly Rate',
       description: 'Includes Post-its, markers & Presentation screen.',
       is_multi_day: false,
       is_increment_rate: 1,
@@ -689,6 +692,8 @@ export function BookingWidget() {
         line_items: line_items,
         date: new Date().toISOString().split('T')[0],
         notes: comments,
+        // custom subject i.e: Half Day for 17/01/2025 at Blossom
+        custom_subject: `${selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).short_description).join(', ')} for ${new Date(date).toLocaleDateString('en-CA')} at ${venues.find(v => v.id === venue)?.name}`,
       };
   
       try {
@@ -736,7 +741,7 @@ export function BookingWidget() {
     )
   : (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
-      <div id="booking-widget" className="w-full p-4 md:p-8 mt-8 overflow-scroll" ref={widgetRef}>  
+      <div id="booking-widget" className="w-full p-4 mt-8 overflow-scroll" ref={widgetRef}>  
         {currentStep === 1 && (
           <>
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>
