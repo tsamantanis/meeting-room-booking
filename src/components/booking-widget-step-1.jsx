@@ -186,21 +186,8 @@ const Step1 = ({
       </div>
       <div className="mt-12 space-y-8 flex flex-col items-center">
         <h3 className="text-lg font-bold text-center">
-          Venue Preference <span className="text-muted-foreground">(optional)</span>
+          Venue Preference
         </h3>
-        <div className="flex items-center space-x-2 mt-4">
-          <Select onValueChange={(value) => setTableSetup(value)} defaultValue="Boardroom" >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Boardroom Setup" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Boardroom">Boardroom</SelectItem>
-              <SelectItem value="U-Shape">U-Shape</SelectItem>
-              <SelectItem value="Classroom">Classroom</SelectItem>
-              <SelectItem value="Intimate">Intimate - no tables</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
         <div className="grid md:grid-cols-2 gap-4 mt-4">
           {venues.map(v => (
             <VenueCardOption
@@ -216,6 +203,19 @@ const Step1 = ({
           ))}
         </div>
         { venueError && <p className="text-red-500 text-sm mt-1">{venueError}</p> }
+        <div className="flex items-center space-x-2 mt-4">
+          <Select onValueChange={(value) => setTableSetup(value)} defaultValue="Boardroom" >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Boardroom Setup" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Boardroom">Boardroom</SelectItem>
+              <SelectItem value="U-Shape">U-Shape</SelectItem>
+              <SelectItem value="Classroom">Classroom</SelectItem>
+              <SelectItem value="Intimate">Intimate - no tables</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </>
   );

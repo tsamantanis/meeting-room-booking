@@ -34,7 +34,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
   };
 
   return (
-    <div className="flex flex-col space-y-4 md:space-y-8 mt-8">
+    <div className="flex flex-col space-y-4 md:space-y-6 mt-8">
       <h2 className="text-2xl font-bold text-center">Choose facilities & catering</h2>
       <p className="text-center text-muted-foreground">Make your event complete</p>
 
@@ -57,7 +57,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
 
       <div>
         <h3 className="text-lg text-primary font-medium">Catering arrangements</h3>
-        <p className="text-muted-foreground mt-2">Specific delivery times are be added later from your customer portal.</p>
+        <p className="text-muted-foreground mt-2">Specific delivery times are be added later from your customer portal. For more details check our <a className="font-normal underline text-muted-foreground" href="https://www.creativepoint.nl/catering-options/" target='_blank'>catering section</a>.</p>
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(220px,_1fr))] gap-4 mt-4">
           {catering.map(cater => {
             const selectedCater = cateringSelected.find(item => item.id === cater.id);
@@ -80,10 +80,10 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
       </div>
 
       <div>
-        <h3 className="text-lg text-primary">Special Requests / Comments</h3>
+        <h3 className="text-lg text-primary font-medium">Special Requests / Comments</h3>
         <textarea
           className="w-full p-4 border rounded mt-2 bg-gray-50 focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50"
-          rows="4"
+          rows="2"
           placeholder="Let us know how we can help with your event."
           value={comments}
           onChange={(e) => setComments(e.target.value)}

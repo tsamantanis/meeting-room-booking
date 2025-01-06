@@ -14,7 +14,7 @@ export default function ThankYou () {
         </svg>
       </div>
       <h2 className="text-2xl font-bold text-center">Thank you!</h2>
-      <p className="text-center text-muted-foreground">Your request was sent successfully. Please check your inbox to review your proposal and access your personal portal.</p>
+      <p className="text-center text-muted-foreground">We received your request. We commit to have a proposal in your inbox within 10 minutes.</p>
     </div>
   );
 };

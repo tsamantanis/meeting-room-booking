@@ -65,9 +65,9 @@ const Step3 = ({
   };
 
   return (
-    <div className="flex flex-col space-y-4 md:space-y-8 mt-0 md:mt-8 max-w-[480px] mx-auto">
+    <div className="flex flex-col space-y-4 md:space-y-6 mt-0 md:mt-8 max-w-[480px] mx-auto">
       <h2 className="text-2xl font-bold text-center">Almost there!</h2>
-      <p className="text-center text-muted-foreground">Your Free proposal is almost there. No strings attached ;)</p>
+      <p className="text-center text-muted-foreground">A couple extra details and your proposal is on it's way.</p>
 
       <div className="mt-4">
         <h3 className="text-lg">Contact Details <span className="text-sm text-red-400">(required)</span></h3>
@@ -140,7 +140,7 @@ const Step3 = ({
       </div>
 
       <p className='text-muted-foreground text-sm'>
-        We will prepare a proposal for your event without any commitment. You will gain access to a personalised portal where you can manage your proposal online.
+        This is a non-binding request. We commit to reply within less than 10 minutes. Your data is not used for marketing or promotional reasons.
       </p>
       <div className="mt-4 text-center">
         <Button 

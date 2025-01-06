@@ -27,7 +27,7 @@ const FacilityCard = ({ title, price, description, image_url, isSelected, onClic
           <p className="text-xs sm:text-sm mt-2">{description}</p>
         </div>
         <Button className="mt-4 w-fit outline-none" onClick={onClick}>
-          <span className={isSelected && 'hidden'}>Choose</span>            
+          <span className={isSelected && 'hidden'}>Add</span>            
           <div className={
             `${!isSelected && 'hidden'} animate-fade-in flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1`
             }>

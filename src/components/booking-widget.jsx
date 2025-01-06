@@ -223,7 +223,7 @@ export function BookingWidget(props) {
       title: 'Lunch',
       price: 24,
       description: 'Via catering partners. Time of delivery specified later.',
-      image: './lunch_form_m.jpg'
+      image: './lunch_form_m.webp'
     },
     {
       id: 1,
@@ -247,7 +247,7 @@ export function BookingWidget(props) {
       title: 'Breakfast',
       price: 18,
       description: 'Via catering partners. Time of delivery specified later.',
-      image: './breakfast_form_m.jpg'
+      image: './breakfast_form_m.webp'
     },
   ];
   
@@ -762,7 +762,7 @@ export function BookingWidget(props) {
         {currentStep === 1 && (
           <>
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>
-            <p className="text-center text-muted-foreground mt-6">When and with how many people will you meet?</p>
+            <p className="text-center text-muted-foreground mt-6">{`Grab your free quote. It only takes a minute!`}</p>
             <Step1
               guests={guests}
               setGuests={setGuests}

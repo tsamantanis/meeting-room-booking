@@ -25,9 +25,9 @@ describe('FacilityCard', () => {
     expect(mockProps.onClick).toHaveBeenCalled();
   });
 
-  it('displays "Choose" button when not selected', () => {
+  it('displays "Add" button when not selected', () => {
     const { getByText } = render(<FacilityCard {...mockProps} />);
-    expect(getByText('Choose')).toBeInTheDocument();
+    expect(getByText('Add')).toBeInTheDocument();
   });
 
   it('displays check icon when selected', () => {
