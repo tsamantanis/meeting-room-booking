@@ -122,7 +122,7 @@ const Overview = ({
           <span className="text-md font-medium">
             Total excl. VAT 
           </span>
-          <span className="text-md font-medium">
+          <span className="text-md font-medium" aria-label="Total">
             {`${totalExclVat}€`}
           </span>
         </div>

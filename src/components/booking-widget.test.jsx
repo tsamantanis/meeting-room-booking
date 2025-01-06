@@ -155,3 +155,67 @@ describe('BookingWidget Component', () => {
     expect(screen.getByText(/Please select the number of guests/i)).toBeInTheDocument();
   });
 });
+
+// Test for total calculation validation
+const validateTotalCalculation = async (guestCount, durationLabel, venueLabel, facilityLabels, cateringLabels, expectedTotal) => {
+  render(<BookingWidget />);
+
+  // Step 1: Fill out guest count
+  fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: guestCount.toString() } });
+
+  // Step 1: Select a duration
+  fireEvent.click(screen.getByLabelText(new RegExp(`${durationLabel}`, 'i')));
+
+  // Step 1: Select a venue
+  fireEvent.click(screen.getByLabelText(new RegExp(`${venueLabel}`, 'i')));
+
+  // Proceed to the next step
+  fireEvent.click(screen.getByLabelText('Add Event Options'));
+
+  // Validate that Step 2 is loaded
+  expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+
+  // Step 2: Select facilities
+  facilityLabels.forEach(facility => {
+    fireEvent.click(screen.getByText(new RegExp(`${facility}`, 'i')));
+  });
+
+  // Step 2: Select catering items
+  cateringLabels.forEach(catering => {
+    fireEvent.click(screen.getByText(new RegExp(`${catering}`, 'i')));
+  });
+
+  // Validate that the Overview is displayed
+  await waitFor(() => expect(screen.getByText(/Overview/i)).toBeInTheDocument());
+// Open the Overview if it is hidden in a Drawer
+  const overviewButton = screen.queryByText(/Overview/i);
+  if (overviewButton) {
+    fireEvent.click(overviewButton);
+  }
+
+  // Validate that the Overview section or Drawer content is visible
+  await waitFor(() => {
+    expect(screen.getByText(/Event Overview/i)).toBeInTheDocument();
+  });
+  // Check if the Total excl. VAT is visible in the Overview section
+  const totalDisplay = screen.queryByLabelText('Total');
+  expect(totalDisplay).toBeInTheDocument();
+  expect(totalDisplay).toHaveTextContent(`${expectedTotal}€`);
+};
+
+// Different combinations for total calculation validation
+test('calculates total correctly for combination 1', async () => {
+  await validateTotalCalculation(10, '4 Hours', 'Aurora Private Space', ['Flip Charts'], ['Snacks'], '520.00');
+});
+
+test('calculates total correctly for combination 2', async () => {
+  await validateTotalCalculation(20, '8 Hours', 'Blossom Private Space', ['Conference System'], ['Lunch', 'Beverages'], '1320.00');
+});
+
+test('calculates total correctly for combination 3', async () => {
+  await validateTotalCalculation(15, '8 Hours', 'Aurora Private Space', ['Flip Charts', 'Conference System'], ['Breakfast', 'Snacks'], '1150.00');
+});
+
+test('calculates total correctly for combination 4', async () => {
+  await validateTotalCalculation(8, '4 Hours', 'Blossom Private Space', [], ['Lunch'], '582.00');
+});
