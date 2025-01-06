@@ -15,7 +15,7 @@ import {
 
 const isDateDisabled = (date) => date < new Date() || date > new Date().setFullYear(new Date().getFullYear() + 1);
 
-export function DatePicker({ date, setDate, disabled = isDateDisabled }) {
+export function DatePicker({ date, setDate, disabled = isDateDisabled, label = "Pick a date" }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -26,7 +26,7 @@ export function DatePicker({ date, setDate, disabled = isDateDisabled }) {
             "w-full justify-start text-left font-normal hover:border-2 focus:border-2 border-offset-2",
             !date && "text-muted-foreground"
           )}
-          aria-label="Pick a date"
+          aria-label={label}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? format(date, "PPP") : <span>Pick a date</span>}

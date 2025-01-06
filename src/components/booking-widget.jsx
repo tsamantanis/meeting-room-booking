@@ -673,7 +673,9 @@ export function BookingWidget(props) {
         const foundPackage = mockEventPackages.find((eventPkg) => eventPkg.id === pkg);
         return {
           item_id: foundPackage?.zoho_id, // Use `zoho_id` from mockEventPackages
-          quantity: 1,                   // Default quantity is 1 for each event package
+          // Default quantity is 1 for each event package
+          // if Multi-day, then calculate the number of days
+          quantity: isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) : 1,
         };
       });
   
@@ -682,7 +684,9 @@ export function BookingWidget(props) {
         if (facility) {
           line_items.push({
             item_id: facility.zoho_id,
-            quantity: 1,
+            // Default quantity is 1 for each facility
+            // if Multi-day, then calculate the number of days
+            quantity: isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) : 1,
           });
         }
       });
@@ -692,7 +696,9 @@ export function BookingWidget(props) {
         if (cateringDetail) {
           line_items.push({
             item_id: cateringDetail.zoho_id,
-            quantity: cateringItem.quantity,
+            // Quantity is the quantity selected by the user
+            // if Multi-day, then calculate the number of days
+            quantity: isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) * cateringItem.quantity : cateringItem.quantity,
           });
         }
       });

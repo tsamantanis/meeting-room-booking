@@ -88,6 +88,63 @@ describe('BookingWidget Component', () => {
     }, { timeout: 8000 });
   });
 
+  // test multi day event calculations and submission
+  test('handles multi-day event flow correctly', async () => {
+    render(<BookingWidget />);
+  
+    // Step 1: Fill out guest count
+    fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '15' } });
+  
+    // Step 1: Select a duration
+    fireEvent.click(screen.getByLabelText(/8 Hours/i));
+  
+    // Step 1: Select a venue
+    fireEvent.click(screen.getByLabelText(/Blossom Private Space/i));
+  
+    // Step 1: Toggle the multi-day switch
+    fireEvent.click(screen.getByLabelText(/Multi day event/i));
+  
+    // Step 1: Pick a start date
+    fireEvent.click(screen.getByRole('button', { name: /Pick a date/i }));
+    fireEvent.click(screen.getByText('15')); // Select the 15th as the start date
+  
+    // Step 1: Pick an end date
+    fireEvent.click(screen.getByRole('button', { name: /Pick an end date/i }));
+    fireEvent.click(screen.getByText('17')); // Select the 17th as the end date
+  
+    // Step 1: Proceed to the next step
+    fireEvent.click(screen.getByLabelText('Add Event Options'));
+  
+    // Validate that Step 2 is loaded
+    expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+  
+    // Step 2: Select a facility
+    fireEvent.click(screen.getByText(/Conference System/i));
+
+    // Step 2: Select two catering items
+    fireEvent.click(screen.getByText(/Lunch/i));
+    fireEvent.click(screen.getByText(/Beverages/i));
+
+    // Complete the rest of the booking process
+    fireEvent.click(screen.getByLabelText('Next'));
+  
+    // Step 3: Fill out the contact form
+    fireEvent.change(screen.getByPlaceholderText(/Company name/i), { target: { value: 'Test Company' } });
+    fireEvent.change(screen.getByPlaceholderText(/First name/i), { target: { value: 'John' } });
+    fireEvent.change(screen.getByPlaceholderText(/Last name/i), { target: { value: 'Doe' } });
+    fireEvent.change(screen.getByPlaceholderText(/Email/i), { target: { value: 'john.doe@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/Phone/i), { target: { value: '+1234567890' } });
+  
+    // Submit the form
+    fireEvent.click(screen.getByLabelText('Request Proposal BW'));
+  
+    // Wait for final step to be reached
+    await waitFor(() => {
+      expect(screen.getByText(/Thank You!/i)).toBeInTheDocument();
+    }, { timeout: 8000 });
+  });
+
+
   test('displays error messages when required fields are missing in Step 1', () => {
     renderComponent();
 
