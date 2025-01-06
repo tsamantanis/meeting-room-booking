@@ -18,6 +18,7 @@ export function VenueCardOption({
       cn("relative bg-gray-50 border-2 shadow-md border-transparent hover:border-primary hover:cursor-pointer", isSelected && "border-primary")
     }
       onClick={onClick}
+      aria-label={venue_name}
     >
       <CardContent className="p-6">
         <img

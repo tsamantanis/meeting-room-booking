@@ -4,11 +4,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckIcon, MinusIcon, PlusIcon } from '@/components/icons';
 
-const CateringCard = ({ guests, title, description, quantity = 0, image_url, isSelected, onClick, onQuantityChange }) => {
+const CateringCard = ({ guests, title, price, description, quantity = 0, image_url, isSelected, onClick, onQuantityChange }) => {
   return (
-    <Card className={
-      cn("relative bg-gray-50 border-2 shadow-sm border-transparent hover:border-primary cursor-pointer", isSelected && "border-primary")
-    }
+    <Card
+      className={cn(
+        "catering-card relative bg-gray-50 border-2 shadow-sm border-transparent hover:border-primary cursor-pointer",
+        isSelected && "selected border-primary"
+      )}
       onClick={onClick}
     >
       <CardContent className="p-6 flex flex-col items-left justify-between cursor-pointer h-full">
@@ -18,7 +20,10 @@ const CateringCard = ({ guests, title, description, quantity = 0, image_url, isS
             alt={title}
             loading="lazy"
             className="w-full aspect-[4/3] md:aspect-square rounded-md object-cover" />
-          <h4 className="text-sm sm:text-md font-medium mt-4">{title}</h4>
+          <div className="flex items-center justify-between mt-4">
+            <h4 className="text-sm sm:text-md font-medium">{title}</h4>
+            <span className="text-sm sm:text-md font-medium">{price}€</span>
+          </div>
           <p className="text-xs sm:text-sm mt-2">{description}</p>
         </div>
         {isSelected ? (

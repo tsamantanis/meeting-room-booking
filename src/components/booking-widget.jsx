@@ -14,7 +14,7 @@ import ThankYou from '@/components/thank-you';
 // const supabase = createClient(supabaseUrl, supabaseKey);
 
 
-export function BookingWidget() {
+export function BookingWidget(props) {
   const [guests, setGuests] = useState('');
   const [date, setDate] = useState(new Date().setDate(new Date().getDate() + 1))
   const [endDate, setEndDate] = useState('');
@@ -106,7 +106,7 @@ export function BookingWidget() {
       id: '1',
       name: 'Blossom Private Space',
       description: 'With a spacious garden can host teams up to...',
-      images: ['./Blossom_hero_widget.jpg'],  // Correctly resolve the image
+      images: ['./Blossom_hero_widget.jpg'],
       capacity: 20,
       area: 70
     },
@@ -114,7 +114,7 @@ export function BookingWidget() {
       id: '2',
       name: 'Aurora Private Space',
       description: 'With a spacious garden can host teams up to...',
-      images: ['./Aurora_hero_widget.jpg'],  // Correctly resolve the image
+      images: ['./Aurora_hero_widget.jpg'],
       capacity: 20,
       area: 70
     }
@@ -441,8 +441,9 @@ export function BookingWidget() {
   }
 
   const handleSubmit = async () => {
+    console.log('Submit handling');
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
-      // console.log('Submit handling');
+      console.log('basic validation passed');
       setSubmitting(true);
       const queryParams = new URLSearchParams(window.location.search)
       // console.log("queryParams: ", queryParams);
@@ -500,13 +501,16 @@ export function BookingWidget() {
         "Duration": duration,
         "Total Value": totalValue,
         "Venue": venueName,
+        "Items": facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId).title).join(', ') + ', ' + cateringSelected.map(cateringItem => catering.find(cater => cater.id === cateringItem.id).title).join(', '),
         "Comments": comments,
         "adsID": adsID
       };
+      // console.log('Data to Google Sheets:', dataToGoogleSheets);
       const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
       // console.log('Google Sheets success:', googleSheetsSuccess);
       // console.log('Comidor success:', comidorSuccess);
       const zohoEstimate = await createZohoEstimate();
+      // console.log('Zoho success:', zohoEstimate);
       if (!zohoEstimate) {
         console.log('zoho estimate was not created')
       }
@@ -517,6 +521,11 @@ export function BookingWidget() {
       setSubmitting(false);
 
     }
+  }
+
+  // Expose handleSubmit for testing
+  if (props.exposeHandleSubmit) {
+    props.exposeHandleSubmit(handleSubmit);
   }
 
   const sendToComidor = async ({ dataToComidor }) => {
@@ -580,10 +589,11 @@ export function BookingWidget() {
       dataToGoogleSheets['Duration'],
       dataToGoogleSheets['Total Value'],
       dataToGoogleSheets['Venue'],
+      dataToGoogleSheets['Items'],
       dataToGoogleSheets['Comments'],
       dataToGoogleSheets['adsID'],
     ];
-    
+    console.log('weird')
     try {
       const response = await fetch(`${import.meta.env.VITE_GSAPI_WRAPPER_URL}append-data`, {
         // const response = await fetch(`http://localhost:5001/append-data`, {
@@ -598,16 +608,16 @@ export function BookingWidget() {
 
       if (response.ok) {
         // setMessage(result.message);
-        // console.log('Data successfully submitted:', result)
+        console.log('Data successfully submitted:', result)
         return true;
       } else {
         // setMessage('Error appending data: ' + result.message);
-        // console.error('Error appending data:', result);
+        console.error('Error appending data:', result);
         return false;
       }
     } catch (error) {
       // setMessage('Failed to submit data.');
-      // console.error('Failed to submit data:', error);
+      console.error('Failed to submit data:', error);
       return false;
     }
   };
@@ -642,7 +652,6 @@ export function BookingWidget() {
   const createZohoEstimate = async () => {
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
       setSubmitting(true);
-      
       const customerData = {
         contact_name: `${firstName.trim()} ${lastName.trim()}`,  
         first_name: firstName.trim(),
@@ -664,7 +673,9 @@ export function BookingWidget() {
         const foundPackage = mockEventPackages.find((eventPkg) => eventPkg.id === pkg);
         return {
           item_id: foundPackage?.zoho_id, // Use `zoho_id` from mockEventPackages
-          quantity: 1,                   // Default quantity is 1 for each event package
+          // Default quantity is 1 for each event package
+          // if Multi-day, then calculate the number of days
+          quantity: isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) : 1,
         };
       });
   
@@ -673,7 +684,9 @@ export function BookingWidget() {
         if (facility) {
           line_items.push({
             item_id: facility.zoho_id,
-            quantity: 1,
+            // Default quantity is 1 for each facility
+            // if Multi-day, then calculate the number of days
+            quantity: isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) : 1,
           });
         }
       });
@@ -683,7 +696,9 @@ export function BookingWidget() {
         if (cateringDetail) {
           line_items.push({
             item_id: cateringDetail.zoho_id,
-            quantity: cateringItem.quantity,
+            // Quantity is the quantity selected by the user
+            // if Multi-day, then calculate the number of days
+            quantity: isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) * cateringItem.quantity : cateringItem.quantity,
           });
         }
       });
@@ -742,7 +757,7 @@ export function BookingWidget() {
       <ThankYou />
     )
   : (
-    <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible">
+    <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible" ref={widgetRef}>
       <div id="booking-widget" className="w-full p-4 mt-8 overflow-scroll" ref={widgetRef}>  
         {currentStep === 1 && (
           <>
@@ -778,7 +793,7 @@ export function BookingWidget() {
               venues={venues}
             />
             <div className="mt-12 space-y-8 flex flex-col items-center">
-              <Button className="mt-8" onClick={() => checkStep1Errors() && isStep1Valid() && setCurrentStep(2)}>
+              <Button aria-label="Add Event Options" className="mt-8" onClick={() => checkStep1Errors() && isStep1Valid() && setCurrentStep(2)}>
                 Add Event Options <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
               </Button>
             </div>
@@ -802,7 +817,7 @@ export function BookingWidget() {
               <Button variant="outline" className="mt-8" onClick={() => setCurrentStep(1)}>
                 <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
               </Button>
-              <Button className="mt-8" onClick={() => setCurrentStep(3)}>
+              <Button aria-label="Next" className="mt-8" onClick={() => setCurrentStep(3)}>
                 Next <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
               </Button>
             </div>
@@ -841,6 +856,7 @@ export function BookingWidget() {
                   <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                 </Button>
                 <Button 
+                  aria-label="Request Proposal BW"
                   disabled={!isStep3Valid()}
                   onClick={() => {
                     if (checkStep3Errors() && isStep3Valid()) {

@@ -45,6 +45,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
             <FacilityCard
               key={facility.id}
               title={facility.title}
+              price={facility.price}
               description={facility.description}
               image_url={facility.image}
               isSelected={facilitiesSelected.includes(facility.id)}
@@ -65,6 +66,7 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
                 key={cater.id}
                 guests={guests}
                 title={cater.title}
+                price={cater.price}
                 description={cater.description}
                 image_url={cater.image}
                 isSelected={!!selectedCater}

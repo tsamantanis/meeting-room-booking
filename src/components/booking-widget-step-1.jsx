@@ -126,6 +126,9 @@ const Step1 = ({
                   <DatePicker 
                     date={endDate} 
                     setDate={setEndDate} 
+                    // disable days before the start date
+                    disabled={(d) => new Date(d) < new Date(date)}
+                    label={"Pick an end date"}
                   />
                 </div>
                 { endDateError && <p className="text-red-500 text-sm mt-1">{endDateError}</p> }
