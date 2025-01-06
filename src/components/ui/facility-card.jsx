@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckIcon } from '@/components/icons';
 
-const FacilityCard = ({ title, description, image_url, isSelected, onClick }) => {
+const FacilityCard = ({ title, price, description, image_url, isSelected, onClick }) => {
   return (
     <Card
       className={cn(
@@ -20,7 +20,10 @@ const FacilityCard = ({ title, description, image_url, isSelected, onClick }) =>
             alt={title}
             loading="lazy"
             className="w-full aspect-[4/3] md:aspect-square rounded-md object-cover" />
-          <h4 className="text-sm sm:text-md font-medium mt-4">{title}</h4>
+          <div className="flex items-center justify-between mt-4">
+            <h4 className="text-sm sm:text-md font-medium">{title}</h4>
+            <span className="text-sm sm:text-md font-medium">{price}€</span>
+          </div>
           <p className="text-xs sm:text-sm mt-2">{description}</p>
         </div>
         <Button className="mt-4 w-fit outline-none" onClick={onClick}>
