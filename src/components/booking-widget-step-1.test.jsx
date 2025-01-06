@@ -5,6 +5,7 @@ import Step1 from './booking-widget-step-1';
 
 describe('Step1', () => {
   const mockProps = {
+    language: 'en',
     guests: '',
     setGuests: vi.fn(),
     guestsError: '',
@@ -35,8 +36,8 @@ describe('Step1', () => {
     selectedEventPackages: [],
     setSelectedEventPackages: vi.fn(),
     venues: [
-      { id: 1, name: 'Venue 1', description: 'Description 1', images: ['image1.jpg'], capacity: 20, area: 70 },
-      { id: 2, name: 'Venue 2', description: 'Description 2', images: ['image2.jpg'], capacity: 20, area: 70 },
+      { id: 1, name: { en: 'Venue 1'}, description: 'Description 1', images: ['image1.jpg'], capacity: 20, area: 70 },
+      { id: 2, name: { en: 'Venue 2'}, description: 'Description 2', images: ['image2.jpg'], capacity: 20, area: 70 },
     ],
   };
 

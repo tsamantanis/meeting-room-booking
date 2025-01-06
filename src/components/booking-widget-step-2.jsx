@@ -3,7 +3,18 @@ import FacilityCard from '@/components/ui/facility-card';
 import CateringCard from '@/components/ui/catering-card';
 
 
-const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilitiesSelected, cateringSelected, setCateringSelected, comments, setComments }) => {
+const Step2 = ({ 
+  language,
+  facilities, 
+  catering, 
+  guests, 
+  facilitiesSelected, 
+  setFacilitiesSelected, 
+  cateringSelected, 
+  setCateringSelected, 
+  comments, 
+  setComments 
+}) => {
   const handleFacilityClick = (id) => {
     if (facilitiesSelected.includes(id)) {
       setFacilitiesSelected(facilitiesSelected.filter(facility => facility !== id));
@@ -44,9 +55,9 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
           {facilities.map(facility => (
             <FacilityCard
               key={facility.id}
-              title={facility.title}
+              title={facility.title[language]}
               price={facility.price}
-              description={facility.description}
+              description={facility.description[language]}
               image_url={facility.image}
               isSelected={facilitiesSelected.includes(facility.id)}
               onClick={() => handleFacilityClick(facility.id)}
@@ -65,9 +76,9 @@ const Step2 = ({ facilities, catering, guests, facilitiesSelected, setFacilities
               <CateringCard
                 key={cater.id}
                 guests={guests}
-                title={cater.title}
+                title={cater.title[language]}
                 price={cater.price}
-                description={cater.description}
+                description={cater.description[language]}
                 image_url={cater.image}
                 isSelected={!!selectedCater}
                 quantity={selectedCater ? selectedCater.quantity : 0}

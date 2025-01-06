@@ -1,13 +1,13 @@
-const mockVenues = [
+export const mockVenues = [
   {
     id: "1",
     name: {
-      en: "Blossom Private Space",
-      nl: "Blossom Privéruimte",
+      en: "Blossom",
+      nl: "Blossom",
     },
     description: {
-      en: "With a spacious garden can host teams up to...",
-      nl: "Met een ruime tuin kan teams tot...",
+      en: "Perfect for workshops, trainings & team events",
+      nl: "Ideaal voor workshops, trainingen en teamevenementen",
     },
     images: ["./Blossom_hero_widget.jpg"],
     capacity: 20,
@@ -16,20 +16,20 @@ const mockVenues = [
   {
     id: "2",
     name: {
-      en: "Aurora Private Space",
-      nl: "Aurora Privéruimte",
+      en: "Aurora",
+      nl: "Aurora",
     },
     description: {
-      en: "With a spacious garden can host teams up to...",
-      nl: "Met een ruime tuin kan teams tot...",
+      en: "Perfect for workshops, trainings & team events",
+      nl: "Ideaal voor workshops, trainingen en teamevenementen",
     },
     images: ["./Aurora_hero_widget.jpg"],
-    capacity: 20,
-    area: 70,
+    capacity: 16,
+    area: 65,
   },
 ];
 
-const mockEventPackages = [
+export const mockEventPackages = [
   {
     id: "1",
     zoho_id: "294101000000450227",
@@ -37,15 +37,15 @@ const mockEventPackages = [
     duration_minutes: 0,
     short_description: {
       en: "Full Day",
-      nl: "Volledige Dag",
+      nl: "Hele Dag",
     },
     description: {
-      en: "Includes Post-its, markers & Presentation screen.",
-      nl: "Inclusief Post-its, markeerstiften & presentatiescherm.",
+      en: "Arrive at your convenience. Self check-in / out system available.",
+      nl: "Kom op uw gemak aan. Zelf in- en uitchecksysteem beschikbaar.",
     },
     is_multi_day: true,
     is_increment_rate: null,
-    rate: 590.0,
+    rate: 600.0,
   },
   {
     id: "2",
@@ -57,12 +57,12 @@ const mockEventPackages = [
       nl: "Halve Dag",
     },
     description: {
-      en: "Includes Post-its, markers & Presentation screen.",
-      nl: "Inclusief Post-its, markeerstiften & presentatiescherm.",
+      en: "Part of day. Morning until 1:00pm - Evening slot from 2:00pm.",
+      nl: "Dagdeel. Ochtend tot 13:00 uur - Avondslot vanaf 14:00 uur.",
     },
     is_multi_day: true,
     is_increment_rate: null,
-    rate: 390.0,
+    rate: 400.0,
   },
   {
     id: "3",
@@ -74,8 +74,8 @@ const mockEventPackages = [
       nl: "Uurtarief",
     },
     description: {
-      en: "Includes Post-its, markers & Presentation screen.",
-      nl: "Inclusief Post-its, markeerstiften & presentatiescherm.",
+      en: "During weekends or evenings. Minimum booking for 2 hours.",
+      nl: "In het weekend of 's avonds. Minimale boeking voor 2 uur.",
     },
     is_multi_day: false,
     is_increment_rate: 1,
@@ -83,18 +83,57 @@ const mockEventPackages = [
   },
 ];
 
-const facilities = [
+export const mockVenuePackages = [
+  {
+    id: "1",
+    venue_id: "1",
+    package_id: "1",
+    price: 600,
+  },
+  {
+    id: "2",
+    venue_id: "1",
+    package_id: "2",
+    price: 400,
+  },
+  {
+    id: "3",
+    venue_id: "1",
+    package_id: "3",
+    price: 120,
+  },
+  {
+    id: "4",
+    venue_id: "2",
+    package_id: "1",
+    price: 600,
+  },
+  {
+    id: "5",
+    venue_id: "2",
+    package_id: "2",
+    price: 400,
+  },
+  {
+    id: "6",
+    venue_id: "2",
+    package_id: "3",
+    price: 120,
+  },
+];
+
+export const facilities = [
   {
     id: 3,
     zoho_id: "294101000000057154",
     title: {
-      en: "Conference System",
-      nl: "Conferentiesysteem",
+      en: "Remote Attendees",
+      nl: "Deelnemers op afstand",
     },
     price: 50,
     description: {
-      en: "Wide angle camera with external microphones.",
-      nl: "Groothoekcamera met externe microfoons.",
+      en: "Conference system with Wide angle camera with external microphones.",
+      nl: "conferentiesysteem met groothoekcamera met externe microfoons.",
     },
     image: "./conference_form_m.jpg",
   },
@@ -102,10 +141,10 @@ const facilities = [
     id: 4,
     zoho_id: "294101000000302075",
     title: {
-      en: "Flip Charts",
+      en: "Flip-charts",
       nl: "Flip-overs",
     },
-    price: 30,
+    price: 35,
     description: {
       en: "Set of 2 flip-charts with paper.",
       nl: "Set van 2 flip-overs met papier.",
@@ -114,7 +153,7 @@ const facilities = [
   },
 ];
 
-const catering = [
+export const catering = [
   {
     id: 4,
     zoho_id: "294101000000057128",
@@ -124,17 +163,17 @@ const catering = [
     },
     price: 24,
     description: {
-      en: "Via catering partners. Time of delivery specified later.",
-      nl: "Via cateringpartners. Levertijd wordt later gespecificeerd.",
+      en: "Vegan & vegetarian options as well. We provide a form to order online conveniently.",
+      nl: "Ook veganistische en vegetarische opties. We bieden een formulier om gemakkelijk online te bestellen.",
     },
-    image: "./lunch_form_m.jpg",
+    image: "./lunch_form_m.webp",
   },
   {
     id: 1,
     zoho_id: "294101000000134831",
     title: {
       en: "Beverages",
-      nl: "Dranken",
+      nl: "Drankjes",
     },
     price: 7,
     description: {
@@ -152,8 +191,8 @@ const catering = [
     },
     price: 10,
     description: {
-      en: "Fresh fruit, cake, energy bars, chocolate bites.",
-      nl: "Vers fruit, cake, energierepen, chocoladesnacks.",
+      en: "Fresh fruit basket, cake, energy bars, chocolate bites.",
+      nl: "Vers fruit basket, cake, energierepen, chocoladesnacks.",
     },
     image: "./snacks_form_m.jpg",
   },
@@ -166,9 +205,9 @@ const catering = [
     },
     price: 18,
     description: {
-      en: "Via catering partners. Time of delivery specified later.",
-      nl: "Via cateringpartners. Levertijd wordt later gespecificeerd.",
+      en: "Freshly baked pastries, yogurt with fruit and small sandwiches.",
+      nl: "Versgebakken broodjes, yoghurt met fruit en kleine broodjes.",
     },
-    image: "./breakfast_form_m.jpg",
+    image: "./breakfast_form_m.webp",
   },
 ];

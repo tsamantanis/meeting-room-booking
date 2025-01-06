@@ -9,6 +9,7 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { check } from 'prettier';
 
 const Overview = ({ 
+  language,
   date, 
   guests, 
   time, 
@@ -100,7 +101,7 @@ const Overview = ({
         {facilitiesSelected.map((facility, index) => (
           <div key={index} className="flex items-center justify-between space-x-2">
             <span className="text-sm">
-              {`${facility.title}`}<span className="text-muted-foreground">{selectedEventPackages.length > 1 ? ` per day` : ''}</span>
+              {`${facility.title[language]}`}<span className="text-muted-foreground">{selectedEventPackages.length > 1 ? ` per day` : ''}</span>
             </span>
             <span className="text-sm">
               {`${facility.price}€`}
@@ -110,7 +111,7 @@ const Overview = ({
         {cateringSelected.map((item, index) => (
           <div key={index} className="flex items-center justify-between space-x-2">
             <span className="text-sm">
-              {`${item.name} x ${item.quantity}`}<span className="text-muted-foreground">{selectedEventPackages.length > 1 ? ` per day` : ''}</span>
+              {`${item.name[language]} x ${item.quantity}`}<span className="text-muted-foreground">{selectedEventPackages.length > 1 ? ` per day` : ''}</span>
             </span>
             <span className="text-sm">
               {`${item.price * item.quantity}€`}

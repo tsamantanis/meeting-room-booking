@@ -12,18 +12,19 @@ describe('Step2 Component', () => {
   });
 
   const facilitiesMock = [
-    { id: 1, title: 'Facility 1', description: 'Description 1', image: '/image1.png' },
-    { id: 2, title: 'Facility 2', description: 'Description 2', image: '/image2.png' },
+    { id: 1, title: { en: 'Facility 1'}, description: {en: 'Description 1'}, image: '/image1.png' },
+    { id: 2, title: { en: 'Facility 2'}, description: {en: 'Description 2'}, image: '/image2.png' },
   ];
 
   const cateringMock = [
-    { id: 1, title: 'Catering 1', description: 'Description 1', image: '/cater1.png' },
-    { id: 2, title: 'Catering 2', description: 'Description 2', image: '/cater2.png' },
+    { id: 1, title: { en: 'Catering 1'}, description: {en: 'Description 1'}, image: '/cater1.png' },
+    { id: 2, title: { en: 'Catering 2'}, description: {en: 'Description 2'}, image: '/cater2.png' },
   ];
 
   const renderComponent = (props = {}) => {
     return render(
       <Step2
+        language={'en'}
         facilities={facilitiesMock}
         catering={cateringMock}
         guests={10}

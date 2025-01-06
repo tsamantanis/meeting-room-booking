@@ -15,6 +15,7 @@ import {
 import { UserIcon, CalendarDaysIcon, ClockIcon } from "@/components/icons";
 
 const Step1 = ({ 
+  language,
   guests, 
   setGuests, 
   guestsError,
@@ -155,7 +156,7 @@ const Step1 = ({
                 <CardOption
                   key={pkg.id}
                   title={`${pkg.duration_hours} Hours`}
-                  description={pkg.description}
+                  description={pkg.description[language]}
                   onClick={() => handleSelectEventPackage(index, pkg.id)}
                   id={pkg.id}
                   isSelected={selectedEventPackages[index] === pkg.id}
@@ -171,7 +172,7 @@ const Step1 = ({
               <CardOption
                 key={pkg.id}
                 title={`${pkg.duration_hours} Hours`}
-                description={pkg.description}
+                description={pkg.description[language]}
                 onClick={() => handleSelectEventPackage(0, pkg.id)}
                 id={pkg.id}
                 isSelected={selectedEventPackages.length > 0 && selectedEventPackages[0] === pkg.id}
@@ -192,13 +193,13 @@ const Step1 = ({
           {venues.map(v => (
             <VenueCardOption
               key={v.id}
-              venue_name={v.name}
-              venue_description={v.description}
+              venue_name={v.name[language]}
+              venue_description={v.description[language]}
               image_url={v.images[0]}
               capacity={v.capacity}
               area={v.area}
               isSelected={v.id === venue}
-              onClick={() => {console.log("Onclick fired"); setVenue(v.id)}}
+              onClick={() => setVenue(v.id)}
             />
           ))}
         </div>

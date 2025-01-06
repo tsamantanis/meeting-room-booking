@@ -16,9 +16,9 @@ export function CardOption({ title, id, description, onClick, isSelected, noneSe
         <p className="text-sm">{description}</p>
         
         <Button className="mt-4 outline-none" disabled={isDisabled} onClick={onClick}>
-          <span className={isSelected && 'hidden'}>Choose</span>            
+          <span className={isSelected ? 'hidden': ''}>Choose</span>            
           <div className={
-            `${!isSelected && 'hidden'} animate-fade-in flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1`
+            `${!isSelected ? 'hidden': ''} animate-fade-in flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1`
             }>
             <CheckIcon className="h-4 w-4 text-white " />
           </div>

@@ -36,7 +36,7 @@ describe('BookingWidget Component', () => {
     // Fill in Step 1 inputs
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '12' } });
     fireEvent.click(screen.getByLabelText(/8 Hours/i));
-    fireEvent.click(screen.getByLabelText(/Blossom Private Space/i));
+    fireEvent.click(screen.getByLabelText(/Blossom/i));
     fireEvent.click(screen.getByLabelText('Add Event Options'));
 
     // Validate transition to Step 2
@@ -49,7 +49,7 @@ describe('BookingWidget Component', () => {
     // Complete Step 1
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '12' } });
     fireEvent.click(screen.getByLabelText(/8 Hours/i));
-    fireEvent.click(screen.getByLabelText(/Blossom Private Space/i));
+    fireEvent.click(screen.getByLabelText(/Blossom/i));
     fireEvent.click(screen.getByLabelText('Add Event Options'));
 
     // Complete Step 2
@@ -67,7 +67,7 @@ describe('BookingWidget Component', () => {
     // Complete Step 1
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '12' } });
     fireEvent.click(screen.getByLabelText(/8 Hours/i));
-    fireEvent.click(screen.getByLabelText(/Blossom Private Space/i));
+    fireEvent.click(screen.getByLabelText(/Blossom/i));
     fireEvent.click(screen.getByLabelText('Add Event Options'));
 
     // Complete Step 2
@@ -99,7 +99,7 @@ describe('BookingWidget Component', () => {
     fireEvent.click(screen.getByLabelText(/8 Hours/i));
   
     // Step 1: Select a venue
-    fireEvent.click(screen.getByLabelText(/Blossom Private Space/i));
+    fireEvent.click(screen.getByLabelText(/Blossom/i));
   
     // Step 1: Toggle the multi-day switch
     fireEvent.click(screen.getByLabelText(/Multi day event/i));
@@ -177,7 +177,7 @@ const validateTotalCalculation = async (guestCount, durationLabel, venueLabel, f
 
   // Step 2: Select facilities
   facilityLabels.forEach(facility => {
-    fireEvent.click(screen.getByText(new RegExp(`${facility}`, 'i')));
+    fireEvent.click(screen.getByText(facility));
   });
 
   // Step 2: Select catering items
@@ -205,17 +205,17 @@ const validateTotalCalculation = async (guestCount, durationLabel, venueLabel, f
 
 // Different combinations for total calculation validation
 test('calculates total correctly for combination 1', async () => {
-  await validateTotalCalculation(10, '4 Hours', 'Aurora Private Space', ['Flip Charts'], ['Snacks'], '520.00');
+  await validateTotalCalculation(10, '4 Hours', 'Aurora', ['Flip-charts'], ['Snacks'], '535.00');
 });
 
 test('calculates total correctly for combination 2', async () => {
-  await validateTotalCalculation(20, '8 Hours', 'Blossom Private Space', ['Conference System'], ['Lunch', 'Beverages'], '1320.00');
+  await validateTotalCalculation(20, '8 Hours', 'Blossom', ['Remote Attendees'], ['Lunch', 'Beverages'], '1270.00');
 });
 
 test('calculates total correctly for combination 3', async () => {
-  await validateTotalCalculation(15, '8 Hours', 'Aurora Private Space', ['Flip Charts', 'Conference System'], ['Breakfast', 'Snacks'], '1150.00');
+  await validateTotalCalculation(15, '8 Hours', 'Aurora', ['Flip-charts', 'Remote Attendees'], ['Breakfast', 'Snacks'], '1105.00');
 });
 
 test('calculates total correctly for combination 4', async () => {
-  await validateTotalCalculation(8, '4 Hours', 'Blossom Private Space', [], ['Lunch'], '582.00');
+  await validateTotalCalculation(8, '4 Hours', 'Blossom', [], ['Lunch'], '592.00');
 });

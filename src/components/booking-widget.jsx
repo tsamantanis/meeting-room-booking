@@ -7,6 +7,7 @@ import Step1 from '@/components/booking-widget-step-1';
 import Step2 from '@/components/booking-widget-step-2';
 import Step3 from '@/components/booking-widget-step-3';
 import ThankYou from '@/components/thank-you';
+import { mockVenues, mockEventPackages, mockVenuePackages, facilities, catering } from '@/data';
 
 // Initialize Supabase client
 // const supabaseUrl = 'https://your-supabase-url.supabase.co';
@@ -52,14 +53,19 @@ export function BookingWidget(props) {
   const [phoneError, setPhoneError] = useState(null);
   const [agreeTermsError, setAgreeTermsError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [language, setLanguage] = useState('en');
 
   const widgetRef = useRef(null)
 
   useEffect(() => {
-    // fetchVenues();
-    // fetchEventPackages();
     setVenues(mockVenues);
     setEventPackages(mockEventPackages);
+
+    // check if url contains /nl/ to set the language
+    if (window.location.pathname.includes('/nl/')) {
+      setLanguage('nl');
+    }
+
   }, []);
 
   useEffect(() => {
@@ -94,162 +100,156 @@ export function BookingWidget(props) {
     scrollToTop();
   }, [currentStep]);
 
-  useEffect(() => {
-    console.log("Boardroom Setup change");
-    console.log(tableSetup)
-    console.log(venue)
-  }, [tableSetup])
-
   // Mock Data
-  const mockVenues = [
-    {
-      id: '1',
-      name: 'Blossom Private Space',
-      description: 'With a spacious garden can host teams up to...',
-      images: ['./Blossom_hero_widget.jpg'],
-      capacity: 20,
-      area: 70
-    },
-    {
-      id: '2',
-      name: 'Aurora Private Space',
-      description: 'With a spacious garden can host teams up to...',
-      images: ['./Aurora_hero_widget.jpg'],
-      capacity: 20,
-      area: 70
-    }
-  ];
+  // const mockVenues = [
+  //   {
+  //     id: '1',
+  //     name: 'Blossom Private Space',
+  //     description: 'With a spacious garden can host teams up to...',
+  //     images: ['./Blossom_hero_widget.jpg'],
+  //     capacity: 20,
+  //     area: 70
+  //   },
+  //   {
+  //     id: '2',
+  //     name: 'Aurora Private Space',
+  //     description: 'With a spacious garden can host teams up to...',
+  //     images: ['./Aurora_hero_widget.jpg'],
+  //     capacity: 20,
+  //     area: 70
+  //   }
+  // ];
 
-  const mockEventPackages = [
-    {
-      id: '1',
-      zoho_id: '294101000000450227', // Full day event (8 hours)
-      duration_hours: 8,
-      duration_minutes: 0,
-      short_description: 'Full Day',
-      description: 'Includes Post-its, markers & Presentation screen.',
-      is_multi_day: true,
-      is_increment_rate: null,
-      rate: 590.0
-    },
-    {
-      id: '2',
-      zoho_id: '294101000000450240', // Half day event (4 hours)
-      duration_hours: 4,
-      duration_minutes: 0,
-      short_description: 'Half Day',
-      description: 'Includes Post-its, markers & Presentation screen.',
-      is_multi_day: true,
-      is_increment_rate: null,
-      rate: 390.0
-    },
-    {
-      id: '3',
-      zoho_id: '294101000000450262', // Hourly rate
-      duration_hours: 1,
-      duration_minutes: 0,
-      short_description: 'Hourly Rate',
-      description: 'Includes Post-its, markers & Presentation screen.',
-      is_multi_day: false,
-      is_increment_rate: 1,
-      rate: 120.0
-    }
-  ];
+  // const mockEventPackages = [
+  //   {
+  //     id: '1',
+  //     zoho_id: '294101000000450227', // Full day event (8 hours)
+  //     duration_hours: 8,
+  //     duration_minutes: 0,
+  //     short_description: 'Full Day',
+  //     description: 'Includes Post-its, markers & Presentation screen.',
+  //     is_multi_day: true,
+  //     is_increment_rate: null,
+  //     rate: 590.0
+  //   },
+  //   {
+  //     id: '2',
+  //     zoho_id: '294101000000450240', // Half day event (4 hours)
+  //     duration_hours: 4,
+  //     duration_minutes: 0,
+  //     short_description: 'Half Day',
+  //     description: 'Includes Post-its, markers & Presentation screen.',
+  //     is_multi_day: true,
+  //     is_increment_rate: null,
+  //     rate: 390.0
+  //   },
+  //   {
+  //     id: '3',
+  //     zoho_id: '294101000000450262', // Hourly rate
+  //     duration_hours: 1,
+  //     duration_minutes: 0,
+  //     short_description: 'Hourly Rate',
+  //     description: 'Includes Post-its, markers & Presentation screen.',
+  //     is_multi_day: false,
+  //     is_increment_rate: 1,
+  //     rate: 120.0
+  //   }
+  // ];
   
 
-  const mockVenuePackages = [
-    {
-      id: '1',
-      venue_id: '1',
-      package_id: '1',
-      price: 650
-    },
-    {
-      id: '2',
-      venue_id: '1',
-      package_id: '2',
-      price: 390
-    },
-    {
-      id: '3',
-      venue_id: '1',
-      package_id: '3',
-      price: 120
-    },
-    {
-      id: '4',
-      venue_id: '2',
-      package_id: '1',
-      price: 650
-    },
-    {
-      id: '5',
-      venue_id: '2',
-      package_id: '2',
-      price: 390
-    },
-    {
-      id: '6',
-      venue_id: '2',
-      package_id: '3',
-      price: 120
-    }
-  ]
+  // const mockVenuePackages = [
+  //   {
+  //     id: '1',
+  //     venue_id: '1',
+  //     package_id: '1',
+  //     price: 650
+  //   },
+  //   {
+  //     id: '2',
+  //     venue_id: '1',
+  //     package_id: '2',
+  //     price: 390
+  //   },
+  //   {
+  //     id: '3',
+  //     venue_id: '1',
+  //     package_id: '3',
+  //     price: 120
+  //   },
+  //   {
+  //     id: '4',
+  //     venue_id: '2',
+  //     package_id: '1',
+  //     price: 650
+  //   },
+  //   {
+  //     id: '5',
+  //     venue_id: '2',
+  //     package_id: '2',
+  //     price: 390
+  //   },
+  //   {
+  //     id: '6',
+  //     venue_id: '2',
+  //     package_id: '3',
+  //     price: 120
+  //   }
+  // ]
 
-  const facilities = [
-    {
-      id: 3,
-      zoho_id: '294101000000057154', // Conference system
-      title: 'Conference System',
-      price: 50,
-      description: 'Wide angle camera with external microphones.',
-      image: './conference_form_m.jpg'
-    },
-    {
-      id: 4,
-      zoho_id: '294101000000302075', // 2 x flip charts
-      title: 'Flip Charts',
-      price: 30,
-      description: 'Set of 2 flip-charts with paper.',
-      image: './flipcharts_form_m.jpg'
-    }
-  ];
+  // const facilities = [
+  //   {
+  //     id: 3,
+  //     zoho_id: '294101000000057154', // Conference system
+  //     title: 'Conference System',
+  //     price: 50,
+  //     description: 'Wide angle camera with external microphones.',
+  //     image: './conference_form_m.jpg'
+  //   },
+  //   {
+  //     id: 4,
+  //     zoho_id: '294101000000302075', // 2 x flip charts
+  //     title: 'Flip Charts',
+  //     price: 30,
+  //     description: 'Set of 2 flip-charts with paper.',
+  //     image: './flipcharts_form_m.jpg'
+  //   }
+  // ];
   
   
-  const catering = [
-    {
-      id: 4,
-      zoho_id: '294101000000057128', // Lunch pack
-      title: 'Lunch',
-      price: 24,
-      description: 'Via catering partners. Time of delivery specified later.',
-      image: './lunch_form_m.webp'
-    },
-    {
-      id: 1,
-      zoho_id: '294101000000134831', // Beverages
-      title: 'Beverages',
-      price: 7,
-      description: 'Unlimited Coffee, tea and soft drinks.',
-      image: './beverages_form_m.jpg'
-    },
-    {
-      id: 2,
-      zoho_id: '294101000000124242', // Snacks pack
-      title: 'Fruits & Snacks',
-      price: 10,
-      description: 'Fresh fruit, cake, energy bars, chocolate bites.',
-      image: './snacks_form_m.jpg'
-    },
-    {
-      id: 3,
-      zoho_id: '294101000000057137', // Breakfast pack
-      title: 'Breakfast',
-      price: 18,
-      description: 'Via catering partners. Time of delivery specified later.',
-      image: './breakfast_form_m.webp'
-    },
-  ];
+  // const catering = [
+  //   {
+  //     id: 4,
+  //     zoho_id: '294101000000057128', // Lunch pack
+  //     title: 'Lunch',
+  //     price: 24,
+  //     description: 'Via catering partners. Time of delivery specified later.',
+  //     image: './lunch_form_m.webp'
+  //   },
+  //   {
+  //     id: 1,
+  //     zoho_id: '294101000000134831', // Beverages
+  //     title: 'Beverages',
+  //     price: 7,
+  //     description: 'Unlimited Coffee, tea and soft drinks.',
+  //     image: './beverages_form_m.jpg'
+  //   },
+  //   {
+  //     id: 2,
+  //     zoho_id: '294101000000124242', // Snacks pack
+  //     title: 'Fruits & Snacks',
+  //     price: 10,
+  //     description: 'Fresh fruit, cake, energy bars, chocolate bites.',
+  //     image: './snacks_form_m.jpg'
+  //   },
+  //   {
+  //     id: 3,
+  //     zoho_id: '294101000000057137', // Breakfast pack
+  //     title: 'Breakfast',
+  //     price: 18,
+  //     description: 'Via catering partners. Time of delivery specified later.',
+  //     image: './breakfast_form_m.webp'
+  //   },
+  // ];
   
 
   // comidor post request data structure
@@ -321,6 +321,7 @@ export function BookingWidget(props) {
       && (selectedEventPackages.length > 0)
       && venue !== ''
       && (isMultiDay ? endDate !== '' : true)
+      && guests <= mockVenues.find(v => v.id === venue)?.capacity
     );
   };
 
@@ -353,6 +354,10 @@ export function BookingWidget(props) {
 
     if (!venue) {
       setVenueError("Please select a venue");
+    }
+
+    if (guests > mockVenues.find(v => v.id === venue)?.capacity) {
+      setGuestsError("Number of guests exceeds venue capacity of " + mockVenues.find(v => v.id === venue)?.capacity);
     }
 
     return true;
@@ -441,9 +446,7 @@ export function BookingWidget(props) {
   }
 
   const handleSubmit = async () => {
-    console.log('Submit handling');
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
-      console.log('basic validation passed');
       setSubmitting(true);
       const queryParams = new URLSearchParams(window.location.search)
       // console.log("queryParams: ", queryParams);
@@ -451,38 +454,8 @@ export function BookingWidget(props) {
       if (isMultiDay) {
         event_end_date = new Date(endDate);
       }
-      const selectedVenueName = venues.find(v => v.id === venue)?.name.split(' ')[0]
+      const selectedVenueName = venues.find(v => v.id === venue)?.name[language].split(' ')[0]
 
-      // dates need to have yyyymmdd format
-      // const dataToComidor = {
-      //   u_accountName: company.trim(),
-      //   u_contactFirstName: firstName.trim(),
-      //   u_contactLastName: lastName.trim(),
-      //   u_email: email.trim(),
-      //   u_resStartDate: new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
-      //   u_resEndDate: new Date(new Date(event_end_date).setDate(new Date(event_end_date).getDate() + 1)).toISOString().slice(0, 10).replace(/-/g, ""),
-      //   u_resStartTime: time,
-      //   u_resEndTime: endTime,
-      //   u_duration: selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours),
-      //   u_teamSize: guests,
-      //   u_venueName: selectedVenueName,
-      //   u_tableLayout: tableSetup,
-      //   // facilities check with { id, quantity } where id is the facility id
-      //   u_hasHardware: facilitiesSelected.find(facility => facility === 1) ? 1 : 0,
-      //   u_hasFlipcharts: facilitiesSelected.find(facility => facility === 2) ? 1 : 0,
-      //   u_hasUnlimitedCoffee: cateringSelected.find(catering => catering.id === 1) ? 1 : 0,
-      //   u_hasBreakfast: cateringSelected.find(catering => catering.id === 3) ? 1 : 0,
-      //   u_hasLunch: cateringSelected.find(catering => catering.id === 4) ? 1 : 0,
-      //   u_hasSnacks: cateringSelected.find(catering => catering.id === 2) ? 1 : 0,
-      //   u_hasDinner: cateringSelected.find(catering => catering.id === 5) ? 1 : 0,
-      //   client: "creativepointdev",
-      //   unit: "APP_000134",
-      //   dataAction: "u_createReservation",
-      //   u_customQuote: 1,
-      //   u_preventEmailCommunications: 0,
-      //   responseFormat: "json",
-      // };
-      // const comidorSuccess = await sendToComidor({dataToComidor});
       const adsID = queryParams.get('adsID');
       const quoteDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
       const duration = selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours).join(', ');
@@ -501,7 +474,7 @@ export function BookingWidget(props) {
         "Duration": duration,
         "Total Value": totalValue,
         "Venue": venueName,
-        "Items": facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId).title).join(', ') + ', ' + cateringSelected.map(cateringItem => catering.find(cater => cater.id === cateringItem.id).title).join(', '),
+        "Items": facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId).title[language]).join(', ') + ', ' + cateringSelected.map(cateringItem => catering.find(cater => cater.id === cateringItem.id).title[language]).join(', '),
         "Comments": comments,
         "adsID": adsID
       };
@@ -710,7 +683,7 @@ export function BookingWidget(props) {
         date: new Date().toISOString().split('T')[0],
         notes: comments,
         // custom subject i.e: Half Day for 17/01/2025 at Blossom
-        custom_subject: `${selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).short_description).join(', ')} for ${new Date(date).toLocaleDateString('en-CA')} at ${venues.find(v => v.id === venue)?.name}`,
+        custom_subject: `${selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).short_description[language]).join(', ')} for ${new Date(date).toLocaleDateString('en-CA')} at ${venues.find(v => v.id === venue)?.name[language]}`,
       };
   
       try {
@@ -764,6 +737,7 @@ export function BookingWidget(props) {
             <h2 className="text-2xl font-bold text-center">Let's get you started</h2>
             <p className="text-center text-muted-foreground mt-6">{`Grab your free quote. It only takes a minute!`}</p>
             <Step1
+              language={language}
               guests={guests}
               setGuests={setGuests}
               guestsError={guestsError}
@@ -802,6 +776,7 @@ export function BookingWidget(props) {
         {currentStep === 2 && (
           <>
             <Step2
+              language={language}
               guests={guests}
               facilitiesSelected={facilitiesSelected}
               setFacilitiesSelected={setFacilitiesSelected}
@@ -881,10 +856,11 @@ export function BookingWidget(props) {
         )}
       </div>
       <Overview
+        language={language}
         date={date}
         guests={guests}
         time={time}
-        venue={venues.find(v => v.id === venue)?.name}
+        venue={venues.find(v => v.id === venue)?.name[language]}
         tableSetup={tableSetup}
         isMultiDay={isMultiDay}
         endDate={endDate}
@@ -900,7 +876,7 @@ export function BookingWidget(props) {
           price: mockVenuePackages.find(vp => vp.venue_id === venue && vp.package_id === item)?.price 
         }))}
         facilitiesSelected={facilities.filter(facility => facilitiesSelected.includes(facility.id))}
-        cateringSelected={cateringSelected.map(item => ({ ...item, name: catering.find(cater => cater.id === item.id).title, price: catering.find(cater => cater.id === item.id).price}))}
+        cateringSelected={cateringSelected.map(item => ({ ...item, name: catering.find(cater => cater.id === item.id).title[language], price: catering.find(cater => cater.id === item.id).price}))}
         totalExclVat={totalExclVat}
         handleSubmit={handleSubmit}
         submitting={submitting}
