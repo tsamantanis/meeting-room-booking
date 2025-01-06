@@ -6,11 +6,13 @@ import { CheckIcon } from '@/components/icons';
 
 const FacilityCard = ({ title, description, image_url, isSelected, onClick }) => {
   return (
-    <Card className={
-      cn("relative bg-gray-50 border-2 shadow-sm border-transparent hover:border-primary cursor-pointer", isSelected && "border-primary")
-    }
+    <Card
+      className={cn(
+        "facility-card relative bg-gray-50 border-2 shadow-sm border-transparent hover:border-primary cursor-pointer",
+        isSelected && "selected border-primary"
+      )}
       onClick={onClick}
-    >
+>
       <CardContent className="p-6 flex flex-col items-left justify-between cursor-pointer h-full">
         <div className="flex flex-col items-left h-full">
           <img

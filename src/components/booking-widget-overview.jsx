@@ -163,13 +163,13 @@ const Overview = ({
                 </div>
               </div>
               {/* button next step */}
-              { currentStep === 1 && <Button className="ml-auto" disabled={!isStep1Valid()} onClick={() => checkStep1Errors() && isStep1Valid() && setCurrentStep(2)}>Add Event Options</Button>} 
+              { currentStep === 1 && <Button aria-label="Add Event Options Overview" className="ml-auto" disabled={!isStep1Valid()} onClick={() => checkStep1Errors() && isStep1Valid() && setCurrentStep(2)}>Add Event Options</Button>} 
               { currentStep === 2 && (
                 <div className="relative space-x-4 flex justify-center items-center">
                   <Button variant="outline" onClick={() => setCurrentStep(1)}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button> 
-                 <Button className="ml-auto" onClick={() => setCurrentStep(3)}>Next</Button>
+                 <Button aria-label="Next Overview" className="ml-auto" onClick={() => setCurrentStep(3)}>Next</Button>
                 </div>
               )}
               { currentStep === 3 && (
@@ -177,11 +177,13 @@ const Overview = ({
                   <Button variant="outline" onClick={() => setCurrentStep(2)}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
-                  <Button disabled={!isStep3Valid()} onClick={() => {
-                    if (checkStep3Errors() && isStep3Valid()) {
-                      handleSubmit()
-                    }
-                  }}>
+                  <Button 
+                    aria-label="Request Proposal Overview"
+                    disabled={!isStep3Valid()} onClick={() => {
+                      if (checkStep3Errors() && isStep3Valid()) {
+                        handleSubmit()
+                      }
+                    }}>
                     {submitting ? 
                     (
                       <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -208,7 +210,7 @@ const Overview = ({
             <div className="flex flex-col items-between justify-start h-full overflow-y-auto">
               <OverviewData />
 
-              { currentStep === 1 &&  <Button className="w-full mt-auto" disabled={!isStep1Valid()} onClick={() => {
+              { currentStep === 1 &&  <Button aria-label="Add Event Options Overview Drawer" className="w-full mt-auto" disabled={!isStep1Valid()} onClick={() => {
                 setCurrentStep(2)
                 setIsDrawerOpen(false)
               }}>Add Event Options</Button> }
@@ -220,7 +222,7 @@ const Overview = ({
                   }}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button> 
-                 <Button className="ml-auto w-full" onClick={() => {
+                 <Button aria-label="Next Overview Drawer" className="ml-auto w-full" onClick={() => {
                     setCurrentStep(3)
                     setIsDrawerOpen(false)
                   }}>Next</Button>
@@ -235,6 +237,7 @@ const Overview = ({
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
                   <Button 
+                    aria-label="Request Proposal Overview Drawer"
                     className="w-full min-w-fit"
                     disabled={!isStep3Valid()} 
                     onClick={() => {

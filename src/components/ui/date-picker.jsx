@@ -24,6 +24,7 @@ export function DatePicker({ date, setDate }) {
             "w-full justify-start text-left font-normal hover:border-2 focus:border-2 border-offset-2",
             !date && "text-muted-foreground"
           )}
+          aria-label="Pick a date"
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? format(date, "PPP") : <span>Pick a date</span>}
