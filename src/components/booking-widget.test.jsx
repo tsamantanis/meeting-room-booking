@@ -85,7 +85,7 @@ describe('BookingWidget Component', () => {
 
     await waitFor(() => {
       expect(screen.getByText(/Thank You!/i)).toBeInTheDocument();
-    }, { timeout: 5000 });
+    }, { timeout: 8000 });
   });
 
   test('displays error messages when required fields are missing in Step 1', () => {

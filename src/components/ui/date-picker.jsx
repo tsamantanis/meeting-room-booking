@@ -13,7 +13,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function DatePicker({ date, setDate }) {
+const isDateDisabled = (date) => date < new Date() || date > new Date().setFullYear(new Date().getFullYear() + 1);
+
+export function DatePicker({ date, setDate, disabled = isDateDisabled }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -40,9 +42,7 @@ export function DatePicker({ date, setDate }) {
             setIsOpen(false);
           }}
           initialFocus
-          disabled={(date) =>
-            date < new Date() || date > new Date().setFullYear(new Date().getFullYear() + 1)
-          }
+          disabled={disabled}
         />
       </PopoverContent>
     </Popover>
