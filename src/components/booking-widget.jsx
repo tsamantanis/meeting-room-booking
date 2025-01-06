@@ -501,20 +501,21 @@ export function BookingWidget(props) {
         "Duration": duration,
         "Total Value": totalValue,
         "Venue": venueName,
+        "Items": facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId).title).join(', ') + ', ' + cateringSelected.map(cateringItem => catering.find(cater => cater.id === cateringItem.id).title).join(', '),
         "Comments": comments,
         "adsID": adsID
       };
-      console.log('Data to Google Sheets:', dataToGoogleSheets);
+      // console.log('Data to Google Sheets:', dataToGoogleSheets);
       const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
-      console.log('Google Sheets success:', googleSheetsSuccess);
+      // console.log('Google Sheets success:', googleSheetsSuccess);
       // console.log('Comidor success:', comidorSuccess);
       const zohoEstimate = await createZohoEstimate();
-      console.log('Zoho success:', zohoEstimate);
+      // console.log('Zoho success:', zohoEstimate);
       if (!zohoEstimate) {
         console.log('zoho estimate was not created')
       }
       if (googleSheetsSuccess) {
-        console.log('Success!');
+        // console.log('Success!');
         setCurrentStep(4);
       }
       setSubmitting(false);
@@ -588,6 +589,7 @@ export function BookingWidget(props) {
       dataToGoogleSheets['Duration'],
       dataToGoogleSheets['Total Value'],
       dataToGoogleSheets['Venue'],
+      dataToGoogleSheets['Items'],
       dataToGoogleSheets['Comments'],
       dataToGoogleSheets['adsID'],
     ];
@@ -648,10 +650,8 @@ export function BookingWidget(props) {
   };
   
   const createZohoEstimate = async () => {
-    console.log('Creating Zoho Estimate');
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
       setSubmitting(true);
-      console.log('basic validation passed');
       const customerData = {
         contact_name: `${firstName.trim()} ${lastName.trim()}`,  
         first_name: firstName.trim(),
