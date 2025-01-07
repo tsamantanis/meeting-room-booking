@@ -642,16 +642,32 @@ export function BookingWidget(props) {
       }
   
       // Step 2: Create `line_items` data for the estimate using `zoho_id`
-      const line_items = selectedEventPackages.map((pkg) => {
+      // input is selectedEventPackages i.e [1, 2, 2]
+      // output should be {1: 1, 2: 2}
+      const packageQuantities = selectedEventPackages.reduce((acc, pkg) => {
+        if (acc[pkg]) {
+          acc[pkg] += 1;
+        } else {
+          acc[pkg] = 1;
+        }
+        return acc;
+      }, {});
+
+      const line_items = Object.entries(packageQuantities).map(([pkg, quantity]) => {
         const foundPackage = mockEventPackages.find((eventPkg) => eventPkg.id === pkg);
         return {
           item_id: foundPackage?.zoho_id, // Use `zoho_id` from mockEventPackages
           // Default quantity is 1 for each event package
-          // if Multi-day, then calculate the number of days
-          quantity: isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) : 1,
+          quantity: packageQuantities[pkg],
         };
       });
-  
+
+      // line_items expected output
+      // [
+      //   { item_id: '294101000000450227', quantity: 1 },
+      //   { item_id: '294101000000450240', quantity: 2 }
+      // ]
+      
       facilitiesSelected.forEach((facilityId) => {
         const facility = facilities.find((f) => f.id === facilityId);
         if (facility) {
@@ -716,8 +732,6 @@ export function BookingWidget(props) {
   };
   
   
-  
-
   useEffect(() => {
     setEventPackagesError(null)
   }, [selectedEventPackages]);
