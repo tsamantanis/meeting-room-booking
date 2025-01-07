@@ -566,7 +566,7 @@ export function BookingWidget(props) {
       dataToGoogleSheets['Comments'],
       dataToGoogleSheets['adsID'],
     ];
-    console.log('weird')
+
     try {
       const response = await fetch(`${import.meta.env.VITE_GSAPI_WRAPPER_URL}append-data`, {
         // const response = await fetch(`http://localhost:5001/append-data`, {
@@ -581,7 +581,7 @@ export function BookingWidget(props) {
 
       if (response.ok) {
         // setMessage(result.message);
-        console.log('Data successfully submitted:', result)
+        // console.log('Data successfully submitted:', result)
         return true;
       } else {
         // setMessage('Error appending data: ' + result.message);
@@ -717,7 +717,7 @@ export function BookingWidget(props) {
           return false
         } else {
           const data = await response.json();
-          console.log('Estimate created successfully:', data);
+          // console.log('Estimate created successfully:', data);
           return true
         }
       } catch (error) {
