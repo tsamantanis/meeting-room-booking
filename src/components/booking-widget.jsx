@@ -445,6 +445,22 @@ export function BookingWidget(props) {
     return access_token;
   }
 
+  function gtag_report_conversion(url) {
+    if (typeof window != 'undefined') {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-809314877/L7EYCP29spQaEL3U9IED',
+          'event_callback': callback
+      });
+      return false;
+    }
+    return true;
+  }
+
   const handleSubmit = async () => {
     if (checkStep1Errors() && checkStep3Errors() && isStep1Valid() && isStep3Valid()) {
       setSubmitting(true);
@@ -489,6 +505,10 @@ export function BookingWidget(props) {
       }
       if (googleSheetsSuccess) {
         // console.log('Success!');
+
+        // Fire google tag event
+        gtag_report_conversion();
+
         setCurrentStep(4);
       }
       setSubmitting(false);

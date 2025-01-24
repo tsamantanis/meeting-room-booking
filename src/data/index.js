@@ -144,7 +144,7 @@ export const facilities = [
       en: "Flip-charts",
       nl: "Flip-overs",
     },
-    price: 35,
+    price: 40,
     description: {
       en: "Set of 2 flip-charts with paper.",
       nl: "Set van 2 flip-overs met papier.",
