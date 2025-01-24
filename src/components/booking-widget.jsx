@@ -493,7 +493,7 @@ export function BookingWidget(props) {
         // redirect to thank you page
         // https://www.creativepoint.nl/thank-you/
         if (typeof window !== 'undefined') {
-          window.location.href = 'https://www.creativepoint.nl/thank-you/';
+          window.top.location.href = 'https://www.creativepoint.nl/thank-you/';
         }
 
         setCurrentStep(4);
