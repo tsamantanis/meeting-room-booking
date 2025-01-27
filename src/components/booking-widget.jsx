@@ -458,7 +458,28 @@ export function BookingWidget(props) {
 
       const adsID = queryParams.get('adsID');
       const quoteDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+      const startDateTime = new Date(date);
+      const startTime = time.split(':');
+      startDateTime.setHours(startTime[0]);
+      startDateTime.setMinutes(startTime[1]);
+      let endDateTime = null;
       const duration = selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours).join(', ');
+      if (isMultiDay && endDate) {
+        endDateTime = new Date(endDate);
+      
+        if (endTime) {
+        endDateTime.setHours(endTime[0]);
+        endDateTime.setMinutes(endTime[1]);
+        } else {
+          // use duration
+          endDateTime.setHours(startTime[0] + parseInt(duration));
+          endDateTime.setMinutes(startTime[1]);
+        }
+      } else {
+        endDateTime = new Date(startDateTime);
+        endDateTime.setHours(startDateTime.getHours() + parseInt(duration));
+      }
+
       const totalValue = totalExclVat;
       const venueName = selectedVenueName;
       const dataToGoogleSheets = {
@@ -469,12 +490,13 @@ export function BookingWidget(props) {
         "Email": email,
         "Phone": phone,
         "Quote Date": quoteDate,
-        "Event Start Date": new Date(date).toISOString().slice(0, 10),
-        "Event End Date": new Date(event_end_date).toISOString().slice(0, 10),
+        "Event Start Date": new Date(startDateTime).toISOString(),
+        "Event End Date": new Date(endDateTime)?.toISOString(),
         "Duration": duration,
         "Total Value": totalValue,
         "Venue": venueName,
         "Items": facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId).title[language]).join(', ') + ', ' + cateringSelected.map(cateringItem => catering.find(cater => cater.id === cateringItem.id).title[language]).join(', '),
+        "Status": "Pending",
         "Comments": comments,
         "adsID": adsID
       };
@@ -570,6 +592,7 @@ export function BookingWidget(props) {
       dataToGoogleSheets['Total Value'],
       dataToGoogleSheets['Venue'],
       dataToGoogleSheets['Items'],
+      dataToGoogleSheets['Status'],
       dataToGoogleSheets['Comments'],
       dataToGoogleSheets['adsID'],
     ];

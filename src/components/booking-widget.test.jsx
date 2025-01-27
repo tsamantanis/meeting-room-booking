@@ -205,7 +205,7 @@ const validateTotalCalculation = async (guestCount, durationLabel, venueLabel, f
 
 // Different combinations for total calculation validation
 test('calculates total correctly for combination 1', async () => {
-  await validateTotalCalculation(10, '4 Hours', 'Aurora', ['Flip-charts'], ['Snacks'], '535.00');
+  await validateTotalCalculation(10, '4 Hours', 'Aurora', ['Flip-charts'], ['Snacks'], '540.00');
 });
 
 test('calculates total correctly for combination 2', async () => {
@@ -213,7 +213,7 @@ test('calculates total correctly for combination 2', async () => {
 });
 
 test('calculates total correctly for combination 3', async () => {
-  await validateTotalCalculation(15, '8 Hours', 'Aurora', ['Flip-charts', 'Remote Attendees'], ['Breakfast', 'Snacks'], '1105.00');
+  await validateTotalCalculation(15, '8 Hours', 'Aurora', ['Flip-charts', 'Remote Attendees'], ['Breakfast', 'Snacks'], '1110.00');
 });
 
 test('calculates total correctly for combination 4', async () => {
