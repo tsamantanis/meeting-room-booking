@@ -185,7 +185,7 @@ const Step1 = ({
       { eventPackagesError && <p className="text-red-500 text-sm mt-1">{eventPackagesError}</p> }
       </div>
       </div>
-      <div className="mt-12 space-y-8 flex flex-col items-center">
+      <div className="mt-12 space-y-8 flex flex-col items-center lg:max-w-[680px] mx-auto">
         <h3 className="text-lg font-bold text-center">
           Venue Preference
         </h3>

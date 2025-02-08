@@ -9,7 +9,7 @@ export const mockVenues = [
       en: "Perfect for workshops, trainings & team events",
       nl: "Ideaal voor workshops, trainingen en teamevenementen",
     },
-    images: ["./Blossom_hero_widget.jpg"],
+    images: ["../Blossom_hero_widget.jpg"],
     capacity: 20,
     area: 70,
   },
@@ -23,7 +23,7 @@ export const mockVenues = [
       en: "Perfect for workshops, trainings & team events",
       nl: "Ideaal voor workshops, trainingen en teamevenementen",
     },
-    images: ["./Aurora_hero_widget.jpg"],
+    images: ["../Aurora_hero_widget.jpg"],
     capacity: 16,
     area: 65,
   },
@@ -135,7 +135,7 @@ export const facilities = [
       en: "Conference system with Wide angle camera with external microphones.",
       nl: "conferentiesysteem met groothoekcamera met externe microfoons.",
     },
-    image: "./conference_form_m.jpg",
+    image: "../conference_form_m.jpg",
   },
   {
     id: 4,
@@ -149,7 +149,7 @@ export const facilities = [
       en: "Set of 2 flip-charts with paper.",
       nl: "Set van 2 flip-overs met papier.",
     },
-    image: "./flipcharts_form_m.jpg",
+    image: "../flipcharts_form_m.jpg",
   },
 ];
 
@@ -166,7 +166,7 @@ export const catering = [
       en: "Vegan & vegetarian options as well. We provide a form to order online conveniently.",
       nl: "Ook veganistische en vegetarische opties. We bieden een formulier om gemakkelijk online te bestellen.",
     },
-    image: "./lunch_form_m.webp",
+    image: "../lunch_form_m.webp",
   },
   {
     id: 1,
@@ -180,7 +180,7 @@ export const catering = [
       en: "Unlimited Coffee, tea and soft drinks.",
       nl: "Onbeperkt koffie, thee en frisdrank.",
     },
-    image: "./beverages_form_m.jpg",
+    image: "../beverages_form_m.jpg",
   },
   {
     id: 2,
@@ -194,7 +194,7 @@ export const catering = [
       en: "Fresh fruit basket, cake, energy bars, chocolate bites.",
       nl: "Vers fruit basket, cake, energierepen, chocoladesnacks.",
     },
-    image: "./snacks_form_m.jpg",
+    image: "../snacks_form_m.jpg",
   },
   {
     id: 3,
@@ -208,6 +208,6 @@ export const catering = [
       en: "Freshly baked pastries, yogurt with fruit and small sandwiches.",
       nl: "Versgebakken broodjes, yoghurt met fruit en kleine broodjes.",
     },
-    image: "./breakfast_form_m.webp",
+    image: "../breakfast_form_m.webp",
   },
 ];
