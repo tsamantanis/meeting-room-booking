@@ -13,20 +13,20 @@ export const mockVenues = [
     capacity: 20,
     area: 70,
   },
-  {
-    id: "2",
-    name: {
-      en: "Aurora",
-      nl: "Aurora",
-    },
-    description: {
-      en: "Perfect for workshops, trainings & team events",
-      nl: "Ideaal voor workshops, trainingen en teamevenementen",
-    },
-    images: ["../Aurora_hero_widget.jpg"],
-    capacity: 16,
-    area: 65,
-  },
+  // {
+  //   id: "2",
+  //   name: {
+  //     en: "Aurora",
+  //     nl: "Aurora",
+  //   },
+  //   description: {
+  //     en: "Perfect for workshops, trainings & team events",
+  //     nl: "Ideaal voor workshops, trainingen en teamevenementen",
+  //   },
+  //   images: ["../Aurora_hero_widget.jpg"],
+  //   capacity: 16,
+  //   area: 65,
+  // },
 ];
 
 export const mockEventPackages = [

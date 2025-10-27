@@ -189,7 +189,7 @@ const Step1 = ({
         <h3 className="text-lg font-bold text-center">
           Venue Preference
         </h3>
-        <div className="grid md:grid-cols-2 gap-4 mt-4">
+        <div className="grid  gap-4 mt-4">
           {venues.map(v => (
             <VenueCardOption
               key={v.id}
