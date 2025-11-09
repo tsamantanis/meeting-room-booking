@@ -175,7 +175,7 @@ export const catering = [
       en: "Beverages",
       nl: "Drankjes",
     },
-    price: 7,
+    price: 10,
     description: {
       en: "Unlimited Coffee, tea and soft drinks.",
       nl: "Onbeperkt koffie, thee en frisdrank.",
@@ -189,7 +189,7 @@ export const catering = [
       en: "Fruits & Snacks",
       nl: "Fruit & Snacks",
     },
-    price: 10,
+    price: 13,
     description: {
       en: "Fresh fruit basket, cake, energy bars, chocolate bites.",
       nl: "Vers fruit basket, cake, energierepen, chocoladesnacks.",
