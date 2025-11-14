@@ -32,7 +32,7 @@ export const mockVenues = [
 export const mockEventPackages = [
   {
     id: "1",
-    zoho_id: "294101000000450227",
+    zoho_id: "708382000000060052",
     duration_hours: 8,
     duration_minutes: 0,
     short_description: {
@@ -49,7 +49,7 @@ export const mockEventPackages = [
   },
   {
     id: "2",
-    zoho_id: "294101000000450240",
+    zoho_id: "708382000000060063",
     duration_hours: 4,
     duration_minutes: 0,
     short_description: {
@@ -66,7 +66,7 @@ export const mockEventPackages = [
   },
   {
     id: "3",
-    zoho_id: "294101000000450262",
+    zoho_id: "708382000000098155",
     duration_hours: 1,
     duration_minutes: 0,
     short_description: {
@@ -125,7 +125,7 @@ export const mockVenuePackages = [
 export const facilities = [
   {
     id: 3,
-    zoho_id: "294101000000057154",
+    zoho_id: "708382000000059891",
     title: {
       en: "Remote Attendees",
       nl: "Deelnemers op afstand",
@@ -139,7 +139,7 @@ export const facilities = [
   },
   {
     id: 4,
-    zoho_id: "294101000000302075",
+    zoho_id: "708382000000060041",
     title: {
       en: "Flip-charts",
       nl: "Flip-overs",
@@ -156,7 +156,7 @@ export const facilities = [
 export const catering = [
   {
     id: 4,
-    zoho_id: "294101000000057128",
+    zoho_id: "708382000000060276",
     title: {
       en: "Lunch",
       nl: "Lunch",
@@ -170,7 +170,7 @@ export const catering = [
   },
   {
     id: 1,
-    zoho_id: "294101000000278273",
+    zoho_id: "708382000000060019",
     title: {
       en: "Beverages",
       nl: "Drankjes",
@@ -184,7 +184,7 @@ export const catering = [
   },
   {
     id: 2,
-    zoho_id: "294101000000124242",
+    zoho_id: "708382000000059967",
     title: {
       en: "Fruits & Snacks",
       nl: "Fruit & Snacks",
@@ -198,7 +198,7 @@ export const catering = [
   },
   {
     id: 3,
-    zoho_id: "294101000000057137",
+    zoho_id: "708382000000059868",
     title: {
       en: "Breakfast",
       nl: "Ontbijt",
