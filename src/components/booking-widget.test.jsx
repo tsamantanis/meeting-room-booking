@@ -205,17 +205,42 @@ const validateTotalCalculation = async (guestCount, durationLabel, venueLabel, f
 
 // Different combinations for total calculation validation
 test('calculates total correctly for combination 1', async () => {
-  await validateTotalCalculation(10, '4 Hours', 'Aurora', ['Flip-charts'], ['Snacks'], '540.00');
+  await validateTotalCalculation(10, '4 Hours', 'Blossom', ['Flip-charts'], ['Fruits & Snacks'], '570.00');
 });
 
 test('calculates total correctly for combination 2', async () => {
-  await validateTotalCalculation(20, '8 Hours', 'Blossom', ['Remote Attendees'], ['Lunch', 'Beverages'], '1270.00');
+  await validateTotalCalculation(20, '8 Hours', 'Blossom', ['Remote Attendees'], ['Lunch', 'Beverages'], '1330.00');
 });
 
 test('calculates total correctly for combination 3', async () => {
-  await validateTotalCalculation(15, '8 Hours', 'Aurora', ['Flip-charts', 'Remote Attendees'], ['Breakfast', 'Snacks'], '1110.00');
+  await validateTotalCalculation(15, '8 Hours', 'Blossom', ['Flip-charts', 'Remote Attendees'], ['Breakfast', 'Fruits & Snacks'], '1155.00');
 });
 
 test('calculates total correctly for combination 4', async () => {
   await validateTotalCalculation(8, '4 Hours', 'Blossom', [], ['Lunch'], '592.00');
+});
+
+test('calculates total correctly when event package is selected after venue (regression: zero total bug)', async () => {
+  render(<BookingWidget />);
+
+  fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '10' } });
+  fireEvent.click(screen.getByLabelText(/Blossom/i));
+  // Select package AFTER venue — this is the sequence that triggered the zero total bug
+  fireEvent.click(screen.getByLabelText(/4 Hours/i));
+  fireEvent.click(screen.getByLabelText('Add Event Options'));
+
+  expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+
+  await waitFor(() => expect(screen.getByText(/Overview/i)).toBeInTheDocument());
+  const overviewButton = screen.queryByText(/Overview/i);
+  if (overviewButton) {
+    fireEvent.click(overviewButton);
+  }
+  await waitFor(() => {
+    expect(screen.getByText(/Event Overview/i)).toBeInTheDocument();
+  });
+
+  const totalDisplay = screen.queryByLabelText('Total');
+  expect(totalDisplay).toBeInTheDocument();
+  expect(totalDisplay).toHaveTextContent('400.00€');
 });

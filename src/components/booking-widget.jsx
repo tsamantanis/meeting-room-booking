@@ -94,7 +94,7 @@ export function BookingWidget(props) {
     setTotalExclVat(total.toFixed(2));
 
     
-  }, [venue, isMultiDay, endDate, facilitiesSelected, cateringSelected]);
+  }, [venue, selectedEventPackages, isMultiDay, endDate, facilitiesSelected, cateringSelected]);
 
   useEffect(() => {
     scrollToTop();
