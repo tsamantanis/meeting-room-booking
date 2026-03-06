@@ -429,7 +429,11 @@ export function BookingWidget(props) {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Error creating customer:', errorData.error);
-        alert('Error creating customer: ' + errorData.error);
+        if (errorData.error && errorData.error.toLowerCase().includes('already exists')) {
+          alert('Welcome back! Your reservation request has been created successfully.');
+        } else {
+          alert('Error creating customer: ' + errorData.error);
+        }
         return null;
       }
   
