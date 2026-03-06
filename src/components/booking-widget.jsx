@@ -153,7 +153,7 @@ export function BookingWidget(props) {
 
   // Company Name Validation
   const validateCompany = (company) => {
-    const companyRegex = /^[A-Za-z0-9&.\-' ]{2,100}$/;
+    const companyRegex = /^[A-Za-z0-9&.\-'() ]{2,100}$/;
     return company.trim().length >= 2 && company.trim().length <= 100 && companyRegex.test(company.trim());
   };
 
@@ -190,6 +190,8 @@ export function BookingWidget(props) {
 
     if (!company) {
       setCompanyError("Please enter your company name");
+    } else if (!validateCompany(company)) {
+      setCompanyError("Company name contains invalid characters");
     }
 
     if (!firstName) {

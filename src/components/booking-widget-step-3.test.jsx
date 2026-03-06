@@ -108,4 +108,9 @@ describe('Step3 Component', () => {
     renderComponent({ submitting: false });
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
+
+  test('displays company error message when companyError prop is set', () => {
+    renderComponent({ companyError: 'Company name contains invalid characters' });
+    expect(screen.getByText('Company name contains invalid characters')).toBeInTheDocument();
+  });
 });
