@@ -216,6 +216,15 @@ export function BookingWidget(props) {
     return true;
   }
 
+  const generateReservationId = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return `CP-${result}`;
+  };
+
   const scrollToTop = () => {
     
     if (widgetRef && widgetRef.current) {
@@ -273,7 +282,7 @@ export function BookingWidget(props) {
       const totalValue = totalExclVat;
       const venueName = selectedVenueName;
       const dataToGoogleSheets = {
-        "reservationId": new Date().toLocaleString("en-US", { timeZone: "Europe/Amsterdam" }),
+        "reservationId": generateReservationId(),
         "First Name": firstName.trim(),
         "Last Name": lastName.trim(),
         "Company": company.trim(),
