@@ -36,8 +36,9 @@ export function DatePicker({ date, setDate, disabled = isDateDisabled, label = "
         <Calendar
           mode="single"
           selected={date}
+          required
           onSelect={(date) => {
-            setDate(date);
+            if (date) setDate(date);
             // close the popover
             setIsOpen(false);
           }}

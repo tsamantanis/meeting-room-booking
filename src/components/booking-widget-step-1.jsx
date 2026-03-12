@@ -106,12 +106,14 @@ const Step1 = ({
             <Switch id="multi-day" checked={isMultiDay} onClick={(e) => {
               setMultiDay(!isMultiDay); 
               if (date && !isMultiDay) {
-                setEndDate(new Date().setDate(new Date(date).getDate() + 1)); 
+                setEndDate(new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000));
                 if (time) {
-                  setEndTime(new Date(date).setHours(new Date(date).getHours() + 8)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                  const endTimeDate = new Date(date);
+                  endTimeDate.setHours(endTimeDate.getHours() + 8);
+                  setEndTime(endTimeDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }));
                 }
               } else {
-                setEndDate(new Date().setDate(new Date().getDate() + 2))
+                setEndDate(new Date(Date.now() + 2 * 24 * 60 * 60 * 1000))
                 setEndTime("17:00");
               }
               }} />

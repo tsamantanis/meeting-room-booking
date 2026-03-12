@@ -102,12 +102,12 @@ export function BookingWidget(props) {
 
   const isStep1Valid = () => {
     return (
-      guests > 0 
-      && date !== '' 
-      && time !== '' 
+      guests > 0
+      && !!date
+      && time !== ''
       && (selectedEventPackages.length > 0)
       && venue !== ''
-      && (isMultiDay ? endDate !== '' : true)
+      && (isMultiDay ? !!endDate : true)
       && guests <= mockVenues.find(v => v.id === venue)?.capacity
     );
   };
@@ -256,13 +256,14 @@ export function BookingWidget(props) {
       if (isMultiDay && endDate) {
         endDateTime = new Date(endDate);
       
-        if (endTime) {
-        endDateTime.setHours(endTime[0]);
-        endDateTime.setMinutes(endTime[1]);
+        if (endTime && typeof endTime === 'string') {
+        const endTimeParts = endTime.split(':');
+        endDateTime.setHours(parseInt(endTimeParts[0]));
+        endDateTime.setMinutes(parseInt(endTimeParts[1]));
         } else {
           // use duration
-          endDateTime.setHours(startTime[0] + parseInt(duration));
-          endDateTime.setMinutes(startTime[1]);
+          endDateTime.setHours(parseInt(startTime[0]) + parseInt(duration));
+          endDateTime.setMinutes(parseInt(startTime[1]));
         }
       } else {
         endDateTime = new Date(startDateTime);
