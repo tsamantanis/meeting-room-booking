@@ -242,3 +242,90 @@ export function ArrowUpCircleIcon(props) {
     </svg>)
   );
 }
+
+// ── Seating-layout glyphs (0 0 24 24, currentColor) ─────────────────────────
+
+export function BoardroomGlyph(props) {
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="9" width="12" height="6" rx="1" />
+      <circle cx="8" cy="6.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="6.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="6.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="8" cy="17.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="17.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="17.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function UShapeGlyph(props) {
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 5 V14 a2 2 0 0 0 2 2 H14 a2 2 0 0 0 2 -2 V5" />
+      <circle cx="5" cy="7" r="1" fill="currentColor" stroke="none" />
+      <circle cx="5" cy="11" r="1" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="7" r="1" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="11" r="1" fill="currentColor" stroke="none" />
+      <circle cx="10" cy="19" r="1" fill="currentColor" stroke="none" />
+      <circle cx="14" cy="19" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function ClassroomGlyph(props) {
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg">
+      <line x1="9" y1="4" x2="15" y2="4" />
+      <line x1="6" y1="13" x2="18" y2="13" />
+      <line x1="6" y1="18.5" x2="18" y2="18.5" />
+      <circle cx="8" cy="10.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="10.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="10.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="8" cy="16" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="16" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="16" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function CircleGlyph(props) {
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="4.5" />
+      <circle cx="12" cy="4.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="18.5" cy="8.25" r="1" fill="currentColor" stroke="none" />
+      <circle cx="18.5" cy="15.75" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="19.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="5.5" cy="15.75" r="1" fill="currentColor" stroke="none" />
+      <circle cx="5.5" cy="8.25" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function TheatreGlyph(props) {
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg">
+      <line x1="6" y1="5" x2="18" y2="5" />
+      <circle cx="8" cy="10" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="10" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="10" r="1" fill="currentColor" stroke="none" />
+      <circle cx="8" cy="14" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="14" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="14" r="1" fill="currentColor" stroke="none" />
+      <circle cx="8" cy="18" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="18" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="18" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}

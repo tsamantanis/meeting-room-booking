@@ -66,22 +66,31 @@ export const mockEventPackages = [
   },
   {
     id: "3",
-    zoho_id: "936322000000089908",
-    duration_hours: 1,
+    zoho_id: "936322000000090488",
+    duration_hours: 2,
     duration_minutes: 0,
     short_description: {
-      en: "Hourly Rate",
-      nl: "Uurtarief",
+      en: "Weekend / Evening",
+      nl: "Weekend / Avond",
     },
     description: {
-      en: "During weekends or evenings. Minimum booking for 2 hours.",
-      nl: "In het weekend of 's avonds. Minimale boeking voor 2 uur.",
+      en: "During weekends or evenings. Includes 2 hours.",
+      nl: "In het weekend of 's avonds. Inclusief 2 uur.",
     },
     is_multi_day: false,
     is_increment_rate: 1,
-    rate: 120.0,
+    rate: 270.0,
   },
 ];
+
+// Flat rate for each extra hour added on top of the selected duration.
+export const EXTRA_HOUR_RATE = 60;
+
+// Maximum total hours per day (selected duration + extra hours).
+export const MAX_TOTAL_HOURS = 12;
+
+// Zoho item id for the €60/hr extra-hours line item (org 20113447459).
+export const extraHourZohoId = "936322000000090454";
 
 export const mockVenuePackages = [
   {
@@ -100,7 +109,7 @@ export const mockVenuePackages = [
     id: "3",
     venue_id: "1",
     package_id: "3",
-    price: 120,
+    price: 270,
   },
   {
     id: "4",
@@ -118,7 +127,7 @@ export const mockVenuePackages = [
     id: "6",
     venue_id: "2",
     package_id: "3",
-    price: 120,
+    price: 270,
   },
 ];
 

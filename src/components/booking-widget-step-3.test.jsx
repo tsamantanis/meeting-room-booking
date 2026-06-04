@@ -46,7 +46,7 @@ describe('Step3 Component', () => {
 
   test('renders the Step3 component with default props', () => {
     renderComponent();
-    expect(screen.getByText(/Almost there!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tell us who you are/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Company name/i)).toBeInTheDocument();
   });
 
@@ -87,14 +87,14 @@ describe('Step3 Component', () => {
 
   test('calls handleSubmit when the button is clicked and validations pass', () => {
     renderComponent();
-    const button = screen.getByRole('button', { name: /Request Proposal/i });
+    const button = screen.getByRole('button', { name: /Request Quote/i });
     fireEvent.click(button);
     expect(mockHandleSubmit).toHaveBeenCalled();
   });
 
   test('disables the button when isStep3Valid returns false', () => {
     renderComponent({ isStep3Valid: () => false });
-    const button = screen.getByRole('button', { name: /Request Proposal/i });
+    const button = screen.getByRole('button', { name: /Request Quote/i });
     expect(button).toBeDisabled();
   });
 

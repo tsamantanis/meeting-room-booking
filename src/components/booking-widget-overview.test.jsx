@@ -63,7 +63,7 @@ describe('Overview', () => {
         checkStep3Errors={vi.fn().mockReturnValue(true)}
       />
     );
-    fireEvent.click(getByLabelText('Request Proposal Overview'));
+    fireEvent.click(getByLabelText('Request Quote Overview'));
     expect(mockProps.handleSubmit).toHaveBeenCalled();
   });
 

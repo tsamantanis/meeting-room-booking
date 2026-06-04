@@ -41,9 +41,9 @@ describe('Step2 Component', () => {
 
   test('renders Step2 component with facilities and catering sections', () => {
     renderComponent();
-    expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+    expect(screen.getByText(/Choose your extras/i)).toBeInTheDocument();
     const facilityHeaders = screen.getAllByText(/Facilities/i);
-    expect(facilityHeaders).toHaveLength(2);
+    expect(facilityHeaders).toHaveLength(1);
     expect(screen.getByText(/Catering arrangements/i)).toBeInTheDocument();
   });
 

@@ -27,7 +27,7 @@ describe('BookingWidget Component', () => {
 
   test('renders BookingWidget component with initial step', () => {
     renderComponent();
-    expect(screen.getByText(/Let's get you started/i)).toBeInTheDocument();
+    expect(screen.getByText(/Get a tailored quote in 3 steps/i)).toBeInTheDocument();
   });
 
   test('navigates to Step 2 when Step 1 is completed', () => {
@@ -35,12 +35,11 @@ describe('BookingWidget Component', () => {
 
     // Fill in Step 1 inputs
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '12' } });
-    fireEvent.click(screen.getByLabelText(/8 Hours/i));
-    fireEvent.click(screen.getByLabelText(/Blossom/i));
+    fireEvent.click(screen.getByLabelText(/Full day/i));
     fireEvent.click(screen.getByLabelText('Add Event Options'));
 
     // Validate transition to Step 2
-    expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+    expect(screen.getByText(/Choose your extras/i)).toBeInTheDocument();
   });
 
   test('navigates to Step 3 when Step 2 is completed', () => {
@@ -48,16 +47,15 @@ describe('BookingWidget Component', () => {
 
     // Complete Step 1
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '12' } });
-    fireEvent.click(screen.getByLabelText(/8 Hours/i));
-    fireEvent.click(screen.getByLabelText(/Blossom/i));
+    fireEvent.click(screen.getByLabelText(/Full day/i));
     fireEvent.click(screen.getByLabelText('Add Event Options'));
 
     // Complete Step 2
-    fireEvent.click(screen.getByText(/Choose facilities & catering/i));
+    fireEvent.click(screen.getByText(/Choose your extras/i));
     fireEvent.click(screen.getByLabelText('Next'));
 
     // Validate transition to Step 3
-    expect(screen.getByText(/Almost there!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tell us who you are/i)).toBeInTheDocument();
   });
 
   test('calls handleSubmit on final step submission', async () => {
@@ -66,12 +64,11 @@ describe('BookingWidget Component', () => {
 
     // Complete Step 1
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '12' } });
-    fireEvent.click(screen.getByLabelText(/8 Hours/i));
-    fireEvent.click(screen.getByLabelText(/Blossom/i));
+    fireEvent.click(screen.getByLabelText(/Full day/i));
     fireEvent.click(screen.getByLabelText('Add Event Options'));
 
     // Complete Step 2
-    fireEvent.click(screen.getByText(/Choose facilities & catering/i));
+    fireEvent.click(screen.getByText(/Choose your extras/i));
     fireEvent.click(screen.getByLabelText('Next'));
 
     // Simulate final submission
@@ -80,7 +77,7 @@ describe('BookingWidget Component', () => {
     fireEvent.change(screen.getByPlaceholderText(/Last name/i), { target: { value: 'Doe' } });
     fireEvent.change(screen.getByPlaceholderText(/Email/i), { target: { value: 'john.doe@example.com' } });
     fireEvent.change(screen.getByPlaceholderText(/Phone/i), { target: { value: '+1234567890' }});
-    const button = screen.getByLabelText('Request Proposal BW');
+    const button = screen.getByLabelText('Request Quote');
     fireEvent.click(button);
 
     await waitFor(() => {
@@ -96,10 +93,9 @@ describe('BookingWidget Component', () => {
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '15' } });
   
     // Step 1: Select a duration
-    fireEvent.click(screen.getByLabelText(/8 Hours/i));
+    fireEvent.click(screen.getByLabelText(/Full day/i));
   
     // Step 1: Select a venue
-    fireEvent.click(screen.getByLabelText(/Blossom/i));
   
     // Step 1: Toggle the multi-day switch
     fireEvent.click(screen.getByLabelText(/Multi day event/i));
@@ -116,7 +112,7 @@ describe('BookingWidget Component', () => {
     fireEvent.click(screen.getByLabelText('Add Event Options'));
   
     // Validate that Step 2 is loaded
-    expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+    expect(screen.getByText(/Choose your extras/i)).toBeInTheDocument();
   
     // Step 2: Select a facility
     fireEvent.click(screen.getByText(/Conference System/i));
@@ -136,7 +132,7 @@ describe('BookingWidget Component', () => {
     fireEvent.change(screen.getByPlaceholderText(/Phone/i), { target: { value: '+1234567890' } });
   
     // Submit the form
-    fireEvent.click(screen.getByLabelText('Request Proposal BW'));
+    fireEvent.click(screen.getByLabelText('Request Quote'));
   
     // Wait for final step to be reached
     await waitFor(() => {
@@ -166,14 +162,13 @@ const validateTotalCalculation = async (guestCount, durationLabel, venueLabel, f
   // Step 1: Select a duration
   fireEvent.click(screen.getByLabelText(new RegExp(`${durationLabel}`, 'i')));
 
-  // Step 1: Select a venue
-  fireEvent.click(screen.getByLabelText(new RegExp(`${venueLabel}`, 'i')));
+  // Venue is fixed (single venue, auto-selected) — venueLabel kept for readability
 
   // Proceed to the next step
   fireEvent.click(screen.getByLabelText('Add Event Options'));
 
   // Validate that Step 2 is loaded
-  expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+  expect(screen.getByText(/Choose your extras/i)).toBeInTheDocument();
 
   // Step 2: Select facilities
   facilityLabels.forEach(facility => {
@@ -205,31 +200,30 @@ const validateTotalCalculation = async (guestCount, durationLabel, venueLabel, f
 
 // Different combinations for total calculation validation
 test('calculates total correctly for combination 1', async () => {
-  await validateTotalCalculation(10, '4 Hours', 'Blossom', ['Flip-charts'], ['Fruits & Snacks'], '570.00');
+  await validateTotalCalculation(10, 'Half day', 'Blossom', ['Flip-charts'], ['Fruits & Snacks'], '570.00');
 });
 
 test('calculates total correctly for combination 2', async () => {
-  await validateTotalCalculation(20, '8 Hours', 'Blossom', ['Remote Attendees'], ['Lunch', 'Beverages'], '1330.00');
+  await validateTotalCalculation(20, 'Full day', 'Blossom', ['Remote Attendees'], ['Lunch', 'Beverages'], '1330.00');
 });
 
 test('calculates total correctly for combination 3', async () => {
-  await validateTotalCalculation(15, '8 Hours', 'Blossom', ['Flip-charts', 'Remote Attendees'], ['Breakfast', 'Fruits & Snacks'], '1155.00');
+  await validateTotalCalculation(15, 'Full day', 'Blossom', ['Flip-charts', 'Remote Attendees'], ['Breakfast', 'Fruits & Snacks'], '1155.00');
 });
 
 test('calculates total correctly for combination 4', async () => {
-  await validateTotalCalculation(8, '4 Hours', 'Blossom', [], ['Lunch'], '592.00');
+  await validateTotalCalculation(8, 'Half day', 'Blossom', [], ['Lunch'], '592.00');
 });
 
 test('calculates total correctly when event package is selected after venue (regression: zero total bug)', async () => {
   render(<BookingWidget />);
 
   fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: '10' } });
-  fireEvent.click(screen.getByLabelText(/Blossom/i));
-  // Select package AFTER venue — this is the sequence that triggered the zero total bug
-  fireEvent.click(screen.getByLabelText(/4 Hours/i));
+  // Venue is auto-selected; selecting a package should compute a non-zero total (regression)
+  fireEvent.click(screen.getByLabelText(/Half day/i));
   fireEvent.click(screen.getByLabelText('Add Event Options'));
 
-  expect(screen.getByText(/Choose facilities & catering/i)).toBeInTheDocument();
+  expect(screen.getByText(/Choose your extras/i)).toBeInTheDocument();
 
   await waitFor(() => expect(screen.getByText(/Overview/i)).toBeInTheDocument());
   const overviewButton = screen.queryByText(/Overview/i);

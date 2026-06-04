@@ -59,9 +59,9 @@ describe('Step1', () => {
     expect(mockProps.setDate).toHaveBeenCalled();
   });
 
-  it('handles venue selection', () => {
+  it('handles layout selection', () => {
     const { getByText } = render(<Step1 {...mockProps} />);
-    fireEvent.click(getByText('Venue 1'));
-    expect(mockProps.setVenue).toHaveBeenCalledWith(1);
+    fireEvent.click(getByText('Classroom'));
+    expect(mockProps.setTableSetup).toHaveBeenCalledWith('Classroom');
   });
 });
