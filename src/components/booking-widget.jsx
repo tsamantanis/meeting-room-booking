@@ -693,13 +693,11 @@ export function BookingWidget(props) {
               handleSubmit={handleSubmit}
               submitting={submitting}
             />
-            <div className="hidden md:flex mt-12 flex justify-between items-center">
+            <div className="hidden md:flex mt-12 flex items-center space-x-4">
+              <Button variant="outline" onClick={() => setCurrentStep(2)}>
+                <ArrowLeftIcon className="h-5 w-5 text-muted-foreground" />
+              </Button>
               <span className="text-muted-foreground">Step 3 of 3</span>
-              <div className='flex space-x-4 items-center'>
-                <Button variant="outline" onClick={() => setCurrentStep(2)}>
-                  <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
-                </Button>
-              </div>
             </div>
           </>
         )}
