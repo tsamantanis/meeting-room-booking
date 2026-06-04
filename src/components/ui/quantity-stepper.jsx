@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import { MinusIcon, PlusIcon } from '@/components/icons';
 
 /**
- * A small −/value/+ stepper. The catering card's stepper is hard-coded
- * disabled; this is the reusable, enabled version used for extra hours.
+ * Borderless −/value/+ stepper, styled to match the catering card's control.
+ * The parent supplies the surrounding pill/border, so this renders inline:
+ * the value followed by the minus and plus buttons next to each other.
  */
 const QuantityStepper = ({ value, onChange, min = 0, max = Infinity, label }) => {
   return (
-    <div className="w-fit flex items-center justify-center rounded-full border-primary border-2 p-1 space-x-2">
+    <div className="flex items-center space-x-2">
+      <p className="text-primary font-medium min-w-5 text-center" aria-label={label}>{value}</p>
       <Button
         type="button"
         variant="outline"
@@ -19,7 +21,6 @@ const QuantityStepper = ({ value, onChange, min = 0, max = Infinity, label }) =>
       >
         <MinusIcon className="h-5 w-5 text-primary group-hover:text-white" />
       </Button>
-      <p className="text-primary font-medium min-w-5 text-center" aria-label={label}>{value}</p>
       <Button
         type="button"
         variant="outline"
