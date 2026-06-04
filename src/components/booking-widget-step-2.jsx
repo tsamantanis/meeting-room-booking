@@ -46,7 +46,7 @@ const Step2 = ({
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6 mt-8">
-      <h2 className="text-2xl font-bold text-center">Choose facilities & catering</h2>
+      <h2 className="text-xl font-bold text-center">Choose your extras</h2>
       <p className="text-center text-muted-foreground">Make your event complete</p>
 
       <div>
@@ -68,7 +68,7 @@ const Step2 = ({
 
       <div>
         <h3 className="text-lg text-primary font-medium">Catering arrangements</h3>
-        <p className="text-muted-foreground mt-2">Specific delivery times are be added later from your customer portal. For more details check our <a className="font-normal underline text-muted-foreground" href="https://www.creativepoint.nl/catering-options/" target='_blank'>catering section</a>.</p>
+        <p className="text-muted-foreground mt-2">If you want to keep your energy high choose your preferred catering options.</p>
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(220px,_1fr))] gap-4 mt-4">
           {catering.map(cater => {
             const selectedCater = cateringSelected.find(item => item.id === cater.id);

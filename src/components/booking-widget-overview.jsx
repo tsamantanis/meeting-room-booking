@@ -6,7 +6,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { check } from 'prettier';
+import { EXTRA_HOUR_RATE } from '@/data';
 
 const Overview = ({ 
   language,
@@ -21,9 +21,10 @@ const Overview = ({
   checkStep1Errors,
   isStep3Valid,
   checkStep3Errors,
-  facilitiesSelected, 
-  cateringSelected, 
+  facilitiesSelected,
+  cateringSelected,
   selectedEventPackages,
+  extraHours = 0,
   totalExclVat,
   handleSubmit,
   submitting
@@ -116,8 +117,18 @@ const Overview = ({
             <span className="text-sm">
               {`${item.price * item.quantity}€`}
             </span>
-          </div>  
+          </div>
         ))}
+        {extraHours > 0 && (
+          <div className="flex items-center justify-between space-x-2">
+            <span className="text-sm">
+              {`Extra hours x ${extraHours}`}<span className="text-muted-foreground">{selectedEventPackages.length > 1 ? ` per day` : ''}</span>
+            </span>
+            <span className="text-sm">
+              {`${extraHours * EXTRA_HOUR_RATE}€`}
+            </span>
+          </div>
+        )}
       {currentStep > 1 && venue && guests > 0 && <hr />}
         <div className="flex items-center justify-between space-x-2">
           <span className="text-md font-medium">
@@ -178,14 +189,14 @@ const Overview = ({
                   <Button variant="outline" onClick={() => setCurrentStep(2)}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
-                  <Button 
-                    aria-label="Request Proposal Overview"
+                  <Button
+                    aria-label="Request Quote Overview"
                     disabled={!isStep3Valid()} onClick={() => {
                       if (checkStep3Errors() && isStep3Valid()) {
                         handleSubmit()
                       }
                     }}>
-                    {submitting ? 
+                    {submitting ?
                     (
                       <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -193,7 +204,7 @@ const Overview = ({
                       </svg>
                     )
                   : (
-                    <span className="flex space-x-2">Request <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    <span className="flex space-x-2">Request Quote <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                     </span>
                   )}
                   </Button>
@@ -237,16 +248,16 @@ const Overview = ({
                   }}>
                     <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
                   </Button>
-                  <Button 
-                    aria-label="Request Proposal Overview Drawer"
+                  <Button
+                    aria-label="Request Quote Overview Drawer"
                     className="w-full min-w-fit"
-                    disabled={!isStep3Valid()} 
+                    disabled={!isStep3Valid()}
                     onClick={() => {
                       if (checkStep3Errors() && isStep3Valid()) {
                         handleSubmit()
                       }
                     }}>
-                    {submitting ? 
+                    {submitting ?
                     (
                       <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -254,7 +265,7 @@ const Overview = ({
                       </svg>
                     )
                   : (
-                    <span className="flex space-x-2">Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
+                    <span className="flex space-x-2">Request Quote <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
                     </span>
                   )}
                   </Button>

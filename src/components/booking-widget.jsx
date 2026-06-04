@@ -7,7 +7,8 @@ import Step1 from '@/components/booking-widget-step-1';
 import Step2 from '@/components/booking-widget-step-2';
 import Step3 from '@/components/booking-widget-step-3';
 import ThankYou from '@/components/thank-you';
-import { mockVenues, mockEventPackages, mockVenuePackages, facilities, catering } from '@/data';
+import { StepIndicator } from '@/components/ui/step-indicator';
+import { mockVenues, mockEventPackages, mockVenuePackages, facilities, catering, EXTRA_HOUR_RATE, extraHourZohoId } from '@/data';
 
 // Initialize Supabase client
 // const supabaseUrl = 'https://your-supabase-url.supabase.co';
@@ -37,6 +38,7 @@ export function BookingWidget(props) {
   const [eventPackages, setEventPackages] = useState([]);
   // const [event_package_price, setEventPackagePrice] = useState(0);
   const [selectedEventPackages, setSelectedEventPackages] = useState([]);
+  const [extraHours, setExtraHours] = useState(0);
   const [totalExclVat, setTotalExclVat] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   // const [multiDayPackages, setMultiDayPackages] = useState([{}]); // state for multiple days packages
@@ -78,6 +80,9 @@ export function BookingWidget(props) {
           total += venuePackage.price;
         }
 
+        // Extra hours are priced per day (€EXTRA_HOUR_RATE each).
+        total += extraHours * EXTRA_HOUR_RATE;
+
         const selectedFacilities = facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId));
         selectedFacilities.forEach(facility => {
           total += facility.price;
@@ -94,7 +99,7 @@ export function BookingWidget(props) {
     setTotalExclVat(total.toFixed(2));
 
     
-  }, [venue, selectedEventPackages, isMultiDay, endDate, facilitiesSelected, cateringSelected]);
+  }, [venue, selectedEventPackages, extraHours, isMultiDay, endDate, facilitiesSelected, cateringSelected]);
 
   useEffect(() => {
     scrollToTop();
@@ -262,21 +267,24 @@ export function BookingWidget(props) {
       startDateTime.setMinutes(startTime[1]);
       let endDateTime = null;
       const duration = selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).duration_hours).join(', ');
+      // Departure is driven by the last selected day's package hours plus any extra hours.
+      const lastPackageId = selectedEventPackages[selectedEventPackages.length - 1];
+      const lastDayHours = (mockEventPackages.find(ep => ep.id === lastPackageId)?.duration_hours ?? parseInt(duration)) + extraHours;
       if (isMultiDay && endDate) {
         endDateTime = new Date(endDate);
-      
+
         if (endTime && typeof endTime === 'string') {
         const endTimeParts = endTime.split(':');
         endDateTime.setHours(parseInt(endTimeParts[0]));
         endDateTime.setMinutes(parseInt(endTimeParts[1]));
         } else {
-          // use duration
-          endDateTime.setHours(parseInt(startTime[0]) + parseInt(duration));
+          // use duration (+ extra hours)
+          endDateTime.setHours(parseInt(startTime[0]) + lastDayHours);
           endDateTime.setMinutes(parseInt(startTime[1]));
         }
       } else {
         endDateTime = new Date(startDateTime);
-        endDateTime.setHours(startDateTime.getHours() + parseInt(duration));
+        endDateTime.setHours(startDateTime.getHours() + lastDayHours);
       }
 
       const totalValue = totalExclVat;
@@ -292,13 +300,14 @@ export function BookingWidget(props) {
         "Quote Date": quoteDate,
         "Event Start Date": new Date(startDateTime).toLocaleString("en-US", { timeZone: "Europe/Amsterdam" }),
         "Event End Date": new Date(endDateTime).toLocaleString("en-US", { timeZone: "Europe/Amsterdam" }),
-        "Duration": duration,
+        "Duration": extraHours > 0 ? `${duration} (+${extraHours}h extra)` : duration,
         "Total Value": totalValue,
         "Venue": venueName,
         "Items": facilitiesSelected.map(facilityId => facilities.find(facility => facility.id === facilityId).title[language]).join(', ') + ', ' + cateringSelected.map(cateringItem => catering.find(cater => cater.id === cateringItem.id).title[language]).join(', '),
         "Status": "Pending",
         "Comments": comments,
-        "adsID": adsID
+        "adsID": adsID,
+        "Layout": tableSetup
       };
       // console.log('Data to Google Sheets:', dataToGoogleSheets);
       const googleSheetsSuccess = await sendToGoogleSheets(dataToGoogleSheets); 
@@ -396,6 +405,7 @@ export function BookingWidget(props) {
       dataToGoogleSheets['Status'],
       dataToGoogleSheets['Comments'],
       dataToGoogleSheets['adsID'],
+      dataToGoogleSheets['Layout'],
     ];
 
     try {
@@ -526,15 +536,24 @@ export function BookingWidget(props) {
           });
         }
       });
-  
+
+      // Extra hours: €60/hr line item, multiplied by the number of days for multi-day bookings.
+      if (extraHours > 0) {
+        const days = isMultiDay ? Math.ceil((new Date(endDate) - new Date(date)) / (1000 * 60 * 60 * 24)) : 1;
+        line_items.push({
+          item_id: extraHourZohoId,
+          quantity: extraHours * days,
+        });
+      }
+
       // Step 3: Construct and send the estimate data
       const estimateData = {
         customer_id: customer_id,
         line_items: line_items,
         date: new Date().toISOString().split('T')[0],
-        notes: comments,
-        // custom subject i.e: Half Day for 17/01/2025 at Blossom
-        custom_subject: `${selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).short_description[language]).join(', ')} for ${new Date(date).toLocaleDateString('en-CA')} at ${venues.find(v => v.id === venue)?.name[language]}`,
+        notes: `Layout: ${tableSetup}${comments ? `\n${comments}` : ''}`,
+        // custom subject i.e: Half Day (+2h extra) for 17/01/2025 at Blossom
+        custom_subject: `${selectedEventPackages.map(pkg => mockEventPackages.find(ep => ep.id === pkg).short_description[language]).join(', ')}${extraHours > 0 ? ` (+${extraHours}h extra)` : ''} for ${new Date(date).toLocaleDateString('en-CA')} at ${venues.find(v => v.id === venue)?.name[language]}`,
       };
   
       try {
@@ -580,11 +599,10 @@ export function BookingWidget(props) {
     )
   : (
     <div className="grid grid-rows-[1fr_fit]  overflow-hidden lg:flex lg:flex-row justify-center lg:space-x-8 lg:overflow-visible" ref={widgetRef}>
-      <div id="booking-widget" className="w-full p-4 mt-8 overflow-scroll" ref={widgetRef}>  
+      <div id="booking-widget" className="w-full p-4 mt-8 overflow-scroll" ref={widgetRef}>
+        <StepIndicator currentStep={currentStep} />
         {currentStep === 1 && (
           <>
-            <h2 className="text-2xl font-bold text-center">Let's get you started</h2>
-            <p className="text-center text-muted-foreground mt-6">{`Grab your free quote. It only takes a minute!`}</p>
             <Step1
               language={language}
               guests={guests}
@@ -613,6 +631,8 @@ export function BookingWidget(props) {
               eventPackagesError={eventPackagesError}
               selectedEventPackages={selectedEventPackages}
               setSelectedEventPackages={setSelectedEventPackages}
+              extraHours={extraHours}
+              setExtraHours={setExtraHours}
               venues={venues}
             />
             <div className="mt-12 space-y-8 flex flex-col items-center">
@@ -673,33 +693,11 @@ export function BookingWidget(props) {
               handleSubmit={handleSubmit}
               submitting={submitting}
             />
-            <div className="hidden md:flex mt-12 flex justify-between items-center">
+            <div className="hidden md:flex mt-12 flex items-center space-x-4">
+              <Button variant="outline" onClick={() => setCurrentStep(2)}>
+                <ArrowLeftIcon className="h-5 w-5 text-muted-foreground" />
+              </Button>
               <span className="text-muted-foreground">Step 3 of 3</span>
-              <div className='flex space-x-4 items-center'>
-                <Button variant="outline" onClick={() => setCurrentStep(2)}>
-                  <ArrowLeftIcon className="mr-2 h-5 w-5 text-muted-foreground" />
-                </Button>
-                <Button 
-                  aria-label="Request Proposal BW"
-                  disabled={!isStep3Valid()}
-                  onClick={() => {
-                    if (checkStep3Errors() && isStep3Valid()) {
-                      handleSubmit()
-                    }
-                  }}>
-                  {submitting ? 
-                    (
-                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                    )
-                  : (
-                    <span className="flex space-x-2">Request Proposal <ArrowRightIcon className="ml-2 h-5 w-5 text-white" />
-                    </span>
-                  )}
-                </Button>
-              </div>
             </div>
           </>
         )}
@@ -726,6 +724,7 @@ export function BookingWidget(props) {
         }))}
         facilitiesSelected={facilities.filter(facility => facilitiesSelected.includes(facility.id))}
         cateringSelected={cateringSelected.map(item => ({ ...item, name: catering.find(cater => cater.id === item.id).title[language], price: catering.find(cater => cater.id === item.id).price}))}
+        extraHours={extraHours}
         totalExclVat={totalExclVat}
         handleSubmit={handleSubmit}
         submitting={submitting}

@@ -10,7 +10,8 @@ export function VenueCardOption({
   image_url,
   capacity,
   area,
-  onClick
+  onClick,
+  displayOnly
 }) {
 
   return (
@@ -36,15 +37,17 @@ export function VenueCardOption({
           <RulerIcon className="h-5 w-5 text-muted-foreground" />
           <p className="text-sm">{`${area} m^2`}</p>
         </div>
-        
-        <Button className="mt-4 outline-none" onClick={onClick}>
-          <span className={isSelected ? 'hidden' : ''}>Choose</span>            
-          <div className={
-            `${!isSelected ? 'hidden' : ''} animate-fade-in flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1`
-            }>
-            <CheckIcon className="h-4 w-4 text-white " />
-          </div>
-        </Button>
+
+        {!displayOnly && (
+          <Button className="mt-4 outline-none" onClick={onClick}>
+            <span className={isSelected ? 'hidden' : ''}>Choose</span>
+            <div className={
+              `${!isSelected ? 'hidden' : ''} animate-fade-in flex items-center justify-center border-2 border-white h-6 w-6 rounded-full m-1`
+              }>
+              <CheckIcon className="h-4 w-4 text-white " />
+            </div>
+          </Button>
+        )}
       </CardContent>
     </Card>
   )

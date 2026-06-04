@@ -23,6 +23,7 @@ const Step3 = ({
   phoneError: propPhoneError,
   agreeTermsError,
   isStep3Valid,
+  checkStep3Errors,
   handleSubmit,
   submitting
 }) => {
@@ -45,7 +46,6 @@ const Step3 = ({
   const checkStep3Validation = () => {
     let isValid = true;
 
-    console.log('Validating email:', email);
     if (!validateEmail(email)) {
       setEmailError('Invalid email address');
       isValid = false;
@@ -53,7 +53,6 @@ const Step3 = ({
       setEmailError('');
     }
 
-    console.log('Validating phone:', phone);
     if (!validatePhone(phone)) {
       setPhoneError('Invalid phone number');
       isValid = false;
@@ -66,7 +65,7 @@ const Step3 = ({
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6 mt-0 md:mt-8 max-w-[480px] mx-auto">
-      <h2 className="text-2xl font-bold text-center">Almost there!</h2>
+      <h2 className="text-xl font-bold text-center">Tell us who you are</h2>
       <p className="text-center text-muted-foreground">A couple extra details and your proposal is on it's way.</p>
 
       <div className="mt-4">
@@ -140,7 +139,7 @@ const Step3 = ({
       </div>
 
       <p className='text-muted-foreground text-sm'>
-        This is a non-binding request. We commit to reply within less than 10 minutes. Your data is not used for marketing or promotional reasons.
+        This is a non-binding request. Your data is not used for marketing or promotional reasons.
       </p>
       <div className="mt-4 text-center">
         <Button 
@@ -148,15 +147,12 @@ const Step3 = ({
           disabled={!isStep3Valid()} 
           onClick={(e) => {
             e.preventDefault();
-            console.log('Button clicked');
-            console.log('checkStep3Validation:', checkStep3Validation());
-            console.log('isStep3Valid:', isStep3Valid());
+            checkStep3Errors?.();
             if (checkStep3Validation() && isStep3Valid()) {
-              console.log('Calling handleSubmit');
               handleSubmit();
             }
           }}
-          aria-label="Request Proposal" // Added aria-label
+          aria-label="Request Quote" // Added aria-label
         >
           {submitting ? (
             <svg
@@ -172,7 +168,7 @@ const Step3 = ({
             </svg>
           )
           : (
-            <span>Request Proposal</span>
+            <span>Request Quote</span>
           )}
         </Button>
       </div>
