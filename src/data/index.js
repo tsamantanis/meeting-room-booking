@@ -10,7 +10,7 @@ export const mockVenues = [
       nl: "Ideaal voor workshops, trainingen en teamevenementen",
     },
     images: ["../Blossom_hero_widget.jpg"],
-    capacity: 20,
+    capacity: 30,
     area: 70,
   },
   // {

@@ -110,7 +110,7 @@ const Step1 = ({
                 type="number"
                 id="guests"
                 placeholder="12"
-                max="20"
+                max="30"
                 value={guests}
                 onChange={(e) => {setGuests(e.target.value); setGuestsError(null)}}
               />
